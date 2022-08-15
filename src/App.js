@@ -2,26 +2,11 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/macro';
 import { GlobalStyles } from './constants';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Dashboard from './components/dashboard';
-import Auth from './components/auth/Auth';
-import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SignUp';
-
-const RedirectRoutes = ({ isAuth }) => {
-    return isAuth ? (
-        <Navigate to='/dashboard' replace />
-    ) : (
-        <Navigate to='/auth/sign-in' replace />
-    );
-};
-
-const TestRoute = () => {
-    return (
-        <>
-            <h2>Sandbox Area</h2>
-        </>
-    );
-};
+import Dashboard from './features/dashboard';
+import Auth from './features/auth/Auth';
+import { SignInForm, SignUpForm } from './features/auth';
+import { RedirectRoutes } from './hooks';
+import Sandbox from './features/sandbox/Sandbox';
 
 const App = () => {
     const { colorMode } = useSelector(state => state.theme);
@@ -31,17 +16,19 @@ const App = () => {
             <GlobalStyles />
             <Routes>
                 {/* Redirecting user to route depending on auth */}
-                <Route index element={<RedirectRoutes isAuth={true} />} />
-                <Route path='*' element={<RedirectRoutes isAuth={true} />} />
+                <Route index element={<RedirectRoutes isAuth={false} />} />
+                <Route path='*' element={<RedirectRoutes isAuth={false} />} />
                 <Route path='auth' element={<Auth />}>
-                    <Route path='sign-in' element={<SignIn />} />
-                    <Route path='sign-up' element={<SignUp />} />
+                    <Route path='sign-in' element={<SignInForm />} />
+                    <Route path='sign-up' element={<SignUpForm />} />
                 </Route>
                 <Route path='dashboard' element={<Dashboard />}>
-                    <Route path='platform-launch' element={<TestRoute />} />
-                    <Route path='marketing-plan' element={<TestRoute />} />
-                    <Route path='roadmap' element={<TestRoute />} />
-                    <Route path=':boardId' element={<TestRoute />} />
+                    <Route path='' element={<Navigate to='sandbox' />} />
+                    <Route path='sandbox' element={<Sandbox />} />
+                    <Route path='platform-launch' element={null} />
+                    <Route path='marketing-plan' element={null} />
+                    <Route path='roadmap' element={null} />
+                    <Route path=':boardId' element={null} />
                 </Route>
             </Routes>
         </ThemeProvider>

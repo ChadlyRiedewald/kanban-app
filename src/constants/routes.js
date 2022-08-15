@@ -5,6 +5,8 @@ export const ROUTES = [
     {
         path: 'dashboard',
         children: [
+            { path: '' },
+            { path: 'sandbox' },
             { path: ':boardId' },
             { path: 'platform-launch' },
             { path: 'marketing-plan' },

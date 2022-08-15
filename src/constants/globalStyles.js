@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import theme from 'styled-theming';
+import { BREAKPOINTS } from './breakpoints';
 
 //////////////////// DYNAMIC COLORS  ////////////////////
 export const primaryBg = theme('colorMode', {
@@ -17,7 +18,7 @@ export const textColor = theme('colorMode', {
     dark: 'var(--color-white)',
 });
 
-const inputPlaceholderColor = theme('colorMode', {
+export const inputPlaceholderColor = theme('colorMode', {
     light: 'hsl(0 0% 0% / 0.25)',
     dark: 'hsl(0 0% 100% / 0.25)',
 });
@@ -96,7 +97,7 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
   
-  html, body {
+  html, body, #root {
     height: 100%;
   }
   
@@ -183,46 +184,41 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
   
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
+  a {
+    all: unset;
     font-size: var(--font-xs);
     font-weight: var(--font-bold);
-    color: var(--color-gray-600);
-    line-height: var(--line-height-xs);
+    color: var(--color-purple-200);
+    cursor: pointer;
+    
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
   }
-  
-  input, textarea {
-    border: 1.5px solid var(--color-gray-400);
-    color: ${textColor};
-    background-color: ${secondaryBg};
-    font-weight: var(--font-medium);
-    border-radius: var(--radii-sm);
-    font-size: var(--font-sm);
+
+  input[type="checkbox"] {
+
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radii-xs);
+    flex-shrink: 0;
+    background-color: ${p =>
+        p.checked ? 'var(--color-purple-100)' : secondaryBg};
+    border: ${p =>
+        !p.checked
+            ? `1px var(--color-gray-400) solid`
+            : `1px solid transparent`};
 
     &:focus {
-      border-color: transparent;
-      outline: 1.5px solid var(--color-purple-100);
+      box-shadow: 0 0 0 2px var(--color-purple-shadow);
     }
 
-    &::placeholder {
-      color: ${inputPlaceholderColor};
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
     }
+    
   }
   
-  input {
-    height: 40px;
-    padding-inline: var(--space-sm);
-  }
-  
-  textarea {
-    height: 112px;
-    line-height: var(--line-height-lg);
-    padding: var(--space-xs) var(--space-sm);
-    resize: none;
-  }
-
   //////////////////// CSS VARIABLES  ////////////////////
   :root {
     // Colors
@@ -249,12 +245,28 @@ export const GlobalStyles = createGlobalStyle`
     --color-destructive-200: hsl(0 100% 80%);
     --color-destructive-shadow: hsl(0 78% 63% / 0.5);
     
+    // Column Colors
+    --color-1: hsl(193 75% 59%);
+    --color-2: hsl(154 68% 64%);
+    --color-3: hsl(239 75% 59%);
+    --color-4: hsl(312 75% 59%);
+    --color-5: hsl(21 75% 59%);
+    --color-6: hsl(61 75% 59%);
+    
     // Font sizes
     --font-xs: 0.75rem;
     --font-sm: 0.8125rem;
     --font-md: 0.9375rem;
     --font-lg: 1.125rem;
-    --font-xl: 1.5rem;
+    --font-xl: 1.125rem;
+    
+    @media screen and ${BREAKPOINTS.tablet} {
+      --font-xl: 1.25rem;
+    }
+
+    @media screen and ${BREAKPOINTS.desktop} {
+      --font-xl: 1.5rem;
+    }
     
     // Font weight
     --font-medium: 500;
