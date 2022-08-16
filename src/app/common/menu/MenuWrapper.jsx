@@ -18,9 +18,9 @@ export const backgroundColorMobile = theme('colorMode', {
 const StyledContent = styled(Content)`
     position: absolute;
     background-color: ${p =>
-        p.variant === 'task' ? backgroundColor : backgroundColorMobile};
-    top: ${p => (p.variant === 'task' ? '40px' : '52px')};
-    right: ${p => (p.variant === 'task' ? '-12px' : '-8px')};
+        p.variant === 'tasks' ? backgroundColor : backgroundColorMobile};
+    top: ${p => (p.variant === 'tasks' ? '40px' : '52px')};
+    right: ${p => (p.variant === 'tasks' ? '-12px' : '-8px')};
     width: 192px;
     height: 94px;
     border-radius: var(--radii-lg);
@@ -37,7 +37,7 @@ const StyledContent = styled(Content)`
 
     @media screen and ${BREAKPOINTS.tablet} {
         background-color: ${backgroundColor};
-        right: ${p => (p.variant === 'task' ? '-89px' : '0')};
+        right: ${p => (p.variant === 'tasks' ? '-89px' : '0')};
     }
 `;
 

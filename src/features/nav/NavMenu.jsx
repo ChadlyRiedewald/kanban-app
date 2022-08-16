@@ -34,58 +34,28 @@ const SectionWrapper = styled.div`
 
 const NavMenu = () => {
     const { open } = useSelector(state => state.ui.sidebar);
+    const { boards } = useSelector(state => state.data);
     const dispatch = useDispatch();
 
     return (
         <Wrapper>
             <SectionWrapper>
-                <h4>All boards (3)</h4>
+                <h4>All boards ({boards.length})</h4>
                 <nav>
                     <ul>
-                        <li>
-                            <NavLink
-                                to='/dashboard/sandbox'
-                                className='nav-link'
-                                activeClassName='nav-link--active'
-                                inactiveClassName='nav-link--inactive'
-                            >
-                                <Board />
-                                Sandbox
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/dashboard/platform-launch'
-                                className='nav-link'
-                                activeClassName='nav-link--active'
-                                inactiveClassName='nav-link--inactive'
-                            >
-                                <Board />
-                                Platform Launch
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/dashboard/marketing-plan'
-                                className='nav-link'
-                                activeClassName='nav-link--active'
-                                inactiveClassName='nav-link--inactive'
-                            >
-                                <Board />
-                                Marketing Plan
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/dashboard/roadmap'
-                                className='nav-link'
-                                activeClassName='nav-link--active'
-                                inactiveClassName='nav-link--inactive'
-                            >
-                                <Board />
-                                Roadmap
-                            </NavLink>
-                        </li>
+                        {boards.map(board => (
+                            <li key={board.id}>
+                                <NavLink
+                                    to={`/dashboard/${board.id}`}
+                                    className='nav-link'
+                                    activeClassName='nav-link--active'
+                                    inactiveClassName='nav-link--inactive'
+                                >
+                                    <Board />
+                                    {board.title}
+                                </NavLink>
+                            </li>
+                        ))}
                         <li>
                             <NavButton
                                 onClick={() =>

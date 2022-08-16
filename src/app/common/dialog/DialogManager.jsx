@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { ChangePasswordDialog, SignOutDialog } from '../../../features/account';
-import { CreateNewBoardDialog } from '../../../features/board';
-import { AddNewTaskDialog, OpenTaskDialog } from '../../../features/task';
-import { DeleteBoardDialog } from '../../../features/board/DeleteBoardDialog';
-import { DeleteTaskDialog } from '../../../features/task/DeleteTaskDialog';
+import { CreateNewBoardDialog } from '../../../features/boards';
+import { AddNewTaskDialog, OpenTaskDialog } from '../../../features/tasks';
+import { DeleteBoardDialog } from '../../../features/boards/DeleteBoardDialog';
+import { DeleteTaskDialog } from '../../../features/tasks/DeleteTaskDialog';
 
 export const DialogManager = () => {
     const dialogLookup = {

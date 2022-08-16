@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { BoardMenu } from '../../../features/board';
-import { TaskMenu } from '../../../features/task';
+import { BoardMenu } from '../../../features/boards';
+import { TaskMenu } from '../../../features/tasks';
 
 export const MenuManager = () => {
     const menuLookup = {
