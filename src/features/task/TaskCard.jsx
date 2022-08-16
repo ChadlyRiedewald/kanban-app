@@ -1,5 +1,7 @@
 import styled from 'styled-components/macro';
 import { secondaryBg } from '../../constants';
+import { openDialog } from '../../app/ui';
+import { useDispatch } from 'react-redux';
 
 const Wrapper = styled.div`
     display: flex;
@@ -13,9 +15,13 @@ const Wrapper = styled.div`
     cursor: pointer;
 `;
 
-export const Task = ({ title, num1, num2 }) => {
+export const TaskCard = ({ title, num1, num2 }) => {
+    const dispatch = useDispatch();
+
     return (
-        <Wrapper>
+        <Wrapper
+            onClick={() => dispatch(openDialog({ dialogType: 'openTask' }))}
+        >
             <h3>{title}</h3>
             <strong style={{ color: 'var(--color-gray-600)' }}>
                 {num1} of {num2} subtasks

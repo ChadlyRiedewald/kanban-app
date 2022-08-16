@@ -36,11 +36,11 @@ export const Checkbox = ({ label, ...props }) => {
                 type='checkbox'
                 id={label}
                 value={label}
-                checked={field.value}
+                checked={field.checked}
                 {...field}
                 {...props}
             />
-            {field.value && (
+            {field.checked && (
                 <svg
                     aria-hidden='true'
                     fill='none'
@@ -48,7 +48,7 @@ export const Checkbox = ({ label, ...props }) => {
                     viewBox='-3 -4.5 16 16'
                 >
                     <path
-                        stroke={'var(--color-white)'}
+                        stroke='var(--color-white)'
                         strokeWidth='2'
                         fill='none'
                         d='m1.276 3.066 2.756 2.756 5-5'

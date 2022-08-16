@@ -1,2 +1,2 @@
-export * from './ChangePassword';
-export * from './SignOut';
+export * from './ChangePasswordDialog';
+export * from './SignOutDialog';

@@ -1,13 +1,13 @@
 import styled from 'styled-components/macro';
 import { secondaryBg } from '../../../constants';
 import MobileOnly from '../../../app/common/mobileOnly';
-import { AddNewTask } from '../../task';
 import { ReactComponent as Add } from '../../../assets/icon-add.svg';
 import Button from '../../../app/common/button';
-import { BoardOptions } from '../../board';
-import VisuallyHidden from '../../../app/common/visuallyHidden';
-import { ReactComponent as Icon } from '../../../assets/icon-menu-trigger.svg';
 import { MobileNavDropdown } from './MobileNavDropdown';
+import { openDialog, openMenu } from '../../../app/ui';
+import { useDispatch } from 'react-redux';
+import { OpenMenuButton } from '../../../app/common/menu';
+import { nanoid } from '@reduxjs/toolkit';
 
 const Wrapper = styled.header`
     height: var(--height-topbar-mobile);
@@ -38,24 +38,30 @@ const AddButton = styled(Button)`
 `;
 
 export const MobileNav = () => {
+    const dispatch = useDispatch();
+    const portalId = nanoid();
+
     return (
         <MobileOnly>
             <Wrapper>
                 <MobileNavDropdown />
                 <ButtonsWrapper>
-                    <AddNewTask
-                        trigger={
-                            <AddButton>
-                                <Add style={{ fill: 'var(--color-white)' }} />
-                            </AddButton>
+                    <AddButton
+                        onClick={() =>
+                            dispatch(openDialog({ dialogType: 'addNewTask' }))
                         }
-                    />
-                    <BoardOptions
-                        trigger={
-                            <>
-                                <VisuallyHidden>Edit board</VisuallyHidden>
-                                <Icon />
-                            </>
+                    >
+                        <Add style={{ fill: 'var(--color-white)' }} />
+                    </AddButton>
+                    <OpenMenuButton
+                        portalId={portalId}
+                        onClick={() =>
+                            dispatch(
+                                openMenu({
+                                    menuType: 'boardMenu',
+                                    portalId: portalId,
+                                })
+                            )
                         }
                     />
                 </ButtonsWrapper>

@@ -7,14 +7,12 @@ import styled from 'styled-components/macro';
 import DesktopOnly from '../../app/common/desktopOnly';
 import { BREAKPOINTS } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleOpen } from './sidebarSlice';
-import { CreateNewBoard } from '../board';
 import { ReactComponent as Add } from '../../assets/icon-add.svg';
-import { ChangePassword, SignOut } from '../account';
 import { ReactComponent as User } from '../../assets/icon-user.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/icon-sign-out.svg';
 import { NavLink } from './NavLink';
 import { NavButton } from './NavButton';
+import { openDialog, toggleSidebarOpen } from '../../app/ui';
 
 const Wrapper = styled.div`
     display: flex;
@@ -35,7 +33,7 @@ const SectionWrapper = styled.div`
 `;
 
 const NavMenu = () => {
-    const { open } = useSelector(state => state.sidebar);
+    const { open } = useSelector(state => state.ui.sidebar);
     const dispatch = useDispatch();
 
     return (
@@ -89,22 +87,25 @@ const NavMenu = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <CreateNewBoard
-                                trigger={
-                                    <NavButton
-                                        style={{
-                                            color: 'var(--color-purple-100)',
-                                        }}
-                                    >
-                                        <Add
-                                            style={{
-                                                fill: 'var(--color-purple-100)',
-                                            }}
-                                        />
-                                        Create New Board
-                                    </NavButton>
+                            <NavButton
+                                onClick={() =>
+                                    dispatch(
+                                        openDialog({
+                                            dialogType: 'createNewBoard',
+                                        })
+                                    )
                                 }
-                            />
+                                style={{
+                                    color: 'var(--color-purple-100)',
+                                }}
+                            >
+                                <Add
+                                    style={{
+                                        fill: 'var(--color-purple-100)',
+                                    }}
+                                />
+                                Create New Board
+                            </NavButton>
                         </li>
                     </ul>
                 </nav>
@@ -117,30 +118,38 @@ const NavMenu = () => {
                 <nav>
                     <ul>
                         <li>
-                            <ChangePassword
-                                trigger={
-                                    <NavButton>
-                                        <User />
-                                        Account
-                                    </NavButton>
+                            <NavButton
+                                onClick={() =>
+                                    dispatch(
+                                        openDialog({
+                                            dialogType: 'changePassword',
+                                        })
+                                    )
                                 }
-                            />
+                            >
+                                <User />
+                                Account
+                            </NavButton>
                         </li>
                         <li>
-                            <SignOut
-                                trigger={
-                                    <NavButton>
-                                        <SignOutIcon />
-                                        Sign Out
-                                    </NavButton>
+                            <NavButton
+                                onClick={() =>
+                                    dispatch(
+                                        openDialog({ dialogType: 'signOut' })
+                                    )
                                 }
-                            />
+                            >
+                                <SignOutIcon />
+                                Sign Out
+                            </NavButton>
                         </li>
                     </ul>
                 </nav>
                 <ThemeSwitch />
                 <DesktopOnly>
-                    <NavButton onClick={() => dispatch(toggleOpen(!open))}>
+                    <NavButton
+                        onClick={() => dispatch(toggleSidebarOpen(!open))}
+                    >
                         <Hide />
                         Hide Sidebar
                     </NavButton>

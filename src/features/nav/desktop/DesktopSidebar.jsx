@@ -6,7 +6,7 @@ import { ReactComponent as ShowSidebarIcon } from '../../../assets/icon-show-sid
 import VisuallyHidden from '../../../app/common/visuallyHidden';
 import NavMenu from '../NavMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleOpen } from '../sidebarSlice';
+import { toggleSidebarOpen } from '../../../app/ui';
 
 const Wrapper = styled.aside`
     width: var(--width-sidebar);
@@ -77,7 +77,7 @@ const ShowSidebarButton = styled.button`
 
 export const DesktopSidebar = () => {
     const dispatch = useDispatch();
-    const { open } = useSelector(state => state.sidebar);
+    const { open } = useSelector(state => state.ui.sidebar);
 
     return (
         <>
@@ -93,7 +93,7 @@ export const DesktopSidebar = () => {
             {!open && (
                 <ShowSidebarButton
                     type='button'
-                    onClick={() => dispatch(toggleOpen(!open))}
+                    onClick={() => dispatch(toggleSidebarOpen(!open))}
                 >
                     <VisuallyHidden>Show sidebar</VisuallyHidden>
                     <ShowSidebarIcon />

@@ -1,2 +1,4 @@
-export * from './Task';
-export * from './AddNewTask';
+export * from './TaskCard';
+export * from './AddNewTaskDialog';
+export * from './OpenTaskDialog';
+export * from './TaskMenu';

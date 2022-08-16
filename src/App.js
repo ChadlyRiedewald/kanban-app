@@ -7,29 +7,46 @@ import Auth from './features/auth/Auth';
 import { SignInForm, SignUpForm } from './features/auth';
 import { RedirectRoutes } from './hooks';
 import Sandbox from './features/sandbox/Sandbox';
+import { DialogManager } from './app/common/dialog';
+import { MenuManager } from './app/common/menu';
+import { EmptyBoard } from './features/board/EmptyBoard';
 
 const App = () => {
-    const { colorMode } = useSelector(state => state.theme);
+    const { colorMode } = useSelector(state => state.ui.theme);
+    const { authenticated } = useSelector(state => state.auth);
 
     return (
         <ThemeProvider theme={{ colorMode: colorMode }}>
             <GlobalStyles />
+            <DialogManager />
+            <MenuManager />
             <Routes>
                 {/* Redirecting user to route depending on auth */}
-                <Route index element={<RedirectRoutes isAuth={false} />} />
-                <Route path='*' element={<RedirectRoutes isAuth={false} />} />
+                <Route
+                    index
+                    element={<RedirectRoutes isAuth={authenticated} />}
+                />
+                <Route
+                    path='*'
+                    element={<RedirectRoutes isAuth={authenticated} />}
+                />
                 <Route path='auth' element={<Auth />}>
                     <Route path='sign-in' element={<SignInForm />} />
                     <Route path='sign-up' element={<SignUpForm />} />
                 </Route>
-                <Route path='dashboard' element={<Dashboard />}>
-                    <Route path='' element={<Navigate to='sandbox' />} />
-                    <Route path='sandbox' element={<Sandbox />} />
-                    <Route path='platform-launch' element={null} />
-                    <Route path='marketing-plan' element={null} />
-                    <Route path='roadmap' element={null} />
-                    <Route path=':boardId' element={null} />
-                </Route>
+                {authenticated && (
+                    <Route path='dashboard' element={<Dashboard />}>
+                        <Route path='' element={<Navigate to='sandbox' />} />
+                        <Route path='sandbox' element={<Sandbox />} />
+                        <Route
+                            path='platform-launch'
+                            element={<EmptyBoard />}
+                        />
+                        <Route path='marketing-plan' element={<EmptyBoard />} />
+                        <Route path='roadmap' element={<EmptyBoard />} />
+                        <Route path=':boardId' element={null} />
+                    </Route>
+                )}
             </Routes>
         </ThemeProvider>
     );

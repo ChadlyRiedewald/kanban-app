@@ -98,8 +98,8 @@ const Figure = styled.figure`
     }
 `;
 
-const Auth = () => {
-    const { colorMode } = useSelector(state => state.theme);
+export const Auth = () => {
+    const { colorMode } = useSelector(state => state.ui.theme);
 
     return (
         <Wrapper>

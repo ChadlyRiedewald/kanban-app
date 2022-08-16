@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { signInUser } from './authSlice';
 
 const initialValues = {
     email: '',
@@ -20,6 +22,7 @@ const validationSchema = Yup.object({
 
 export const SignInForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
         <FormWrapper>
@@ -57,7 +60,10 @@ export const SignInForm = () => {
                             <a href='#'>Forgot password?</a>
                         </ButtonsWrapper>
                         <Button
-                            onClick={() => navigate('/dashboard')}
+                            onClick={() => {
+                                dispatch(signInUser());
+                                navigate('/dashboard');
+                            }}
                             type='submit'
                             variant='primary'
                             size='medium'
