@@ -8,7 +8,11 @@ export const BoardMenu = ({ ...props }) => {
         <MenuWrapper {...props}>
             <MenuButton
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'createNewBoard' }))
+                    dispatch(
+                        openDialog({
+                            dialogType: 'updateBoard',
+                        })
+                    )
                 }
             >
                 Edit Board

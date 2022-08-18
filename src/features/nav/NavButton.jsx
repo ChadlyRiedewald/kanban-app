@@ -16,6 +16,8 @@ export const NavButton = styled.button`
     border-radius: 0 var(--radii-round) var(--radii-round) 0;
     margin-inline-start: -24px;
     padding-inline-start: 24px;
+    opacity: ${p => p.disabled && '0.5'};
+    cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
 
     &:focus {
         outline: none;
@@ -29,8 +31,8 @@ export const NavButton = styled.button`
     }
 
     &:hover {
-        color: var(--color-purple-100);
-        background-color: ${secondaryButtonBg};
+        color: ${p => !p.disabled && 'var(--color-purple-100)'};
+        background-color: ${p => !p.disabled && secondaryButtonBg};
 
         svg {
             fill: var(--color-purple-100);

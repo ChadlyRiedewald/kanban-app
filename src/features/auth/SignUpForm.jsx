@@ -1,10 +1,14 @@
 import { FormikControl, Form } from '../../app/common/form';
 import Button from '../../app/common/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import * as Yup from 'yup';
 import { CenteredSpan, FormWrapper, LogoTablet } from './Auth';
 import { Formik } from 'formik';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../app/firebase';
+import { useDispatch } from 'react-redux';
+import { signInUser } from './authSlice';
 
 const initialValues = {
     email: '',
@@ -14,21 +18,40 @@ const initialValues = {
 
 const validationSchema = Yup.object({
     email: Yup.string().email(`Not a valid email`).required(`Can't be empty`),
-    password: Yup.string().required(`Can't be empty`),
+    password: Yup.string()
+        .min(6, `Min. 6 characters`)
+        .required(`Can't be empty`),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required(`Can't be empty`),
 });
 
 export const SignUpForm = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     return (
         <FormWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={async (values, { setSubmitting, setErrors }) => {
+                    try {
+                        const result = await createUserWithEmailAndPassword(
+                            auth,
+                            values.email,
+                            values.confirmPassword
+                        );
+                        dispatch(signInUser(result.user));
+                        navigate('/dashboard');
+                        return console.log(result);
+                    } catch (error) {
+                        setErrors({ auth: error.message });
+                        setSubmitting(false);
+                    }
+                }}
             >
-                {({ values, isSubmitting }) => (
+                {({ isSubmitting, isValid, dirty }) => (
                     <Form>
                         <LogoTablet>
                             <Logo />
@@ -56,6 +79,8 @@ export const SignUpForm = () => {
                             placeholder='Confirm your password'
                         />
                         <Button
+                            loading={isSubmitting}
+                            disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             variant='primary'
                             size='medium'

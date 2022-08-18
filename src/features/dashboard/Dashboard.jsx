@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { BREAKPOINTS } from '../../constants';
 import { DesktopNav } from '../nav/desktop';
+import { useSelector } from 'react-redux';
+import { NoBoards } from './NoBoards';
 
 const MainWrapper = styled.main`
     padding-block-start: calc(var(--height-topbar-mobile) + var(--space-md));
@@ -20,12 +22,14 @@ const MainWrapper = styled.main`
 `;
 
 const Dashboard = () => {
+    const { boards } = useSelector(state => state.board);
+
     return (
         <>
             <MobileNav />
             <DesktopNav />
             <MainWrapper>
-                <Outlet />
+                {boards.length ? <Outlet /> : <NoBoards />}
             </MainWrapper>
         </>
     );

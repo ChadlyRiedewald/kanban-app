@@ -8,7 +8,7 @@ export const TaskMenu = ({ ...props }) => {
         <MenuWrapper {...props}>
             <MenuButton
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'addNewTask' }))
+                    dispatch(openDialog({ dialogType: 'createTask' }))
                 }
             >
                 Edit Task

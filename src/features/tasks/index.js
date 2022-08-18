@@ -1,4 +1,4 @@
 export * from './TaskCard';
-export * from './AddNewTaskDialog';
+export * from './CreateTaskDialog';
 export * from './OpenTaskDialog';
 export * from './TaskMenu';

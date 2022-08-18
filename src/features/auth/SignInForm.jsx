@@ -7,6 +7,8 @@ import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { signInUser } from './authSlice';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../app/firebase';
 
 const initialValues = {
     email: '',
@@ -29,9 +31,24 @@ export const SignInForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={async (values, { setSubmitting, setErrors }) => {
+                    console.log(values);
+
+                    // try {
+                    //     const result = await signInWithEmailAndPassword(
+                    //         auth,
+                    //         values.email,
+                    //         values.password
+                    //     );
+                    //     dispatch(signInUser(result));
+                    //     navigate('/dashboard');
+                    // } catch (error) {
+                    //     setErrors({ auth: error.message });
+                    //     setSubmitting(false);
+                    // }
+                }}
             >
-                {({ values, isSubmitting }) => (
+                {({ isSubmitting, isValid, dirty }) => (
                     <Form>
                         <LogoTablet>
                             <Logo />
@@ -60,9 +77,11 @@ export const SignInForm = () => {
                             <a href='#'>Forgot password?</a>
                         </ButtonsWrapper>
                         <Button
+                            loading={isSubmitting}
+                            // disabled={!isValid || !dirty || isSubmitting}
                             onClick={() => {
-                                dispatch(signInUser());
                                 navigate('/dashboard');
+                                dispatch(signInUser());
                             }}
                             type='submit'
                             variant='primary'

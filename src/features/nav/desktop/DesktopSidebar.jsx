@@ -6,7 +6,7 @@ import { ReactComponent as ShowSidebarIcon } from '../../../assets/icon-show-sid
 import VisuallyHidden from '../../../app/common/visuallyHidden';
 import NavMenu from '../NavMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebarOpen } from '../../../app/ui';
+import { closeSidebar, openSidebar, toggleSidebarOpen } from '../../../app/ui';
 
 const Wrapper = styled.aside`
     width: var(--width-sidebar);
@@ -20,22 +20,10 @@ const Wrapper = styled.aside`
     z-index: 1;
 `;
 
-const LogoLink = styled(Link)`
+const LogoWrapper = styled.div`
     width: fit-content;
-    padding: var(--space-xxs) var(--space-xs);
-    margin: -4px -8px;
-    border-radius: var(--radii-sm);
     svg path {
         fill: ${textColor};
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 5px var(--color-purple-shadow);
-    }
-
-    &:focus:not(:focus-visible) {
-        box-shadow: none;
     }
 `;
 
@@ -79,22 +67,23 @@ export const DesktopSidebar = () => {
     const dispatch = useDispatch();
     const { open } = useSelector(state => state.ui.sidebar);
 
+    function toggleSidebar() {
+        dispatch(openSidebar());
+        document.documentElement.style.setProperty('--width-sidebar', '300px');
+    }
+
     return (
         <>
             {open && (
                 <Wrapper>
-                    <LogoLink to='/'>
-                        <VisuallyHidden>Home</VisuallyHidden>
+                    <LogoWrapper>
                         <Logo />
-                    </LogoLink>
+                    </LogoWrapper>
                     <NavMenu />
                 </Wrapper>
             )}
             {!open && (
-                <ShowSidebarButton
-                    type='button'
-                    onClick={() => dispatch(toggleSidebarOpen(!open))}
-                >
+                <ShowSidebarButton type='button' onClick={toggleSidebar}>
                     <VisuallyHidden>Show sidebar</VisuallyHidden>
                     <ShowSidebarIcon />
                 </ShowSidebarButton>

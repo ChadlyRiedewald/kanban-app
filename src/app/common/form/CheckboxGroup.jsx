@@ -1,5 +1,6 @@
 import { Field } from 'formik';
 import { Label, Checkbox } from './index';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const CheckboxGroup = ({ label, name, options, ...props }) => {
     return (
@@ -7,11 +8,11 @@ export const CheckboxGroup = ({ label, name, options, ...props }) => {
             {label}
             <Field name={name} {...props}>
                 {({ field }) => {
-                    return options.map(option => (
+                    return options.map((option, index) => (
                         <Label
                             variant='checkbox'
                             htmlFor={option.value}
-                            key={option.value}
+                            key={index}
                             checked={field.value.includes(option.value)}
                         >
                             <Checkbox

@@ -7,6 +7,7 @@ import { secondaryBg } from '../../../constants';
 import Portal from '../../../app/common/portal';
 import { useState } from 'react';
 import NavMenu from '../NavMenu';
+import { useSelector } from 'react-redux';
 
 const StyledOverlay = styled(DialogPrimitive.Overlay)`
     position: fixed;
@@ -53,29 +54,24 @@ export const DialogTrigger = StyledTrigger;
 export const DialogClose = DialogPrimitive.Close;
 
 //////////////////// COMPONENTS  ////////////////////
-const DialogContent = ({ children, ...props }) => {
-    return (
-        <Portal>
-            <StyledOverlay />
-            <StyledContent {...props}>{children}</StyledContent>
-        </Portal>
-    );
-};
-
-export const MobileNavDropdown = () => {
+export const MobileNavDropdown = ({ ...props }) => {
     const [isOpen, toggleIsOpen] = useState(false);
     const toggle = () => toggleIsOpen(!isOpen);
+    const { selectedBoard } = useSelector(state => state.board);
 
     return (
         <DialogRoot open={isOpen} onOpenChange={toggle}>
             <DialogTrigger>
                 <Logo />
-                <h1>Platform Launch</h1>
+                <h1>{selectedBoard?.title}</h1>
                 {isOpen ? <Up /> : <Down />}
             </DialogTrigger>
-            <DialogContent>
-                <NavMenu />
-            </DialogContent>
+            <Portal>
+                <StyledOverlay />
+                <StyledContent {...props}>
+                    <NavMenu />
+                </StyledContent>
+            </Portal>
         </DialogRoot>
     );
 };

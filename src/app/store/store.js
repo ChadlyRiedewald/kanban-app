@@ -9,6 +9,6 @@ export const store = configureStore({
         ui: uiReducer,
         auth: authReducer,
         async: asyncReducer,
-        data: boardsReducer,
+        board: boardsReducer,
     },
 });

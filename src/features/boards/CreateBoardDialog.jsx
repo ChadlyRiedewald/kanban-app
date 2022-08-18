@@ -3,28 +3,49 @@ import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import Button from '../../app/common/button';
 import { useDispatch } from 'react-redux';
+import { createBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
+import * as Yup from 'yup';
 
-const initialValues = {
-    name: '',
-    columns: ['', ''],
-};
-
-export const CreateNewBoardDialog = () => {
+export const CreateBoardDialog = () => {
     const dispatch = useDispatch();
+
+    const initialValues = {
+        title: '',
+        columns: [
+            { title: '', placeholder: 'e.g. Todo' },
+            { title: '', placeholder: 'e.g. Done' },
+        ],
+    };
+
+    const validationSchema = Yup.object({
+        title: Yup.string()
+            .max(16, 'Max. 16 characters')
+            .required(`Can't be empty`),
+        columns: Yup.array().of(
+            Yup.object().shape({
+                title: Yup.string().required(`Can't be empty`),
+            })
+        ),
+    });
+
     return (
         <DialogWrapper>
             <Formik
                 initialValues={initialValues}
-                onSubmit={values => console.log(values)}
+                validationSchema={validationSchema}
+                onSubmit={values => {
+                    dispatch(createBoard(values));
+                    dispatch(closeDialog());
+                }}
             >
-                {({ values, isSubmitting }) => (
+                {({ values, isSubmitting, isValid, dirty }) => (
                     <Form>
                         <h2>Add New Board</h2>
                         <FormikControl
                             control='input'
-                            label='Name'
-                            name='name'
+                            label='Title'
+                            name='title'
                             placeholder='e.g. Web design'
                         />
                         <FormikControl
@@ -32,16 +53,15 @@ export const CreateNewBoardDialog = () => {
                             label='Columns'
                             name='columns'
                             values={values.columns}
-                            placeholder='e.g. Todo'
                         />
                         <Button
-                            onClick={() => dispatch(closeDialog())}
-                            type='button'
+                            disabled={!isValid || !dirty || isSubmitting}
+                            type='submit'
                             fluid
                             variant='primary'
                             size='medium'
                         >
-                            Create New Board
+                            Create Board
                         </Button>
                     </Form>
                 )}

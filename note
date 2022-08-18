@@ -1,0 +1,62 @@
+export const InputGroup = ({ values, label, name }) => {
+    return (
+        <Label variant='input'>
+            {label}
+            <InputsWrapper>
+                <FieldArray name={name}>
+                    {({ push, remove }) => (
+                        <>
+                            {values.map((_, index) => (
+                                <Label key={nanoid()} variant='input-group'>
+                                    <Field
+                                        as={StyledInput}
+                                        name={`${name}.${index}.title`}
+                                        type='text'
+                                        placeholder={
+                                            values[`${index}`].placeholder
+                                        }
+                                    />
+                                    <Delete onClick={() => remove(index)} />
+                                </Label>
+                            ))}
+                            <Button
+                                onClick={() => push('')}
+                                type='button'
+                                variant='secondary'
+                                size='medium'
+                                fluid
+                            >
+                                {`+ Add ${
+                                    name === 'subtasks' ? 'Subtask' : 'Column'
+                                }`}
+                            </Button>
+                        </>
+                    )}
+                </FieldArray>
+            </InputsWrapper>
+        </Label>
+    );
+};
+
+export const Select = ({ label, options, ...props }) => {
+    const [field, meta] = useField(props);
+
+    return (
+        <Label variant='select' htmlFor={label}>
+            {label}
+            <StyledSelect
+                id={label}
+                {...field}
+                {...props}
+                error={meta.touched && !!meta.error}
+            >
+                {options.map(option => (
+                    <option value={option} key={nanoid()}>
+                        {option}
+                    </option>
+                ))}
+            </StyledSelect>
+            <Down />
+        </Label>
+    );
+};

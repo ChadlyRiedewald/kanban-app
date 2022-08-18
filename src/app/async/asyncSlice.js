@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+    loading: false,
+    error: '',
+};
+
 export const asyncSlice = createSlice({
     name: 'async',
-    initialState: {
-        loading: false,
-        error: null,
-    },
+    initialState,
     reducers: {
         asyncActionStart: state => {
             state.loading = true;

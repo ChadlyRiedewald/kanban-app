@@ -5,7 +5,7 @@ import { ReactComponent as Add } from '../../../assets/icon-add.svg';
 import Button from '../../../app/common/button';
 import { MobileNavDropdown } from './MobileNavDropdown';
 import { openDialog, openMenu } from '../../../app/ui';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { OpenMenuButton } from '../../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -40,6 +40,7 @@ const AddButton = styled(Button)`
 export const MobileNav = () => {
     const dispatch = useDispatch();
     const portalId = nanoid();
+    const { selectedBoard } = useSelector(state => state.board);
 
     return (
         <MobileOnly>
@@ -47,13 +48,19 @@ export const MobileNav = () => {
                 <MobileNavDropdown />
                 <ButtonsWrapper>
                     <AddButton
+                        disabled={
+                            !selectedBoard || !selectedBoard.columns.length
+                        }
                         onClick={() =>
-                            dispatch(openDialog({ dialogType: 'addNewTask' }))
+                            dispatch(openDialog({ dialogType: 'createTask' }))
                         }
                     >
                         <Add style={{ fill: 'var(--color-white)' }} />
                     </AddButton>
                     <OpenMenuButton
+                        disabled={
+                            !selectedBoard || !selectedBoard.columns.length
+                        }
                         portalId={portalId}
                         onClick={() =>
                             dispatch(

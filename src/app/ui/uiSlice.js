@@ -1,18 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getInitialColorMode } from './getInitialColorMode';
 
+const initialState = {
+    dialog: {},
+    menu: {},
+    theme: {
+        colorMode: getInitialColorMode(),
+    },
+    sidebar: {
+        open: true,
+    },
+};
+
 export const uiSlice = createSlice({
     name: 'ui',
-    initialState: {
-        dialog: {},
-        menu: {},
-        theme: {
-            colorMode: getInitialColorMode(),
-        },
-        sidebar: {
-            open: true,
-        },
-    },
+    initialState,
     reducers: {
         openDialog: (state, action) => {
             const { dialogType, dialogProps } = action.payload;
@@ -28,21 +30,17 @@ export const uiSlice = createSlice({
         closeMenu: state => {
             state.menu = {};
         },
-        setColorMode: (state, action) => {
-            state.theme.colorMode = action.payload;
-            window.localStorage.setItem('color-mode', action.payload);
+        openSidebar: state => {
+            state.sidebar.open = true;
         },
-        toggleSidebarOpen: (state, action) => {
-            state.sidebar.open = action.payload;
-            state.sidebar.open
-                ? document.documentElement.style.setProperty(
-                      '--width-sidebar',
-                      '300px'
-                  )
-                : document.documentElement.style.setProperty(
-                      '--width-sidebar',
-                      '0px'
-                  );
+        closeSidebar: state => {
+            state.sidebar.open = false;
+        },
+        setLightTheme: state => {
+            state.theme.colorMode = 'light';
+        },
+        setDarkTheme: state => {
+            state.theme.colorMode = 'dark';
         },
     },
 });
@@ -52,8 +50,10 @@ export const {
     closeDialog,
     openMenu,
     closeMenu,
-    setColorMode,
-    toggleSidebarOpen,
+    openSidebar,
+    closeSidebar,
+    setLightTheme,
+    setDarkTheme,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

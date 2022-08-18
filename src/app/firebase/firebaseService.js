@@ -1,14 +1,14 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+} from 'firebase/auth';
 import { auth } from './config';
 
-export async function signUpUser(email, password) {
-    try {
-        const user = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-    } catch (e) {
-        console.error(e.message);
-    }
+export function signInWithEmail(creds) {
+    return signInWithEmailAndPassword(auth, creds.email, creds.password);
+}
+
+export function signOutFirebase() {
+    return signOut(auth);
 }

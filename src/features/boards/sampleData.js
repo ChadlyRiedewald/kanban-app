@@ -93,7 +93,7 @@ export const sampleData = [
         ],
     },
     {
-        id: 2,
+        id: '2',
         title: 'Marketing Plan',
         columns: [
             {
@@ -186,7 +186,7 @@ export const sampleData = [
         ],
     },
     {
-        id: 3,
+        id: '3',
         title: 'Roadmap',
         columns: [
             {

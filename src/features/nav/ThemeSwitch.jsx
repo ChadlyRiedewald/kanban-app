@@ -2,7 +2,7 @@ import theme from 'styled-theming';
 import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
 import Switch from '../../app/common/switch';
-import { setColorMode } from '../../app/ui';
+import { setColorMode, setDarkTheme, setLightTheme } from '../../app/ui';
 
 //////////////////// STYLED COMPONENTS  ////////////////////
 const backgroundColor = theme('colorMode', {
@@ -25,6 +25,17 @@ export const Wrapper = styled.div`
 export const ThemeSwitch = () => {
     const dispatch = useDispatch();
     const { colorMode } = useSelector(state => state.ui.theme);
+
+    function setColorModeDark() {
+        dispatch(setDarkTheme());
+        window.localStorage.setItem('color-mode', 'dark');
+    }
+
+    function setColorModeLight() {
+        dispatch(setLightTheme());
+        window.localStorage.setItem('color-mode', 'light');
+    }
+
     return (
         <Wrapper>
             <svg width='19' height='19' xmlns='http://www.w3.org/2000/svg'>
@@ -37,8 +48,8 @@ export const ThemeSwitch = () => {
                 checked={colorMode === 'dark'}
                 onChange={() => {
                     colorMode === 'dark'
-                        ? dispatch(setColorMode('light'))
-                        : dispatch(setColorMode('dark'));
+                        ? setColorModeLight()
+                        : setColorModeDark();
                 }}
             />
             <svg width='16' height='16' xmlns='http://www.w3.org/2000/svg'>

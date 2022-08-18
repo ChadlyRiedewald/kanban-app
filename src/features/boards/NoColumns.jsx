@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import Button from '../../app/common/button';
 
 const Wrapper = styled.div`
+    text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
     gap: var(--space-md);
 `;
 
-export const EmptyBoard = () => {
+export const NoColumns = () => {
     const dispatch = useDispatch();
     return (
         <Wrapper>
@@ -23,7 +24,7 @@ export const EmptyBoard = () => {
                 variant='primary'
                 size='large'
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'createNewBoard' }))
+                    dispatch(openDialog({ dialogType: 'updateBoard' }))
                 }
             >
                 + Add New Column

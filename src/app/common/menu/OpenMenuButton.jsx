@@ -9,7 +9,7 @@ const Wrapper = styled.button`
     margin-right: -5.69px;
     margin-left: -5.69px;
     height: 28px;
-    cursor: pointer;
+    cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
     display: flex;
     justify-content: center;
     align-items: center;

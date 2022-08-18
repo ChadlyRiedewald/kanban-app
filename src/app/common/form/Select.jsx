@@ -3,6 +3,7 @@ import { textColor } from '../../../constants';
 import { ReactComponent as Down } from '../../../assets/icon-arrow-down.svg';
 import { Label } from './index';
 import { useField } from 'formik';
+import { nanoid } from '@reduxjs/toolkit';
 
 const StyledSelect = styled.select`
     border: 1px solid
@@ -41,9 +42,9 @@ export const Select = ({ label, options, ...props }) => {
                 {...props}
                 error={meta.touched && !!meta.error}
             >
-                {options.map(option => (
-                    <option value={option.value} key={option.key}>
-                        {option.key}
+                {options.map((option, index) => (
+                    <option value={option} key={index}>
+                        {option}
                     </option>
                 ))}
             </StyledSelect>

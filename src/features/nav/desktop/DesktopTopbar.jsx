@@ -2,8 +2,6 @@ import styled from 'styled-components/macro';
 import { borderColor, secondaryBg, textColor } from '../../../constants';
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import VisuallyHidden from '../../../app/common/visuallyHidden';
 import Button from '../../../app/common/button';
 import { openDialog, openMenu } from '../../../app/ui';
 import { OpenMenuButton } from '../../../app/common/menu';
@@ -32,32 +30,16 @@ const ContentWrapper = styled.div`
     padding-inline: var(--space-md);
 `;
 
-const LogoLink = styled(Link)`
-    width: fit-content;
-    padding: var(--space-xxs) var(--space-xs);
-    margin: -4px -8px;
-    border-radius: var(--radii-sm);
-    svg path {
-        fill: ${textColor};
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 5px var(--color-purple-shadow);
-    }
-
-    &:focus:not(:focus-visible) {
-        box-shadow: none;
-    }
-`;
-
 const LogoWrapper = styled.div`
     height: var(--height-topbar);
     padding-inline: var(--space-md);
-    min-width: fit-content;
     display: flex;
     align-items: center;
     border-right: 1px solid ${borderColor};
+    min-width: fit-content;
+    svg path {
+        fill: ${textColor};
+    }
 `;
 
 const ButtonsWrapper = styled.div`
@@ -68,6 +50,7 @@ const ButtonsWrapper = styled.div`
 
 export const DesktopTopbar = () => {
     const { open } = useSelector(state => state.ui.sidebar);
+    const { selectedBoard } = useSelector(state => state.board);
     const dispatch = useDispatch();
     const portalId = nanoid();
 
@@ -75,18 +58,18 @@ export const DesktopTopbar = () => {
         <Wrapper>
             {!open && (
                 <LogoWrapper>
-                    <LogoLink to='/'>
-                        <VisuallyHidden>Home</VisuallyHidden>
-                        <Logo />
-                    </LogoLink>
+                    <Logo />
                 </LogoWrapper>
             )}
             <ContentWrapper>
-                <h1>Platform Launch</h1>
+                <h1>{selectedBoard?.title}</h1>
                 <ButtonsWrapper>
                     <Button
+                        disabled={
+                            !selectedBoard || !selectedBoard.columns.length
+                        }
                         onClick={() =>
-                            dispatch(openDialog({ dialogType: 'addNewTask' }))
+                            dispatch(openDialog({ dialogType: 'createTask' }))
                         }
                         size='large'
                     >
@@ -94,14 +77,18 @@ export const DesktopTopbar = () => {
                     </Button>
                     <OpenMenuButton
                         portalId={portalId}
-                        onClick={() =>
-                            dispatch(
-                                openMenu({
-                                    menuType: 'boardMenu',
-                                    portalId: portalId,
-                                })
-                            )
+                        disabled={
+                            !selectedBoard || !selectedBoard.columns.length
                         }
+                        onClick={() => {
+                            selectedBoard &&
+                                dispatch(
+                                    openMenu({
+                                        menuType: 'boardMenu',
+                                        portalId: portalId,
+                                    })
+                                );
+                        }}
                     />
                 </ButtonsWrapper>
             </ContentWrapper>

@@ -5,6 +5,6 @@ export const ErrorMessage = styled.span`
     font-weight: var(--font-medium);
     color: var(--color-destructive-100);
     position: absolute;
-    right: 16px;
-    top: 34px;
+    right: ${p => (p.inputGroup ? '48px' : '16px')};
+    top: ${p => (p.inputGroup ? '14px' : '34px')};
 `;

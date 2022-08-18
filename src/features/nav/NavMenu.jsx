@@ -12,7 +12,7 @@ import { ReactComponent as User } from '../../assets/icon-user.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/icon-sign-out.svg';
 import { NavLink } from './NavLink';
 import { NavButton } from './NavButton';
-import { openDialog, toggleSidebarOpen } from '../../app/ui';
+import { closeSidebar, openDialog } from '../../app/ui';
 
 const Wrapper = styled.div`
     display: flex;
@@ -33,9 +33,13 @@ const SectionWrapper = styled.div`
 `;
 
 const NavMenu = () => {
-    const { open } = useSelector(state => state.ui.sidebar);
-    const { boards } = useSelector(state => state.data);
+    const { boards } = useSelector(state => state.board);
     const dispatch = useDispatch();
+
+    function toggleSidebar() {
+        dispatch(closeSidebar());
+        document.documentElement.style.setProperty('--width-sidebar', '0px');
+    }
 
     return (
         <Wrapper>
@@ -43,8 +47,8 @@ const NavMenu = () => {
                 <h4>All boards ({boards.length})</h4>
                 <nav>
                     <ul>
-                        {boards.map(board => (
-                            <li key={board.id}>
+                        {boards.map((board, index) => (
+                            <li key={index}>
                                 <NavLink
                                     to={`/dashboard/${board.id}`}
                                     className='nav-link'
@@ -58,10 +62,11 @@ const NavMenu = () => {
                         ))}
                         <li>
                             <NavButton
+                                disabled={boards.length >= 8}
                                 onClick={() =>
                                     dispatch(
                                         openDialog({
-                                            dialogType: 'createNewBoard',
+                                            dialogType: 'createBoard',
                                         })
                                     )
                                 }
@@ -92,7 +97,7 @@ const NavMenu = () => {
                                 onClick={() =>
                                     dispatch(
                                         openDialog({
-                                            dialogType: 'changePassword',
+                                            dialogType: 'updatePassword',
                                         })
                                     )
                                 }
@@ -117,9 +122,7 @@ const NavMenu = () => {
                 </nav>
                 <ThemeSwitch />
                 <DesktopOnly>
-                    <NavButton
-                        onClick={() => dispatch(toggleSidebarOpen(!open))}
-                    >
+                    <NavButton onClick={toggleSidebar}>
                         <Hide />
                         Hide Sidebar
                     </NavButton>
