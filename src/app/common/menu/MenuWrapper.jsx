@@ -41,9 +41,9 @@ const StyledContent = styled(Content)`
     }
 `;
 
-export const MenuWrapper = ({ children, id, ...props }) => {
+export const MenuWrapper = ({ children, portalId, ...props }) => {
     const dispatch = useDispatch();
-    const container = document.getElementById(id);
+    const container = document.getElementById(portalId);
 
     return (
         <Root defaultOpen={true}>

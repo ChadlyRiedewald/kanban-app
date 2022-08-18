@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { createBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
 import * as Yup from 'yup';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const CreateBoardDialog = () => {
     const dispatch = useDispatch();
@@ -35,7 +36,19 @@ export const CreateBoardDialog = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    dispatch(createBoard(values));
+                    dispatch(
+                        createBoard({
+                            id: nanoid(),
+                            ...values,
+                            columns: values.columns.map(column => {
+                                return {
+                                    title: column.title,
+                                    color: 1,
+                                    tasks: [],
+                                };
+                            }),
+                        })
+                    );
                     dispatch(closeDialog());
                 }}
             >

@@ -24,8 +24,8 @@ export const uiSlice = createSlice({
             state.dialog = {};
         },
         openMenu: (state, action) => {
-            const { menuType, variant, portalId } = action.payload;
-            state.menu = { menuType, variant, portalId };
+            const { menuType, menuProps } = action.payload;
+            state.menu = { menuType, menuProps };
         },
         closeMenu: state => {
             state.menu = {};

@@ -1,6 +1,12 @@
+import { nanoid } from '@reduxjs/toolkit';
+
+const board1 = nanoid();
+const board2 = nanoid();
+const board3 = nanoid();
+
 export const sampleData = [
     {
-        id: '1',
+        id: board1,
         title: 'Platform Launch',
         columns: [
             {
@@ -8,25 +14,27 @@ export const sampleData = [
                 title: 'Todo',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board1,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Todo',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -37,25 +45,27 @@ export const sampleData = [
                 title: 'Doing',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board1,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Doing',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -66,25 +76,27 @@ export const sampleData = [
                 title: 'Done',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board1,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Done',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -93,7 +105,7 @@ export const sampleData = [
         ],
     },
     {
-        id: '2',
+        id: board2,
         title: 'Marketing Plan',
         columns: [
             {
@@ -101,25 +113,27 @@ export const sampleData = [
                 title: 'Todo',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board2,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Todo',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -130,25 +144,27 @@ export const sampleData = [
                 title: 'Doing',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board2,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Doing',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -159,25 +175,27 @@ export const sampleData = [
                 title: 'Done',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board2,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Done',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -186,7 +204,7 @@ export const sampleData = [
         ],
     },
     {
-        id: '3',
+        id: board3,
         title: 'Roadmap',
         columns: [
             {
@@ -194,25 +212,27 @@ export const sampleData = [
                 title: 'Todo',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board3,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Todo',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -223,25 +243,27 @@ export const sampleData = [
                 title: 'Doing',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board3,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Doing',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },
@@ -252,25 +274,27 @@ export const sampleData = [
                 title: 'Done',
                 tasks: [
                     {
+                        taskId: nanoid(),
+                        boardId: board3,
                         title: 'Build UI for onboarding flow',
                         description:
                             "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
                         column: 'Done',
                         subtasks: [
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Research competitor pricing and business models',
+                                title: 'Research competitor pricing and business models',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'utline a business model that works for our solution',
+                                title: 'utline a business model that works for our solution',
                             },
                             {
+                                subtaskId: nanoid(),
                                 completed: false,
-                                description:
-                                    'Talk to potential customers about our proposed solution and ask for fair price expectancy',
+                                title: 'Talk to potential customers about our proposed solution and ask for fair price expectancy',
                             },
                         ],
                     },

@@ -3,7 +3,6 @@ import { textColor } from '../../../constants';
 import { ReactComponent as Down } from '../../../assets/icon-arrow-down.svg';
 import { Label } from './index';
 import { useField } from 'formik';
-import { nanoid } from '@reduxjs/toolkit';
 
 const StyledSelect = styled.select`
     border: 1px solid

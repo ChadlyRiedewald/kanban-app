@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { createTask } from '../boards';
 import { closeDialog } from '../../app/ui';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const CreateTaskDialog = () => {
     const dispatch = useDispatch();
@@ -42,19 +43,20 @@ export const CreateTaskDialog = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    console.log(values);
                     dispatch(
                         createTask({
                             ...values,
+                            taskId: nanoid(),
+                            boardId: currentBoard.id,
                             subtasks: [
                                 ...values.subtasks.map(subtask => {
                                     return {
+                                        subtaskId: nanoid(),
                                         title: subtask.title,
                                         completed: false,
                                     };
                                 }),
                             ],
-                            boardId: currentBoard.id,
                         })
                     );
                     dispatch(closeDialog());

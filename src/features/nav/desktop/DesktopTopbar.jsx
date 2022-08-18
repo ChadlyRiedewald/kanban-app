@@ -85,7 +85,7 @@ export const DesktopTopbar = () => {
                                 dispatch(
                                     openMenu({
                                         menuType: 'boardMenu',
-                                        portalId: portalId,
+                                        menuProps: { portalId: portalId },
                                     })
                                 );
                         }}

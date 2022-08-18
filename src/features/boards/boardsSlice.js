@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { sampleData } from './sampleData';
 
 const initialState = {
@@ -11,16 +11,7 @@ export const boardsSlice = createSlice({
     initialState,
     reducers: {
         createBoard: (state, action) => {
-            state.boards.push({
-                id: nanoid(),
-                title: action.payload.title,
-                columns: action.payload.columns.map(column => {
-                    return {
-                        title: column.title,
-                        color: 1,
-                    };
-                }),
-            });
+            state.boards.push(action.payload);
         },
         updateBoard: (state, action) => {
             const index = state.boards.findIndex(
@@ -48,17 +39,56 @@ export const boardsSlice = createSlice({
                 column => column.title === action.payload.column
             );
 
-            console.log(boardIndex, columnIndex);
-
-            state.boards[boardIndex].columns[columnIndex].tasks?.push({
-                title: action.payload.title,
-                description: action.payload.description,
-                column: action.payload.column,
-                subtasks: action.payload.subtasks,
+            state.boards[boardIndex].columns[columnIndex].tasks.push({
+                ...action.payload,
             });
         },
-        updateTask: (state, action) => {},
+        updateTask: (state, action) => {
+            const boardIndex = state.boards.findIndex(
+                board => board.id === action.payload.boardId
+            );
+
+            const columnIndex = state.boards[boardIndex].columns.findIndex(
+                column => column.title === action.payload.column
+            );
+
+            const taskIndex = state.boards[boardIndex].columns[
+                columnIndex
+            ].tasks.findIndex(task => task.taskId === action.payload.taskId);
+
+            state.boards[boardIndex].columns[columnIndex].tasks[taskIndex] = {
+                subtasks: action.payload.subtasks,
+                column: action.payload.column,
+            };
+        },
         deleteTask: (state, action) => {},
+        toggleSubtask: (state, action) => {
+            const boardIndex = state.boards.findIndex(
+                board => board.id === action.payload.boardId
+            );
+
+            const columnIndex = state.boards[boardIndex].columns.findIndex(
+                column => column.title === action.payload.column
+            );
+
+            const taskIndex = state.boards[boardIndex].columns[
+                columnIndex
+            ].tasks.findIndex(task => task.taskId === action.payload.taskId);
+
+            const subtaskIndex = state.boards[boardIndex].columns[
+                columnIndex
+            ].tasks[taskIndex].subtasks.findIndex(
+                subtask => subtask.subtaskId === action.payload.subtaskId
+            );
+
+            // state.boards[boardIndex].column[columnIndex].tasks[
+            //     taskIndex
+            // ].subtasks[subtaskIndex] = {
+            //     ...state.boards[boardIndex].column[columnIndex].tasks[taskIndex]
+            //         .subtasks[subtaskIndex],
+            //     completed: action.payload.completed,
+            // };
+        },
     },
 });
 
@@ -71,6 +101,7 @@ export const {
     createTask,
     updateTask,
     deleteTask,
+    toggleSubtask,
 } = boardsSlice.actions;
 
 export default boardsSlice.reducer;

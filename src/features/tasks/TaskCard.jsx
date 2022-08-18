@@ -17,9 +17,11 @@ export const TaskCard = ({ task, ...props }) => {
     return (
         <Wrapper {...props}>
             <h3>{task?.title}</h3>
-            <strong style={{ color: 'var(--color-gray-600)' }}>
-                0 of {task.subtasks.length} subtasks
-            </strong>
+            {task.subtasks.length > 0 && (
+                <strong style={{ color: 'var(--color-gray-600)' }}>
+                    0 of {task.subtasks.length} subtasks
+                </strong>
+            )}
         </Wrapper>
     );
 };

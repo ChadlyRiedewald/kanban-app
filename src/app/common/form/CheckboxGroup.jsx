@@ -1,32 +1,18 @@
-import { Field } from 'formik';
+import { Field, FieldArray, useFormikContext } from 'formik';
 import { Label, Checkbox } from './index';
-import { nanoid } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
 
-export const CheckboxGroup = ({ label, name, options, ...props }) => {
+export const CheckboxGroup = ({ label, name, subtasks, ...props }) => {
+    // useEffect(() => {
+    //     if (values !== initialValues) {
+    //         submitForm();
+    //     }
+    // }, [values]);
+
     return (
-        <Label variant='input' htmlFor={label} {...props}>
+        <Label variant='input' {...props}>
             {label}
-            <Field name={name} {...props}>
-                {({ field }) => {
-                    return options.map((option, index) => (
-                        <Label
-                            variant='checkbox'
-                            htmlFor={option.value}
-                            key={index}
-                            checked={field.value.includes(option.value)}
-                        >
-                            <Checkbox
-                                type='checkbox'
-                                id={option.value}
-                                {...field}
-                                value={option.value}
-                                checked={field.value.includes(option.value)}
-                            />
-                            {option.key}
-                        </Label>
-                    ));
-                }}
-            </Field>
+            <FieldArray name={name}></FieldArray>
         </Label>
     );
 };

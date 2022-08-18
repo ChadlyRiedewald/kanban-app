@@ -60,3 +60,30 @@ export const Select = ({ label, options, ...props }) => {
         </Label>
     );
 };
+
+   <Label variant='input' htmlFor={label} {...props}>
+            {label}
+            <Field name={name} {...props}>
+                {({ field }) => {
+                    return subtasks.map((subtask, index) => (
+                        <Label
+                            variant='checkbox'
+                            htmlFor={subtask.title}
+                            key={index}
+                            checked={field.value.includes(subtask.title)}
+                        >
+                            <Checkbox
+                                type='checkbox'
+                                id={subtask.title}
+                                {...field}
+                                value={subtask.completed}
+                                checked={field.value.includes(
+                                    subtask.completed
+                                )}
+                            />
+                            {subtask.title}
+                        </Label>
+                    ));
+                }}
+            </Field>
+        </Label>

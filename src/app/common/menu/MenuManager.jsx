@@ -7,11 +7,11 @@ export const MenuManager = () => {
         boardMenu: BoardMenu,
         taskMenu: TaskMenu,
     };
-    const { menuType, variant, portalId } = useSelector(state => state.ui.menu);
+    const { menuType, menuProps } = useSelector(state => state.ui.menu);
     let renderedMenu;
     if (menuType) {
         const MenuComponent = menuLookup[menuType];
-        renderedMenu = <MenuComponent id={portalId} variant={variant} />;
+        renderedMenu = <MenuComponent {...menuProps} />;
     }
 
     return <span>{renderedMenu}</span>;

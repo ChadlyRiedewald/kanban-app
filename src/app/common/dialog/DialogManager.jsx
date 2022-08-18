@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { ChangePasswordDialog, SignOutDialog } from '../../../features/auth';
 import { CreateBoardDialog, UpdateBoardDialog } from '../../../features/boards';
-import { CreateTaskDialog, OpenTaskDialog } from '../../../features/tasks';
+import { CreateTaskDialog, TaskDialog } from '../../../features/tasks';
 import { DeleteBoardDialog } from '../../../features/boards/';
 import { DeleteTaskDialog } from '../../../features/tasks/DeleteTaskDialog';
 
@@ -12,17 +12,15 @@ export const DialogManager = () => {
         createBoard: CreateBoardDialog,
         updateBoard: UpdateBoardDialog,
         deleteBoard: DeleteBoardDialog,
-        openTask: OpenTaskDialog,
+        openTask: TaskDialog,
         createTask: CreateTaskDialog,
         deleteTask: DeleteTaskDialog,
     };
-    const { dialogType, dialogProps, edit } = useSelector(
-        state => state.ui.dialog
-    );
+    const { dialogType, dialogProps } = useSelector(state => state.ui.dialog);
     let renderedDialog;
     if (dialogType) {
         const DialogComponent = dialogLookup[dialogType];
-        renderedDialog = <DialogComponent {...dialogProps} edit={edit} />;
+        renderedDialog = <DialogComponent {...dialogProps} />;
     }
 
     return <span>{renderedDialog}</span>;

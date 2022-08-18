@@ -47,7 +47,18 @@ export const Board = () => {
                         color={`var(--color-purple-100)`}
                     />
                     {column.tasks?.map((task, index) => (
-                        <TaskCard key={index} task={task} />
+                        <TaskCard
+                            onClick={() =>
+                                dispatch(
+                                    openDialog({
+                                        dialogType: 'openTask',
+                                        dialogProps: { task },
+                                    })
+                                )
+                            }
+                            key={index}
+                            task={task}
+                        />
                     ))}
                 </Column>
             ))}
