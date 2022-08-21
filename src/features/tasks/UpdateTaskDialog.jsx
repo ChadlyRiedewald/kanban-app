@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { columnsSelectors, subtasksSelectors, updateTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
+import { closeDialog } from '../../app/ui';
 
 export const UpdateTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export const UpdateTaskDialog = ({ task }) => {
                             })),
                         })
                     );
-                    // dispatch(closeDialog());
+                    dispatch(closeDialog());
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (

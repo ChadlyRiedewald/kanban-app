@@ -33,7 +33,7 @@ export const ChangePasswordDialog = () => {
                 validationSchema={validationSchema}
                 onSubmit={values => console.log(values)}
             >
-                {({ values, isSubmitting }) => (
+                {({ values, isSubmitting, isValid, dirty }) => (
                     <Form>
                         <h2>Change password</h2>
                         <FormikControl
@@ -50,6 +50,7 @@ export const ChangePasswordDialog = () => {
                         />
                         <ButtonWrapper>
                             <Button
+                                disabled={!isValid || !dirty || isSubmitting}
                                 type='submit'
                                 fluid
                                 variant='primary'

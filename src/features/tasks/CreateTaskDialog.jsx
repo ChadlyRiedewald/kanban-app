@@ -94,7 +94,7 @@ export const CreateTaskDialog = ({ columnId }) => {
                             }))}
                         />
                         <Button
-                            // disabled={!isValid || !dirty || isSubmitting}
+                            disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'
