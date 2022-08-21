@@ -144,6 +144,7 @@ export const TaskDialog = ({ task }) => {
                 ))}
             </Label>
             <Label variant='select'>
+                Column
                 <StyledSelect
                     onChange={e => {
                         dispatch(
