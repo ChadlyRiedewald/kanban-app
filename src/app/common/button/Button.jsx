@@ -138,7 +138,7 @@ const Button = ({ children, size, variant, loading, ...props }) => {
 
     return (
         <Component style={styles} {...props}>
-            {loading ? <LoadingSpinner></LoadingSpinner> : children}
+            {loading ? <LoadingSpinner /> : children}
         </Component>
     );
 };

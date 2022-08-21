@@ -6,9 +6,6 @@ import * as Yup from 'yup';
 import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { signInUser } from './authSlice';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../app/firebase';
 
 const initialValues = {
     email: '',
@@ -31,22 +28,7 @@ export const SignInForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async (values, { setSubmitting, setErrors }) => {
-                    console.log(values);
-
-                    // try {
-                    //     const result = await signInWithEmailAndPassword(
-                    //         auth,
-                    //         values.email,
-                    //         values.password
-                    //     );
-                    //     dispatch(signInUser(result));
-                    //     navigate('/dashboard');
-                    // } catch (error) {
-                    //     setErrors({ auth: error.message });
-                    //     setSubmitting(false);
-                    // }
-                }}
+                onSubmit={async values => console.log(values)}
             >
                 {({ isSubmitting, isValid, dirty }) => (
                     <Form>
@@ -81,7 +63,6 @@ export const SignInForm = () => {
                             // disabled={!isValid || !dirty || isSubmitting}
                             onClick={() => {
                                 navigate('/dashboard');
-                                dispatch(signInUser());
                             }}
                             type='submit'
                             variant='primary'

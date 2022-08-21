@@ -2,7 +2,6 @@ export * from './FormikControl';
 export * from './Select';
 export * from './Input';
 export * from './TextArea';
-export * from './CheckboxGroup';
 export * from './ErrorMessage';
 export * from './Label';
 export * from './Checkbox';

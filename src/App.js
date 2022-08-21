@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/macro';
 import { GlobalStyles } from './constants';
 import { Route, Routes, Navigate } from 'react-router-dom';
@@ -8,11 +8,18 @@ import { SignInForm, SignUpForm } from './features/auth';
 import { DialogManager } from './app/common/dialog';
 import { MenuManager } from './app/common/menu';
 import { Board } from './features/boards';
+import { boardsSelectors, fetchData } from './features/boards/boardsSlice';
+import { useEffect } from 'react';
 
 const App = () => {
     const { colorMode } = useSelector(state => state.ui.theme);
-    const { authenticated } = useSelector(state => state.auth);
-    const { boards } = useSelector(state => state.board);
+    const allBoards = useSelector(boardsSelectors.selectAll);
+    const dispatch = useDispatch();
+    const authenticated = true;
+
+    // useEffect(() => {
+    //     dispatch(fetchData());
+    // }, [dispatch]);
 
     return (
         <ThemeProvider theme={{ colorMode: colorMode }}>
@@ -48,8 +55,8 @@ const App = () => {
                             element={
                                 <Navigate
                                     to={
-                                        boards.length
-                                            ? `/dashboard/${boards[0].id}`
+                                        allBoards
+                                            ? `/dashboard/${allBoards[0]?.id}`
                                             : '/dashboard'
                                     }
                                 />

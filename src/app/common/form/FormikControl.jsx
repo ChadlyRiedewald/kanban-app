@@ -1,11 +1,4 @@
-import {
-    Input,
-    TextArea,
-    Select,
-    CheckboxGroup,
-    Checkbox,
-    InputGroup,
-} from './index';
+import { Input, TextArea, Select, Checkbox, InputGroup } from './index';
 
 export function FormikControl({ control, ...props }) {
     switch (control) {
@@ -17,8 +10,6 @@ export function FormikControl({ control, ...props }) {
             return <TextArea {...props} />;
         case 'select':
             return <Select {...props} />;
-        case 'checkbox-group':
-            return <CheckboxGroup {...props} />;
         case 'checkbox':
             return <Checkbox {...props} />;
         default:

@@ -38,7 +38,7 @@ const NewTask = styled.div`
     }
 `;
 
-export const Column = ({ children }) => {
+export const Column = ({ columnId, children }) => {
     const dispatch = useDispatch();
 
     return (
@@ -46,7 +46,12 @@ export const Column = ({ children }) => {
             {children}
             <NewTask
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'createTask' }))
+                    dispatch(
+                        openDialog({
+                            dialogType: 'createTask',
+                            dialogProps: { columnId },
+                        })
+                    )
                 }
             >
                 <h1>+ New Task</h1>

@@ -50,7 +50,7 @@ const ButtonsWrapper = styled.div`
 
 export const DesktopTopbar = () => {
     const { open } = useSelector(state => state.ui.sidebar);
-    const { selectedBoard } = useSelector(state => state.board);
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
     const dispatch = useDispatch();
     const portalId = nanoid();
 
@@ -62,11 +62,11 @@ export const DesktopTopbar = () => {
                 </LogoWrapper>
             )}
             <ContentWrapper>
-                <h1>{selectedBoard?.title}</h1>
+                <h1>{currentBoard?.title}</h1>
                 <ButtonsWrapper>
                     <Button
                         disabled={
-                            !selectedBoard || !selectedBoard.columns.length
+                            !currentBoard || !currentBoard?.columnIds.length
                         }
                         onClick={() =>
                             dispatch(openDialog({ dialogType: 'createTask' }))
@@ -78,16 +78,20 @@ export const DesktopTopbar = () => {
                     <OpenMenuButton
                         portalId={portalId}
                         disabled={
-                            !selectedBoard || !selectedBoard.columns.length
+                            !currentBoard || !currentBoard?.columnIds.length
                         }
                         onClick={() => {
-                            selectedBoard &&
+                            if (
+                                currentBoard ||
+                                !currentBoard.columnIds?.length
+                            ) {
                                 dispatch(
                                     openMenu({
                                         menuType: 'boardMenu',
                                         menuProps: { portalId: portalId },
                                     })
                                 );
+                            }
                         }}
                     />
                 </ButtonsWrapper>

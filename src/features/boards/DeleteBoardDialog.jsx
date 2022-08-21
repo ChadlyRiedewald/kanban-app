@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AlertDialogWrapper } from '../../app/common/dialog';
 import Button from '../../app/common/button';
 import { closeDialog } from '../../app/ui';
-import { deleteBoard, resetSelectedBoard } from './boardsSlice';
+import { deleteBoard } from './boardsSlice';
 import { useNavigate } from 'react-router-dom';
 
 const ButtonWrapper = styled.div`
@@ -12,28 +12,27 @@ const ButtonWrapper = styled.div`
 `;
 
 export const DeleteBoardDialog = () => {
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { selectedBoard } = useSelector(state => state.board);
 
-    async function handleDelete() {
-        await dispatch(deleteBoard(selectedBoard));
-        dispatch(resetSelectedBoard());
-        dispatch(closeDialog());
+    const onDelete = () => {
+        dispatch(deleteBoard(currentBoard.id));
         navigate('/dashboard');
-    }
+        dispatch(closeDialog());
+    };
 
     return (
         <AlertDialogWrapper>
             <h2>Delete this board?</h2>
             <p>
-                {`Are you sure you want to delete the ${selectedBoard.title} board?
+                {`Are you sure you want to delete the ${currentBoard.title} board?
                     This action will remove all columns and tasks and cannot be
                     reversed.`}
             </p>
             <ButtonWrapper>
                 <Button
-                    onClick={handleDelete}
+                    onClick={onDelete}
                     variant='destructive'
                     size='medium'
                     fluid

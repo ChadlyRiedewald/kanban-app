@@ -13,6 +13,7 @@ import { ReactComponent as SignOutIcon } from '../../assets/icon-sign-out.svg';
 import { NavLink } from './NavLink';
 import { NavButton } from './NavButton';
 import { closeSidebar, openDialog } from '../../app/ui';
+import { boardsSelectors } from '../boards';
 
 const Wrapper = styled.div`
     display: flex;
@@ -33,8 +34,9 @@ const SectionWrapper = styled.div`
 `;
 
 const NavMenu = () => {
-    const { boards } = useSelector(state => state.board);
     const dispatch = useDispatch();
+    const allBoards = useSelector(boardsSelectors.selectAll);
+    const totalBoards = useSelector(boardsSelectors.selectTotal);
 
     function toggleSidebar() {
         dispatch(closeSidebar());
@@ -44,10 +46,10 @@ const NavMenu = () => {
     return (
         <Wrapper>
             <SectionWrapper>
-                <h4>All boards ({boards.length})</h4>
+                <h4>All boards ({totalBoards})</h4>
                 <nav>
                     <ul>
-                        {boards.map((board, index) => (
+                        {allBoards.map((board, index) => (
                             <li key={index}>
                                 <NavLink
                                     to={`/dashboard/${board.id}`}
@@ -62,7 +64,6 @@ const NavMenu = () => {
                         ))}
                         <li>
                             <NavButton
-                                disabled={boards.length >= 8}
                                 onClick={() =>
                                     dispatch(
                                         openDialog({

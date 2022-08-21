@@ -19,6 +19,7 @@ const StyledSelect = styled.select`
     line-height: var(--line-height-md);
     appearance: none;
     overflow: visible;
+    cursor: pointer;
 
     &:focus {
         border-color: ${p =>
@@ -42,8 +43,8 @@ export const Select = ({ label, options, ...props }) => {
                 error={meta.touched && !!meta.error}
             >
                 {options.map((option, index) => (
-                    <option value={option} key={index}>
-                        {option}
+                    <option value={option.id} key={index}>
+                        {option.title}
                     </option>
                 ))}
             </StyledSelect>

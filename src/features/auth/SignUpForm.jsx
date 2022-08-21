@@ -1,14 +1,10 @@
 import { FormikControl, Form } from '../../app/common/form';
 import Button from '../../app/common/button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import * as Yup from 'yup';
 import { CenteredSpan, FormWrapper, LogoTablet } from './Auth';
 import { Formik } from 'formik';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../app/firebase';
-import { useDispatch } from 'react-redux';
-import { signInUser } from './authSlice';
 
 const initialValues = {
     email: '',
@@ -27,29 +23,12 @@ const validationSchema = Yup.object({
 });
 
 export const SignUpForm = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     return (
         <FormWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async (values, { setSubmitting, setErrors }) => {
-                    try {
-                        const result = await createUserWithEmailAndPassword(
-                            auth,
-                            values.email,
-                            values.confirmPassword
-                        );
-                        dispatch(signInUser(result.user));
-                        navigate('/dashboard');
-                        return console.log(result);
-                    } catch (error) {
-                        setErrors({ auth: error.message });
-                        setSubmitting(false);
-                    }
-                }}
+                onSubmit={async values => console.log(values)}
             >
                 {({ isSubmitting, isValid, dirty }) => (
                     <Form>
@@ -80,7 +59,7 @@ export const SignUpForm = () => {
                         />
                         <Button
                             loading={isSubmitting}
-                            disabled={!isValid || !dirty || isSubmitting}
+                            // disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             variant='primary'
                             size='medium'

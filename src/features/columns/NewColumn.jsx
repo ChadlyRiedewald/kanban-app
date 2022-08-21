@@ -15,7 +15,7 @@ export const NewColumn = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${NewColumnBg};
-    min-height: 89.75px;
+    height: 301.25px;
     cursor: pointer;
 
     &:hover {

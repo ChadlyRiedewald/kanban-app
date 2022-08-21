@@ -30,6 +30,7 @@ const StyledContent = styled(Content)`
     gap: var(--space-sm);
     justify-content: center;
     cursor: auto;
+    z-index: 1;
 
     &:focus {
         outline: none;

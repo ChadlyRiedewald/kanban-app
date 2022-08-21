@@ -4,27 +4,28 @@ import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { columnsSelectors, createTask } from '../boards';
+import { columnsSelectors, subtasksSelectors, updateTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
-import { closeDialog } from '../../app/ui';
 
-export const CreateTaskDialog = ({ columnId }) => {
+export const UpdateTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const allColumns = useSelector(columnsSelectors.selectAll);
+    const allSubtasks = useSelector(subtasksSelectors.selectAll);
 
     const currentColumns = allColumns.filter(column =>
         currentBoard.columnIds.includes(column.id)
     );
 
+    const subtasks = allSubtasks.filter(subtask =>
+        task.subtaskIds.includes(subtask.id)
+    );
+
     const initialValues = {
-        title: '',
-        description: '',
-        subtasks: [
-            { title: '', placeholder: 'e.g. Make coffee' },
-            { title: '', placeholder: 'e.g. Drink coffee' },
-        ],
-        columnId: columnId || currentBoard.columnIds[0],
+        title: task.title,
+        description: task.description,
+        subtasks: subtasks,
+        columnId: task.columnId,
     };
 
     const validationSchema = Yup.object({
@@ -44,27 +45,26 @@ export const CreateTaskDialog = ({ columnId }) => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    const taskId = nanoid();
                     dispatch(
-                        createTask({
-                            id: taskId,
+                        updateTask({
+                            id: task.id,
                             title: values.title,
                             description: values.description,
                             columnId: values.columnId,
                             subtasks: values.subtasks.map(subtask => ({
-                                id: nanoid(),
+                                id: subtask.id || nanoid(),
                                 title: subtask.title,
-                                completed: false,
-                                taskId: taskId,
+                                completed: subtask.completed || false,
+                                taskId: task.id,
                             })),
                         })
                     );
-                    dispatch(closeDialog());
+                    // dispatch(closeDialog());
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
                     <Form>
-                        <h2>Add New Task</h2>
+                        <h2>Edit Task</h2>
                         <FormikControl
                             control='input'
                             label='Title'
@@ -94,13 +94,13 @@ export const CreateTaskDialog = ({ columnId }) => {
                             }))}
                         />
                         <Button
-                            // disabled={!isValid || !dirty || isSubmitting}
+                            disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'
                             size='medium'
                         >
-                            Create Task
+                            Save Changes
                         </Button>
                     </Form>
                 )}

@@ -2,7 +2,7 @@ import theme from 'styled-theming';
 import styled from 'styled-components/macro';
 import { useDispatch, useSelector } from 'react-redux';
 import Switch from '../../app/common/switch';
-import { setColorMode, setDarkTheme, setLightTheme } from '../../app/ui';
+import { setDarkTheme, setLightTheme } from '../../app/ui';
 
 //////////////////// STYLED COMPONENTS  ////////////////////
 const backgroundColor = theme('colorMode', {

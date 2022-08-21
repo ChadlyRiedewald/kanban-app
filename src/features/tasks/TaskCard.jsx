@@ -1,5 +1,7 @@
 import styled from 'styled-components/macro';
 import { secondaryBg } from '../../constants';
+import { useSelector } from 'react-redux';
+import { subtasksSelectors } from '../boards';
 
 const Wrapper = styled.div`
     display: flex;
@@ -14,14 +16,18 @@ const Wrapper = styled.div`
 `;
 
 export const TaskCard = ({ task, ...props }) => {
+    const allSubtasks = useSelector(subtasksSelectors.selectAll);
+    const prevSubtasks = allSubtasks.filter(subtask =>
+        task.subtaskIds.includes(subtask.id)
+    );
+    const completedSubtasks = prevSubtasks.filter(subtask => subtask.completed);
+
     return (
         <Wrapper {...props}>
-            <h3>{task?.title}</h3>
-            {task.subtasks.length > 0 && (
-                <strong style={{ color: 'var(--color-gray-600)' }}>
-                    0 of {task.subtasks.length} subtasks
-                </strong>
-            )}
+            <h3>{task.title}</h3>
+            <strong style={{ color: 'var(--color-gray-600)' }}>
+                {`${completedSubtasks.length} of ${task.subtaskIds.length} subtasks`}
+            </strong>
         </Wrapper>
     );
 };

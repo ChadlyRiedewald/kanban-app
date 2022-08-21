@@ -39,8 +39,8 @@ const AddButton = styled(Button)`
 
 export const MobileNav = () => {
     const dispatch = useDispatch();
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
     const portalId = nanoid();
-    const { selectedBoard } = useSelector(state => state.board);
 
     return (
         <MobileOnly>
@@ -49,7 +49,7 @@ export const MobileNav = () => {
                 <ButtonsWrapper>
                     <AddButton
                         disabled={
-                            !selectedBoard || !selectedBoard.columns.length
+                            !currentBoard || !currentBoard?.columnIds.length
                         }
                         onClick={() =>
                             dispatch(openDialog({ dialogType: 'createTask' }))
@@ -58,18 +58,20 @@ export const MobileNav = () => {
                         <Add style={{ fill: 'var(--color-white)' }} />
                     </AddButton>
                     <OpenMenuButton
-                        disabled={
-                            !selectedBoard || !selectedBoard.columns.length
-                        }
                         portalId={portalId}
-                        onClick={() =>
-                            dispatch(
-                                openMenu({
-                                    menuType: 'boardMenu',
-                                    portalId: portalId,
-                                })
-                            )
-                        }
+                        onClick={() => {
+                            if (
+                                currentBoard ||
+                                !currentBoard.columnIds?.length
+                            ) {
+                                dispatch(
+                                    openMenu({
+                                        menuType: 'boardMenu',
+                                        menuProps: { portalId: portalId },
+                                    })
+                                );
+                            }
+                        }}
                     />
                 </ButtonsWrapper>
             </Wrapper>

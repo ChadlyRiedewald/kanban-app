@@ -1,19 +1,30 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { DialogWrapper } from '../../app/common/dialog';
 import { Formik } from 'formik';
-import { updateBoard } from './boardsSlice';
-import { closeDialog } from '../../app/ui';
 import { Form, FormikControl } from '../../app/common/form';
 import Button from '../../app/common/button';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { columnsSelectors, updateBoard } from './boardsSlice';
+import { closeDialog } from '../../app/ui';
+import { nanoid } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 
 export const UpdateBoardDialog = () => {
     const dispatch = useDispatch();
-    const currentBoard = useSelector(state => state.board.selectedBoard);
+    const navigate = useNavigate();
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
+    const allColumns = useSelector(columnsSelectors.selectAll);
+
+    const currentColumns = allColumns.filter(column => {
+        return currentBoard.columnIds.includes(column.id);
+    });
 
     const initialValues = {
         title: currentBoard.title,
-        columns: currentBoard?.columns,
+        columns: currentColumns.map(column => ({
+            id: column.id,
+            title: column.title,
+        })),
     };
 
     const validationSchema = Yup.object({
@@ -35,10 +46,15 @@ export const UpdateBoardDialog = () => {
                 onSubmit={values => {
                     dispatch(
                         updateBoard({
-                            ...currentBoard,
-                            ...values,
+                            boardId: currentBoard.id,
+                            title: values.title,
+                            columns: values.columns.map(column => ({
+                                id: column.id || nanoid(),
+                                title: column.title,
+                            })),
                         })
                     );
+                    navigate(`/dashboard/${currentBoard.id}`);
                     dispatch(closeDialog());
                 }}
             >

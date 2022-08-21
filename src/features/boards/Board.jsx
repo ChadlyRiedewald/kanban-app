@@ -2,73 +2,71 @@ import styled from 'styled-components/macro';
 import { Column, ColumnTitle, NewColumn } from '../columns';
 import { useDispatch, useSelector } from 'react-redux';
 import { openDialog } from '../../app/ui';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { NoColumns } from './NoColumns';
 import { TaskCard } from '../tasks';
-import { useEffect } from 'react';
-import { setSelectedBoard } from './boardsSlice';
+import { columnsSelectors, tasksSelectors } from './boardsSlice';
+import { NoColumns } from './NoColumns';
 
 const Wrapper = styled.div`
     display: flex;
     gap: var(--space-md);
+    height: 100%;
 `;
 
 export const Board = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { boardId } = useParams();
-    const { boards } = useSelector(state => state.board);
-    const currentBoard = useSelector(state => state.board.selectedBoard);
-
-    useEffect(() => {
-        if (location.pathname === '/dashboard') return;
-        const currentBoard = boards.find(board => {
-            return board.id === boardId;
-        });
-
-        if (currentBoard) {
-            dispatch(setSelectedBoard(currentBoard));
-        } else {
-            boards.length
-                ? navigate(`/dashboard/${boards[0].id}`)
-                : navigate('/dashboard');
-        }
-    }, [boards, boardId, dispatch]);
-
-    if (!currentBoard?.columns.length) return <NoColumns />;
+    const allColumns = useSelector(columnsSelectors.selectAll);
+    const allTasks = useSelector(tasksSelectors.selectAll);
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
 
     return (
         <Wrapper>
-            {currentBoard.columns?.map((column, index) => (
-                <Column key={index}>
-                    <ColumnTitle
-                        title={column.title}
-                        color={`var(--color-purple-100)`}
-                    />
-                    {column.tasks?.map((task, index) => (
-                        <TaskCard
-                            onClick={() =>
-                                dispatch(
-                                    openDialog({
-                                        dialogType: 'openTask',
-                                        dialogProps: { task },
-                                    })
-                                )
-                            }
-                            key={index}
-                            task={task}
-                        />
-                    ))}
-                </Column>
-            ))}
-            <NewColumn
-                onClick={() =>
-                    dispatch(openDialog({ dialogType: 'updateBoard' }))
-                }
-            >
-                <h1>+ New Column</h1>
-            </NewColumn>
+            {currentBoard?.columnIds.length ? (
+                <>
+                    {allColumns
+                        .filter(column =>
+                            currentBoard?.columnIds.includes(column.id)
+                        )
+                        .map((column, index) => (
+                            <Column key={index} columnId={column.id}>
+                                <ColumnTitle
+                                    title={column.title}
+                                    color={column.color}
+                                />
+                                {allTasks
+                                    .filter(task =>
+                                        column.taskIds.includes(task.id)
+                                    )
+                                    .map((task, index) => (
+                                        <TaskCard
+                                            key={index}
+                                            task={task}
+                                            onClick={() =>
+                                                dispatch(
+                                                    openDialog({
+                                                        dialogType: 'openTask',
+                                                        dialogProps: {
+                                                            task: task,
+                                                            columnId:
+                                                                task.columnId,
+                                                        },
+                                                    })
+                                                )
+                                            }
+                                        />
+                                    ))}
+                            </Column>
+                        ))}
+                    <NewColumn
+                        onClick={() =>
+                            dispatch(openDialog({ dialogType: 'updateBoard' }))
+                        }
+                    >
+                        <h1>+ New Column</h1>
+                    </NewColumn>
+                </>
+            ) : (
+                <NoColumns />
+            )}
         </Wrapper>
     );
 };

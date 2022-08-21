@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import Button from '../../app/common/button';
 import { useDispatch } from 'react-redux';
 import { closeDialog } from '../../app/ui';
-import { signOutUser } from './index';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../app/firebase';
 import { useState } from 'react';
@@ -28,7 +27,6 @@ export const SignOutDialog = () => {
                         try {
                             await signOut(auth);
                             setLoading(false);
-                            dispatch(signOutUser());
                             dispatch(closeDialog());
                         } catch (error) {
                             setLoading(false);

@@ -56,14 +56,14 @@ export const DialogClose = DialogPrimitive.Close;
 //////////////////// COMPONENTS  ////////////////////
 export const MobileNavDropdown = ({ ...props }) => {
     const [isOpen, toggleIsOpen] = useState(false);
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
     const toggle = () => toggleIsOpen(!isOpen);
-    const { selectedBoard } = useSelector(state => state.board);
 
     return (
         <DialogRoot open={isOpen} onOpenChange={toggle}>
             <DialogTrigger>
                 <Logo />
-                <h1>{selectedBoard?.title}</h1>
+                <h1>{currentBoard?.title}</h1>
                 {isOpen ? <Up /> : <Down />}
             </DialogTrigger>
             <Portal>

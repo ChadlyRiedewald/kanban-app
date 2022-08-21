@@ -1,12 +1,11 @@
 import styled from 'styled-components/macro';
 import { borderColor, secondaryBg, textColor } from '../../../constants';
-import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { ReactComponent as ShowSidebarIcon } from '../../../assets/icon-show-sidebar.svg';
 import VisuallyHidden from '../../../app/common/visuallyHidden';
 import NavMenu from '../NavMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSidebar, openSidebar, toggleSidebarOpen } from '../../../app/ui';
+import { openSidebar } from '../../../app/ui';
 
 const Wrapper = styled.aside`
     width: var(--width-sidebar);

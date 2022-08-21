@@ -1,89 +1,704 @@
-export const InputGroup = ({ values, label, name }) => {
-    return (
-        <Label variant='input'>
-            {label}
-            <InputsWrapper>
-                <FieldArray name={name}>
-                    {({ push, remove }) => (
-                        <>
-                            {values.map((_, index) => (
-                                <Label key={nanoid()} variant='input-group'>
-                                    <Field
-                                        as={StyledInput}
-                                        name={`${name}.${index}.title`}
-                                        type='text'
-                                        placeholder={
-                                            values[`${index}`].placeholder
-                                        }
-                                    />
-                                    <Delete onClick={() => remove(index)} />
-                                </Label>
-                            ))}
-                            <Button
-                                onClick={() => push('')}
-                                type='button'
-                                variant='secondary'
-                                size='medium'
-                                fluid
-                            >
-                                {`+ Add ${
-                                    name === 'subtasks' ? 'Subtask' : 'Column'
-                                }`}
-                            </Button>
-                        </>
-                    )}
-                </FieldArray>
-            </InputsWrapper>
-        </Label>
-    );
-};
-
-export const Select = ({ label, options, ...props }) => {
-    const [field, meta] = useField(props);
-
-    return (
-        <Label variant='select' htmlFor={label}>
-            {label}
-            <StyledSelect
-                id={label}
-                {...field}
-                {...props}
-                error={meta.touched && !!meta.error}
-            >
-                {options.map(option => (
-                    <option value={option} key={nanoid()}>
-                        {option}
-                    </option>
-                ))}
-            </StyledSelect>
-            <Down />
-        </Label>
-    );
-};
-
-   <Label variant='input' htmlFor={label} {...props}>
-            {label}
-            <Field name={name} {...props}>
-                {({ field }) => {
-                    return subtasks.map((subtask, index) => (
-                        <Label
-                            variant='checkbox'
-                            htmlFor={subtask.title}
-                            key={index}
-                            checked={field.value.includes(subtask.title)}
-                        >
-                            <Checkbox
-                                type='checkbox'
-                                id={subtask.title}
-                                {...field}
-                                value={subtask.completed}
-                                checked={field.value.includes(
-                                    subtask.completed
-                                )}
-                            />
-                            {subtask.title}
-                        </Label>
-                    ));
-                }}
-            </Field>
-        </Label>
+export const boards = [
+    {
+        id: 'board1',
+        title: 'Board 1',
+        columns: [
+            {
+                id: 'column1',
+                title: 'Column 1',
+                color: 'purple',
+                tasks: [
+                    {
+                        id: 'task1',
+                        title: 'Task 1',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask1',
+                                title: 'Subtask 1',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask2',
+                                title: 'Subtask 2',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask3',
+                                title: 'Subtask 3',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task2',
+                        title: 'Task 2',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask4',
+                                title: 'Subtask 4',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask5',
+                                title: 'Subtask 5',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask6',
+                                title: 'Subtask 6',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task3',
+                        title: 'Task 3',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask7',
+                                title: 'Subtask 7',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask8',
+                                title: 'Subtask 8',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask9',
+                                title: 'Subtask 9',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column2',
+                title: 'Column 2',
+                color: 'blue',
+                tasks: [
+                    {
+                        id: 'task4',
+                        title: 'Task 4',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask10',
+                                title: 'Subtask 10',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask11',
+                                title: 'Subtask 11',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask12',
+                                title: 'Subtask 12',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task5',
+                        title: 'Task 5',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask13',
+                                title: 'Subtask 13',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask14',
+                                title: 'Subtask 14',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask15',
+                                title: 'Subtask 15',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task6',
+                        title: 'Task 6',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask16',
+                                title: 'Subtask 16',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask17',
+                                title: 'Subtask 17',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask18',
+                                title: 'Subtask 18',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column3',
+                title: 'Column 3',
+                color: 'yellow',
+                tasks: [
+                    {
+                        id: 'task7',
+                        title: 'Task 7',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask19',
+                                title: 'Subtask 19',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask20',
+                                title: 'Subtask 20',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask21',
+                                title: 'Subtask 21',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task8',
+                        title: 'Task 8',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask22',
+                                title: 'Subtask 22',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask23',
+                                title: 'Subtask 23',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask24',
+                                title: 'Subtask 24',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task9',
+                        title: 'Task 9',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask25',
+                                title: 'Subtask 25',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask26',
+                                title: 'Subtask 26',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask27',
+                                title: 'Subtask 27',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: 'board2',
+        title: 'Board 2',
+        columns: [
+            {
+                id: 'column4',
+                title: 'Column 4',
+                color: 'yellow',
+                tasks: [
+                    {
+                        id: 'task10',
+                        title: 'Task 10',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask28',
+                                title: 'Subtask 28',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask29',
+                                title: 'Subtask 29',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask30',
+                                title: 'Subtask 30',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task11',
+                        title: 'Task 11',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask31',
+                                title: 'Subtask 31',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask32',
+                                title: 'Subtask 32',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask33',
+                                title: 'Subtask 33',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task12',
+                        title: 'Task 12',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask34',
+                                title: 'Subtask 34',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask35',
+                                title: 'Subtask 35',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask36',
+                                title: 'Subtask 36',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column5',
+                title: 'Column 5',
+                color: 'purple',
+                tasks: [
+                    {
+                        id: 'task13',
+                        title: 'Task 13',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask37',
+                                title: 'Subtask 37',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask38',
+                                title: 'Subtask 38',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask39',
+                                title: 'Subtask 39',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task14',
+                        title: 'Task 14',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask40',
+                                title: 'Subtask 40',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask41',
+                                title: 'Subtask 41',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask42',
+                                title: 'Subtask 42',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task15',
+                        title: 'Task 15',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask43',
+                                title: 'Subtask 43',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask44',
+                                title: 'Subtask 44',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask45',
+                                title: 'Subtask 45',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column6',
+                title: 'Column 6',
+                color: 'green',
+                tasks: [
+                    {
+                        id: 'task16',
+                        title: 'Task 16',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask46',
+                                title: 'Subtask 46',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask47',
+                                title: 'Subtask 47',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask48',
+                                title: 'Subtask 48',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task17',
+                        title: 'Task 17',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask49',
+                                title: 'Subtask 49',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask50',
+                                title: 'Subtask 50',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask51',
+                                title: 'Subtask 51',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task18',
+                        title: 'Task 18',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask52',
+                                title: 'Subtask 52',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask53',
+                                title: 'Subtask 53',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask54',
+                                title: 'Subtask 54',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: 'board3',
+        title: 'Board 3',
+        columns: [
+            {
+                id: 'column7',
+                title: 'Column 7',
+                color: 'yellow',
+                tasks: [
+                    {
+                        id: 'task19',
+                        title: 'Task 19',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask55',
+                                title: 'Subtask 55',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask56',
+                                title: 'Subtask 56',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask57',
+                                title: 'Subtask 57',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task20',
+                        title: 'Task 20',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask58',
+                                title: 'Subtask 58',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask59',
+                                title: 'Subtask 59',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask60',
+                                title: 'Subtask 60',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task21',
+                        title: 'Task 21',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask61',
+                                title: 'Subtask 61',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask62',
+                                title: 'Subtask 62',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask63',
+                                title: 'Subtask 63',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column8',
+                title: 'Column 8',
+                color: 'purple',
+                tasks: [
+                    {
+                        id: 'task22',
+                        title: 'Task 22',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask64',
+                                title: 'Subtask 64',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask65',
+                                title: 'Subtask 65',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask66',
+                                title: 'Subtask 66',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task23',
+                        title: 'Task 23',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask67',
+                                title: 'Subtask 67',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask68',
+                                title: 'Subtask 68',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask69',
+                                title: 'Subtask 69',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task24',
+                        title: 'Task 24',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask70',
+                                title: 'Subtask 70',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask71',
+                                title: 'Subtask 71',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask72',
+                                title: 'Subtask 72',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'column9',
+                title: 'Column 9',
+                color: 'green',
+                tasks: [
+                    {
+                        id: 'task25',
+                        title: 'Task 25',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask73',
+                                title: 'Subtask 73',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask74',
+                                title: 'Subtask 74',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask75',
+                                title: 'Subtask 75',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task26',
+                        title: 'Task 26',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask76',
+                                title: 'Subtask 76',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask77',
+                                title: 'Subtask 77',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask78',
+                                title: 'Subtask 78',
+                                completed: false,
+                            },
+                        ],
+                    },
+                    {
+                        id: 'task27',
+                        title: 'Task 27',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, sapiente.',
+                        subtasks: [
+                            {
+                                id: 'subtask79',
+                                title: 'Subtask 79',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask80',
+                                title: 'Subtask 80',
+                                completed: false,
+                            },
+                            {
+                                id: 'subtask81',
+                                title: 'Subtask 81',
+                                completed: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+];

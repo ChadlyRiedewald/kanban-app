@@ -2,15 +2,16 @@ import { DialogWrapper } from '../../app/common/dialog';
 import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import Button from '../../app/common/button';
+import * as Yup from 'yup';
+import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { createBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
-import * as Yup from 'yup';
-import { nanoid } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateBoardDialog = () => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const initialValues = {
         title: '',
         columns: [
@@ -36,20 +37,22 @@ export const CreateBoardDialog = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
+                    const boardId = nanoid();
                     dispatch(
                         createBoard({
-                            id: nanoid(),
-                            ...values,
-                            columns: values.columns.map(column => {
-                                return {
-                                    title: column.title,
-                                    color: 1,
-                                    tasks: [],
-                                };
-                            }),
+                            id: boardId,
+                            title: values.title,
+                            columns: values.columns.map(column => ({
+                                id: nanoid(),
+                                title: column.title,
+                                color: 'purple',
+                                boardId: boardId,
+                                taskIds: [],
+                            })),
                         })
                     );
                     dispatch(closeDialog());
+                    navigate(`/dashboard/${boardId}`);
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
