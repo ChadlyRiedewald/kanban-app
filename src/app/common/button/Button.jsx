@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import theme from 'styled-theming';
 import { secondaryButtonBg } from '../../../constants';
+import { LoadingSpinner } from '../loadingSpinner';
 
 //=====================
 // DYNAMIC COLORS
@@ -47,27 +48,6 @@ const PrimaryButton = styled(BaseButton)`
     &:focus {
         outline: none;
         box-shadow: 0 0 0 5px var(--color-purple-shadow);
-    }
-`;
-
-const LoadingSpinner = styled.div`
-    display: flex;
-    justify-content: center;
-
-    &::after {
-        content: '';
-        width: 20px;
-        height: 20px;
-        border: 3px solid var(--color-white);
-        border-top-color: transparent;
-        border-radius: 100%;
-        animation: loading 0.8s linear infinite;
-    }
-
-    @keyframes loading {
-        to {
-            transform: rotate(1turn);
-        }
     }
 `;
 

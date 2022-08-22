@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { signInWithEmail } from '../../app/firebase';
 
 //=====================
 // INITIAL VALUES
@@ -27,14 +27,39 @@ const validationSchema = Yup.object({
 // COMPONENTS
 export const SignInForm = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+
+    function handleError(errorCode) {
+        let errorMessage;
+        switch (errorCode) {
+            case 'auth/user-not-found':
+                errorMessage = {
+                    ['email']: 'User Not Found',
+                };
+                return errorMessage;
+            case 'auth/wrong-password':
+                errorMessage = {
+                    ['password']: 'Wrong Password',
+                };
+                return errorMessage;
+            default:
+                errorMessage = '';
+                return errorMessage;
+        }
+    }
 
     return (
         <FormWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async values => console.log(values)}
+                onSubmit={async (values, { setErrors }) => {
+                    try {
+                        await signInWithEmail(values.email, values.password);
+                        navigate('/dashboard');
+                    } catch (error) {
+                        setErrors(handleError(error.code));
+                    }
+                }}
             >
                 {({ isSubmitting, isValid, dirty }) => (
                     <Form>
@@ -66,10 +91,7 @@ export const SignInForm = () => {
                         </ButtonsWrapper>
                         <Button
                             loading={isSubmitting}
-                            // disabled={!isValid || !dirty || isSubmitting}
-                            onClick={() => {
-                                navigate('/dashboard');
-                            }}
+                            disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             variant='primary'
                             size='medium'

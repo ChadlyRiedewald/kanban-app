@@ -1,68 +1,4 @@
-import {
-    createSlice,
-    createEntityAdapter,
-    createAsyncThunk,
-} from '@reduxjs/toolkit';
-import axios from 'axios';
-
-export const fetchData = createAsyncThunk('boards/fetchData', async () => {
-    try {
-        const result = await axios.get('http://localhost:3001/boards');
-
-        const mappedData = result.data.map(board => ({
-            ...board,
-            columnIds: board.columns.map(column => column.id),
-            columns: board.columns.map(column => ({
-                id: column.id,
-                title: column.title,
-                color: column.color,
-                boardId: board.id,
-                taskIds: column.tasks.map(task => task.id),
-            })),
-            tasks: board.columns.map(column => {
-                return column.tasks.map(task => ({
-                    id: task.id,
-                    title: task.title,
-                    description: task.description,
-                    columnId: column.id,
-                    subtaskIds: task.subtasks.map(subtask => subtask.id),
-                }));
-            }),
-            subtasks: board.columns.map(column => {
-                return column.tasks.map(task => {
-                    return task.subtasks.map(subtask => ({
-                        id: subtask.id,
-                        title: subtask.title,
-                        completed: subtask.completed,
-                        taskId: task.id,
-                    }));
-                });
-            }),
-        }));
-
-        const boards = mappedData.map(({ id, title, columnIds }) => ({
-            id,
-            title,
-            columnIds,
-        }));
-
-        const columns = mappedData
-            .reduce((prev, curr) => [...prev, curr.columns], [])
-            .flat();
-
-        const tasks = mappedData
-            .reduce((prev, curr) => [...prev, curr.tasks], [])
-            .flat(2);
-
-        const subtasks = mappedData
-            .reduce((prev, curr) => [...prev, curr.subtasks], [])
-            .flat(3);
-
-        return { boards, columns, tasks, subtasks };
-    } catch (error) {
-        console.log(error);
-    }
-});
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 //=====================
 // ENTITY ADAPTERS
@@ -420,21 +356,7 @@ const boardsSlice = createSlice({
             });
         },
     },
-    extraReducers: {
-        [fetchData.pending]: state => {},
-        [fetchData.fulfilled]: (state, { payload }) => {
-            boardsAdapter.setAll(state, payload.boards);
-            columnsAdapter.setAll(state.columns, payload.columns);
-            tasksAdapter.setAll(state.columns.tasks, payload.tasks);
-            subtasksAdapter.setAll(
-                state.columns.tasks.subtasks,
-                payload.subtasks
-            );
-        },
-        [fetchData.rejected]: (state, { payload }) => {
-            console.log(payload);
-        },
-    },
+    extraReducers: {},
 });
 
 //=====================
