@@ -23,9 +23,7 @@ export const NoBoards = () => {
             <Button
                 variant='primary'
                 size='large'
-                onClick={() =>
-                    dispatch(openDialog({ dialogType: 'createBoard' }))
-                }
+                onClick={() => dispatch(openDialog({ dialogType: 'addBoard' }))}
             >
                 + Create New Board
             </Button>

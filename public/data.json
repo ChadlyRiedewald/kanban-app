@@ -7,7 +7,7 @@
         {
           "id": "column1",
           "title": "Column 1",
-          "color": "purple",
+          "color": 1,
           "tasks": [
             {
               "id": "task1",
@@ -80,7 +80,7 @@
         {
           "id": "column2",
           "title": "Column 2",
-          "color": "blue",
+          "color": 2,
           "tasks": [
             {
               "id": "task4",
@@ -153,7 +153,7 @@
         {
           "id": "column3",
           "title": "Column 3",
-          "color": "yellow",
+          "color": 3,
           "tasks": [
             {
               "id": "task7",
@@ -232,7 +232,7 @@
         {
           "id": "column4",
           "title": "Column 4",
-          "color": "yellow",
+          "color": 4,
           "tasks": [
             {
               "id": "task10",
@@ -305,7 +305,7 @@
         {
           "id": "column5",
           "title": "Column 5",
-          "color": "purple",
+          "color": 5,
           "tasks": [
             {
               "id": "task13",
@@ -378,7 +378,7 @@
         {
           "id": "column6",
           "title": "Column 6",
-          "color": "green",
+          "color": 6,
           "tasks": [
             {
               "id": "task16",
@@ -457,7 +457,7 @@
         {
           "id": "column7",
           "title": "Column 7",
-          "color": "yellow",
+          "color": 1,
           "tasks": [
             {
               "id": "task19",
@@ -530,7 +530,7 @@
         {
           "id": "column8",
           "title": "Column 8",
-          "color": "purple",
+          "color": 2,
           "tasks": [
             {
               "id": "task22",
@@ -603,7 +603,7 @@
         {
           "id": "column9",
           "title": "Column 9",
-          "color": "green",
+          "color": 3,
           "tasks": [
             {
               "id": "task25",

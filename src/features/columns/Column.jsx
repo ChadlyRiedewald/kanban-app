@@ -48,7 +48,7 @@ export const Column = ({ columnId, children }) => {
                 onClick={() =>
                     dispatch(
                         openDialog({
-                            dialogType: 'createTask',
+                            dialogType: 'addTask',
                             dialogProps: { columnId },
                         })
                     )

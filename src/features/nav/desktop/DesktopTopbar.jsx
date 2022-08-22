@@ -69,7 +69,7 @@ export const DesktopTopbar = () => {
                             !currentBoard || !currentBoard?.columnIds.length
                         }
                         onClick={() =>
-                            dispatch(openDialog({ dialogType: 'createTask' }))
+                            dispatch(openDialog({ dialogType: 'addTask' }))
                         }
                         size='large'
                     >

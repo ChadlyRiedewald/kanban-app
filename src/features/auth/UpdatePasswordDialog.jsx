@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
         .required(`Can't be empty`),
 });
 
-export const ChangePasswordDialog = () => {
+export const UpdatePasswordDialog = () => {
     const dispatch = useDispatch();
     return (
         <DialogWrapper>

@@ -41,6 +41,7 @@ const NavMenu = () => {
     function toggleSidebar() {
         dispatch(closeSidebar());
         document.documentElement.style.setProperty('--width-sidebar', '0px');
+        window.localStorage.setItem('sidebar', 'hidden');
     }
 
     return (
@@ -64,10 +65,11 @@ const NavMenu = () => {
                         ))}
                         <li>
                             <NavButton
+                                disabled={totalBoards >= 8}
                                 onClick={() =>
                                     dispatch(
                                         openDialog({
-                                            dialogType: 'createBoard',
+                                            dialogType: 'addBoard',
                                         })
                                     )
                                 }

@@ -103,7 +103,7 @@ const boardsSlice = createSlice({
         }),
     }),
     reducers: {
-        createBoard: (state, { payload }) => {
+        addBoard: (state, { payload }) => {
             // Add Board
             boardsAdapter.addOne(state, {
                 id: payload.id,
@@ -153,7 +153,7 @@ const boardsSlice = createSlice({
                 columnsToAdd.map(column => ({
                     id: column.id,
                     title: column.title,
-                    color: 'purple',
+                    color: Math.floor(Math.random() * 6) + 1,
                     boardId: payload.boardId,
                     taskIds: [],
                 }))
@@ -183,7 +183,7 @@ const boardsSlice = createSlice({
                 subtasksToDelete
             );
         },
-        deleteBoard: (state, { payload }) => {
+        removeBoard: (state, { payload }) => {
             // Constants
             const allColumns = columnsAdapter
                 .getSelectors()
@@ -222,13 +222,33 @@ const boardsSlice = createSlice({
                 subtasksToDelete
             );
         },
+        addColumn: (state, { payload }) => {
+            // Constants
+            const currBoard = boardsAdapter
+                .getSelectors()
+                .selectById(state, payload.boardId);
+
+            // Add Column(s)
+            columnsAdapter.addMany(state.columns, payload.columns);
+
+            // Update Board
+            boardsAdapter.updateOne(state, {
+                id: payload.boardId,
+                changes: {
+                    columnIds: [
+                        ...currBoard.columnIds,
+                        ...payload.columns.map(({ id }) => id),
+                    ],
+                },
+            });
+        },
         setSelectedBoard: (state, { payload }) => {
             state.selectedBoard = payload;
         },
         resetSelectedBoard: state => {
             state.selectedBoard = null;
         },
-        createTask: (state, { payload }) => {
+        addTask: (state, { payload }) => {
             // Constants
             const currColumn = columnsAdapter
                 .getSelectors()
@@ -372,7 +392,7 @@ const boardsSlice = createSlice({
                 },
             });
         },
-        deleteTask: (state, { payload }) => {
+        removeTask: (state, { payload }) => {
             // Constants
             const currColumn = columnsAdapter
                 .getSelectors()
@@ -454,15 +474,16 @@ EXPORTS
  */
 
 export const {
-    createBoard,
+    addBoard,
     updateBoard,
-    deleteBoard,
+    removeBoard,
+    addColumn,
     setSelectedBoard,
     resetSelectedBoard,
-    createTask,
+    addTask,
     updateTask,
     updateTaskColumn,
-    deleteTask,
+    removeTask,
     toggleSubtask,
 } = boardsSlice.actions;
 

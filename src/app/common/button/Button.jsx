@@ -5,7 +5,7 @@ import { secondaryButtonBg } from '../../../constants';
 //////////////////// DYNAMIC COLORS  ////////////////////
 const secondaryBgHover = theme('colorMode', {
     light: 'var(--color-purple-300)',
-    dark: 'var(--color-white)',
+    dark: 'var(--color-purple-500)',
 });
 
 const secondaryShadow = theme('colorMode', {

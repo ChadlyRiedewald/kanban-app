@@ -69,6 +69,7 @@ export const DesktopSidebar = () => {
     function toggleSidebar() {
         dispatch(openSidebar());
         document.documentElement.style.setProperty('--width-sidebar', '300px');
+        window.localStorage.setItem('sidebar', 'visible');
     }
 
     return (

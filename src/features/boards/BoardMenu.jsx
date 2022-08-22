@@ -20,7 +20,7 @@ export const BoardMenu = ({ ...props }) => {
             <MenuButton
                 variant='destructive'
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'deleteBoard' }))
+                    dispatch(openDialog({ dialogType: 'removeBoard' }))
                 }
             >
                 Delete Board

@@ -52,7 +52,7 @@ export const MobileNav = () => {
                             !currentBoard || !currentBoard?.columnIds.length
                         }
                         onClick={() =>
-                            dispatch(openDialog({ dialogType: 'createTask' }))
+                            dispatch(openDialog({ dialogType: 'addTask' }))
                         }
                     >
                         <Add style={{ fill: 'var(--color-white)' }} />

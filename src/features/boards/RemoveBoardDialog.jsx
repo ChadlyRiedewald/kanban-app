@@ -1,40 +1,41 @@
 import styled from 'styled-components/macro';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AlertDialogWrapper } from '../../app/common/dialog';
 import Button from '../../app/common/button';
 import { closeDialog } from '../../app/ui';
-import { deleteTask } from '../boards';
+import { removeBoard } from './boardsSlice';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
 `;
 
-export const DeleteTaskDialog = ({ task }) => {
+export const RemoveBoardDialog = () => {
+    const currentBoard = useSelector(state => state.boards.selectedBoard);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    function onDelete() {
-        dispatch(deleteTask(task));
+    const onDelete = () => {
+        dispatch(removeBoard(currentBoard.id));
+        navigate('/dashboard');
         dispatch(closeDialog());
-    }
-
-    function onCancel() {
-        dispatch(closeDialog());
-    }
+    };
 
     return (
         <AlertDialogWrapper>
-            <h2>Delete this task?</h2>
+            <h2>Delete this board?</h2>
             <p>
-                {`Are you sure you want to delete the ${task.title} task and
-                its subtasks? This action cannot be reversed.`}
+                {`Are you sure you want to delete the ${currentBoard.title} board?
+                    This action will remove all columns and tasks and cannot be
+                    reversed.`}
             </p>
             <ButtonWrapper>
                 <Button
+                    onClick={onDelete}
                     variant='destructive'
                     size='medium'
                     fluid
-                    onClick={onDelete}
                 >
                     Delete
                 </Button>
@@ -42,7 +43,7 @@ export const DeleteTaskDialog = ({ task }) => {
                     variant='secondary'
                     size='medium'
                     fluid
-                    onClick={onCancel}
+                    onClick={() => dispatch(closeDialog())}
                 >
                     Cancel
                 </Button>

@@ -23,7 +23,7 @@ export const TaskMenu = ({ task, ...props }) => {
                 onClick={() =>
                     dispatch(
                         openDialog({
-                            dialogType: 'deleteTask',
+                            dialogType: 'removeTask',
                             dialogProps: { task },
                         })
                     )

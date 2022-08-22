@@ -226,6 +226,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-purple-200: hsl(243 100% 82%); // primary button hover
     --color-purple-300: hsl(242 48% 58% / 0.25); // secondary button hover & subtask hover
     --color-purple-400: hsl(242 48% 58% / 0.1); // secondary button bg
+    --color-purple-500: hsl(242 42% 92%); // secondary button hover Dark
     --color-purple-shadow: hsl(242 48% 58% / 0.5);
     --color-black:  hsl(237 100% 4%); // black
     --color-white: hsl(0 0% 100%); // white
@@ -246,12 +247,14 @@ export const GlobalStyles = createGlobalStyle`
     --color-destructive-shadow: hsl(0 78% 63% / 0.5);
     
     // Column Colors
-    --color-1: hsl(193 75% 59%);
-    --color-2: hsl(154 68% 64%);
-    --color-3: hsl(239 75% 59%);
-    --color-4: hsl(312 75% 59%);
-    --color-5: hsl(21 75% 59%);
-    --color-6: hsl(61 75% 59%);
+    --color-1: hsl(242 48% 58%);
+    --color-2: hsl(193 48% 58%);
+    --color-3: hsl(154 48% 58%);
+    --color-4: hsl(100 48% 58%);
+    --color-5: hsl(60 48% 58%);
+    --color-6: hsl(20 48% 58%);
+    --color-7: hsl(0 48% 58%);
+    --color-8: hsl(320 48% 58%);
     
     // Font sizes
     --font-xs: 0.75rem;

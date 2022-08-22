@@ -58,7 +58,7 @@ export const Board = () => {
                         ))}
                     <NewColumn
                         onClick={() =>
-                            dispatch(openDialog({ dialogType: 'updateBoard' }))
+                            dispatch(openDialog({ dialogType: 'addColumn' }))
                         }
                     >
                         <h1>+ New Column</h1>

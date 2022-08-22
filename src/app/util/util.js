@@ -1,3 +1,19 @@
+export function getInitialSidebar() {
+    const persistedSidebarPreference = window.localStorage.getItem('sidebar');
+
+    if (persistedSidebarPreference === 'visible') {
+        document.documentElement.style.setProperty('--width-sidebar', '300px');
+        return persistedSidebarPreference;
+    } else if (persistedSidebarPreference === 'hidden') {
+        document.documentElement.style.setProperty('--width-sidebar', '0px');
+        return persistedSidebarPreference;
+    } else {
+        document.documentElement.style.setProperty('--width-sidebar', '300px');
+        window.localStorage.setItem('sidebar', 'visible');
+        return 'visible';
+    }
+}
+
 export function getInitialColorMode() {
     const persistedColorPreference = window.localStorage.getItem('color-mode');
     const hasPersistedPreference = typeof persistedColorPreference === 'string';

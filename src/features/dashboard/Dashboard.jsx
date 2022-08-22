@@ -37,11 +37,14 @@ const Dashboard = () => {
     );
     const allBoards = useSelector(boardsSelectors.selectAll);
     const allBoardIds = useSelector(boardsSelectors.selectIds);
+    const { selectedBoard } = useSelector(state => state.boards);
 
     // selectedBoard or resetSelectedBoard depending on current path
     useEffect(() => {
         currentBoard && dispatch(setSelectedBoard(currentBoard));
-        location.pathname === '/dashboard' && dispatch(resetSelectedBoard());
+        if (selectedBoard && location.pathname === '/dashboard') {
+            dispatch(resetSelectedBoard());
+        }
     }, [location, currentBoard?.id]);
 
     // navigate to dashboard if boardId does not exists

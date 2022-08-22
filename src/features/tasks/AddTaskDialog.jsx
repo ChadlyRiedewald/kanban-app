@@ -4,11 +4,11 @@ import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { columnsSelectors, createTask } from '../boards';
+import { columnsSelectors, addTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
 
-export const CreateTaskDialog = ({ columnId }) => {
+export const AddTaskDialog = ({ columnId }) => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const allColumns = useSelector(columnsSelectors.selectAll);
@@ -32,7 +32,7 @@ export const CreateTaskDialog = ({ columnId }) => {
         description: Yup.string().max(256, 'Max. 256 characters'),
         subtasks: Yup.array().of(
             Yup.object().shape({
-                title: Yup.string().required(`Can't be empty`),
+                title: Yup.string(),
             })
         ),
         column: Yup.string(),
@@ -44,19 +44,22 @@ export const CreateTaskDialog = ({ columnId }) => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
+                    console.log(values);
                     const taskId = nanoid();
                     dispatch(
-                        createTask({
+                        addTask({
                             id: taskId,
                             title: values.title,
                             description: values.description,
                             columnId: values.columnId,
-                            subtasks: values.subtasks.map(subtask => ({
-                                id: nanoid(),
-                                title: subtask.title,
-                                completed: false,
-                                taskId: taskId,
-                            })),
+                            subtasks: values.subtasks
+                                .filter(subtask => subtask.title)
+                                .map(subtask => ({
+                                    id: nanoid(),
+                                    title: subtask.title,
+                                    completed: false,
+                                    taskId: taskId,
+                                })),
                         })
                     );
                     dispatch(closeDialog());

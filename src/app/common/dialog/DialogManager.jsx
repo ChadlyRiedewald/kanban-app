@@ -1,22 +1,24 @@
 import { useSelector } from 'react-redux';
-import { ChangePasswordDialog, SignOutDialog } from '../../../features/auth';
-import { CreateBoardDialog, UpdateBoardDialog } from '../../../features/boards';
-import { CreateTaskDialog, TaskDialog } from '../../../features/tasks';
-import { DeleteBoardDialog } from '../../../features/boards/';
-import { DeleteTaskDialog } from '../../../features/tasks/DeleteTaskDialog';
+import { UpdatePasswordDialog, SignOutDialog } from '../../../features/auth';
+import { AddBoardDialog, UpdateBoardDialog } from '../../../features/boards';
+import { AddTaskDialog, TaskDialog } from '../../../features/tasks';
+import { RemoveBoardDialog } from '../../../features/boards/';
+import { RemoveTaskDialog } from '../../../features/tasks/RemoveTaskDialog';
 import { UpdateTaskDialog } from '../../../features/tasks/UpdateTaskDialog';
+import { AddColumnDialog } from '../../../features/columns/AddColumnDialog';
 
 export const DialogManager = () => {
     const dialogLookup = {
         signOut: SignOutDialog,
-        updatePassword: ChangePasswordDialog,
-        createBoard: CreateBoardDialog,
+        updatePassword: UpdatePasswordDialog,
+        addBoard: AddBoardDialog,
         updateBoard: UpdateBoardDialog,
-        deleteBoard: DeleteBoardDialog,
+        removeBoard: RemoveBoardDialog,
+        addColumn: AddColumnDialog,
         openTask: TaskDialog,
-        createTask: CreateTaskDialog,
+        addTask: AddTaskDialog,
         updateTask: UpdateTaskDialog,
-        deleteTask: DeleteTaskDialog,
+        removeTask: RemoveTaskDialog,
     };
     const { dialogType, dialogProps } = useSelector(state => state.ui.dialog);
     let renderedDialog;

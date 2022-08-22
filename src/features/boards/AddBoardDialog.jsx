@@ -5,11 +5,11 @@ import Button from '../../app/common/button';
 import * as Yup from 'yup';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { createBoard } from './boardsSlice';
+import { addBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
 import { useNavigate } from 'react-router-dom';
 
-export const CreateBoardDialog = () => {
+export const AddBoardDialog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const initialValues = {
@@ -39,13 +39,13 @@ export const CreateBoardDialog = () => {
                 onSubmit={values => {
                     const boardId = nanoid();
                     dispatch(
-                        createBoard({
+                        addBoard({
                             id: boardId,
                             title: values.title,
                             columns: values.columns.map(column => ({
                                 id: nanoid(),
                                 title: column.title,
-                                color: 'purple',
+                                color: Math.floor(Math.random() * 8) + 1,
                                 boardId: boardId,
                                 taskIds: [],
                             })),

@@ -16,7 +16,7 @@ const Circle = styled.div`
 export const ColumnTitle = ({ color, title }) => {
     return (
         <Wrapper>
-            <Circle color={color} />
+            <Circle color={`var(--color-${color})`} />
             <h4>{title}</h4>
         </Wrapper>
     );

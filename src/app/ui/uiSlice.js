@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getInitialColorMode } from './getInitialColorMode';
+import { getInitialColorMode, getInitialSidebar } from '../util';
+
+const isVisible = getInitialSidebar();
 
 const initialState = {
     dialog: {},
@@ -8,7 +10,7 @@ const initialState = {
         colorMode: getInitialColorMode(),
     },
     sidebar: {
-        open: true,
+        open: isVisible === 'visible',
     },
 };
 
