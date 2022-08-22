@@ -1,4 +1,4 @@
-import { MenuButton, MenuWrapper } from '../../app/common/menu';
+import { MenuLink, MenuWrapper } from '../../app/common/menu';
 import { openDialog } from '../../app/ui';
 import { useDispatch } from 'react-redux';
 
@@ -6,7 +6,7 @@ export const TaskMenu = ({ task, ...props }) => {
     const dispatch = useDispatch();
     return (
         <MenuWrapper {...props}>
-            <MenuButton
+            <MenuLink
                 onClick={() =>
                     dispatch(
                         openDialog({
@@ -17,8 +17,8 @@ export const TaskMenu = ({ task, ...props }) => {
                 }
             >
                 Edit Task
-            </MenuButton>
-            <MenuButton
+            </MenuLink>
+            <MenuLink
                 variant='destructive'
                 onClick={() =>
                     dispatch(
@@ -30,7 +30,7 @@ export const TaskMenu = ({ task, ...props }) => {
                 }
             >
                 Delete Task
-            </MenuButton>
+            </MenuLink>
         </MenuWrapper>
     );
 };

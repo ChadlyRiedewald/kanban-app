@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import theme from 'styled-theming';
 import MobileOnly from '../../app/common/mobileOnly';
 
+//=====================
+// DYNAMIC COLORS
 export const authBg = theme('colorMode', {
     light: 'var(--color-white)',
     dark: 'var(--color-gray-100)',
@@ -19,6 +21,8 @@ export const bannerBg = theme('colorMode', {
     dark: 'var(--color-gray-200)',
 });
 
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -98,6 +102,8 @@ const Figure = styled.figure`
     }
 `;
 
+//=====================
+// COMPONENTS
 export const Auth = () => {
     const { colorMode } = useSelector(state => state.ui.theme);
 
@@ -133,8 +139,8 @@ export const Auth = () => {
 
 export default Auth;
 
-/// Children styles
-
+//=====================
+// CHILDREN STYLED
 export const FormWrapper = styled.div`
     width: 100%;
     max-width: 416px;

@@ -5,6 +5,8 @@ import { BREAKPOINTS } from '../../../constants';
 import { closeMenu } from '../../ui';
 import { useDispatch } from 'react-redux';
 
+//=====================
+// DYNAMIC COLORS
 export const backgroundColor = theme('colorMode', {
     light: 'var(--color-white)',
     dark: 'var(--color-gray-100)',
@@ -15,6 +17,8 @@ export const backgroundColorMobile = theme('colorMode', {
     dark: 'var(--color-gray-200)',
 });
 
+//=====================
+// STYLED COMPONENTS
 const StyledContent = styled(Content)`
     position: absolute;
     background-color: ${p =>
@@ -30,6 +34,7 @@ const StyledContent = styled(Content)`
     gap: var(--space-sm);
     justify-content: center;
     cursor: auto;
+    /* z-index is used to put the menu above the form content */
     z-index: 1;
 
     &:focus {
@@ -42,6 +47,8 @@ const StyledContent = styled(Content)`
     }
 `;
 
+//=====================
+// COMPONENTS
 export const MenuWrapper = ({ children, portalId, ...props }) => {
     const dispatch = useDispatch();
     const container = document.getElementById(portalId);

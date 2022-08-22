@@ -4,6 +4,8 @@ import { ReactComponent as Down } from '../../../assets/icon-arrow-down.svg';
 import { Label } from './index';
 import { useField } from 'formik';
 
+//=====================
+// STYLED COMPONENTS
 const StyledSelect = styled.select`
     border: 1px solid
         ${p =>
@@ -30,6 +32,8 @@ const StyledSelect = styled.select`
     }
 `;
 
+//=====================
+// COMPONENTS
 export const Select = ({ label, options, ...props }) => {
     const [field, meta] = useField(props);
 

@@ -3,6 +3,8 @@ import { useField } from 'formik';
 import styled from 'styled-components/macro';
 import { inputPlaceholderColor, textColor } from '../../../constants';
 
+//=====================
+// STYLED COMPONENTS
 const StyledTextArea = styled.textarea`
   height: 112px;
   line-height: var(--line-height-lg);
@@ -29,6 +31,8 @@ const StyledTextArea = styled.textarea`
 }
 `;
 
+//=====================
+// COMPONENTS
 export const TextArea = ({ label, ...props }) => {
     const [field, meta] = useField(props);
 

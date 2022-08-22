@@ -6,11 +6,15 @@ import { closeDialog } from '../../app/ui';
 import { removeBoard } from './boardsSlice';
 import { useNavigate } from 'react-router-dom';
 
+//=====================
+// STYLED COMPONENTS
 const ButtonWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
 `;
 
+//=====================
+// COMPONENTS
 export const RemoveBoardDialog = () => {
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const dispatch = useDispatch();

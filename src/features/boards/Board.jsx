@@ -6,12 +6,16 @@ import { TaskCard } from '../tasks';
 import { columnsSelectors, tasksSelectors } from './boardsSlice';
 import { NoColumns } from './NoColumns';
 
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     display: flex;
     gap: var(--space-md);
     height: 100%;
 `;
 
+//=====================
+// COMPONENTS
 export const Board = () => {
     const dispatch = useDispatch();
     const allColumns = useSelector(columnsSelectors.selectAll);

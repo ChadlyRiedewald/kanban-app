@@ -4,12 +4,16 @@ import { ReactComponent as Delete } from '../../../assets/icon-cross.svg';
 import Button from '../button';
 import styled from 'styled-components/macro';
 
+//=====================
+// STYLED COMPONENTS
 const InputsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
 `;
 
+//=====================
+// COMPONENTS
 export const InputGroup = ({ label, name, values }) => {
     return (
         <Label variant='input'>

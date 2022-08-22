@@ -7,11 +7,15 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../app/firebase';
 import { useState } from 'react';
 
+//=====================
+// STYLED COMPONENTS
 const ButtonWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
 `;
 
+//=====================
+// COMPONENTS
 export const SignOutDialog = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);

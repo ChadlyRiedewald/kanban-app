@@ -3,6 +3,8 @@ import { openDialog } from '../../app/ui';
 import styled from 'styled-components/macro';
 import Button from '../../app/common/button';
 
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     text-align: center;
     margin: auto;
@@ -13,6 +15,8 @@ const Wrapper = styled.div`
     gap: var(--space-md);
 `;
 
+//=====================
+// COMPONENTS
 export const NoColumns = () => {
     const dispatch = useDispatch();
     return (

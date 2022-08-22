@@ -9,7 +9,11 @@ import { useState } from 'react';
 import NavMenu from '../NavMenu';
 import { useSelector } from 'react-redux';
 
-const StyledOverlay = styled(DialogPrimitive.Overlay)`
+/* This component renders only the mobile navigation dropdown MENU */
+
+//=====================
+// STYLED COMPONENTS
+const Overlay = styled(DialogPrimitive.Overlay)`
     position: fixed;
     left: 0;
     top: var(--height-topbar-mobile);
@@ -18,7 +22,7 @@ const StyledOverlay = styled(DialogPrimitive.Overlay)`
     background-color: var(--color-overlay);
 `;
 
-const StyledContent = styled(DialogPrimitive.Content)`
+const Content = styled(DialogPrimitive.Content)`
     margin: auto;
     position: fixed;
     top: 80px;
@@ -37,7 +41,7 @@ const StyledContent = styled(DialogPrimitive.Content)`
     }
 `;
 
-const StyledTrigger = styled(DialogPrimitive.Trigger)`
+const Trigger = styled(DialogPrimitive.Trigger)`
     all: unset;
     display: flex;
     align-items: center;
@@ -48,30 +52,30 @@ const StyledTrigger = styled(DialogPrimitive.Trigger)`
     }
 `;
 
-//////////////////// EXPORTS  ////////////////////
-const DialogRoot = DialogPrimitive.Root;
-export const DialogTrigger = StyledTrigger;
-export const DialogClose = DialogPrimitive.Close;
+//=====================
+// EXPORTS
+const Root = DialogPrimitive.Root;
 
-//////////////////// COMPONENTS  ////////////////////
+//=====================
+// COMPONENTS
 export const MobileNavDropdown = ({ ...props }) => {
     const [isOpen, toggleIsOpen] = useState(false);
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const toggle = () => toggleIsOpen(!isOpen);
 
     return (
-        <DialogRoot open={isOpen} onOpenChange={toggle}>
-            <DialogTrigger>
+        <Root open={isOpen} onOpenChange={toggle}>
+            <Trigger>
                 <Logo />
                 <h1>{currentBoard?.title}</h1>
                 {isOpen ? <Up /> : <Down />}
-            </DialogTrigger>
+            </Trigger>
             <Portal>
-                <StyledOverlay />
-                <StyledContent {...props}>
+                <Overlay />
+                <Content {...props}>
                     <NavMenu />
-                </StyledContent>
+                </Content>
             </Portal>
-        </DialogRoot>
+        </Root>
     );
 };

@@ -3,6 +3,8 @@ import { useField } from 'formik';
 import styled from 'styled-components/macro';
 import { inputPlaceholderColor, textColor } from '../../../constants';
 
+//=====================
+// STYLED COMPONENTS
 export const StyledInput = styled.input`
     height: 40px;
     padding-inline: var(--space-sm);
@@ -27,6 +29,8 @@ export const StyledInput = styled.input`
   } 
 `;
 
+//=====================
+// COMPONENTS
 export const Input = ({ label, ...props }) => {
     const [field, meta] = useField(props);
 

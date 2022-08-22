@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 
-export const MenuButton = styled.button`
+//=====================
+/* These are the Links/Buttons used inside a menu */
+export const MenuLink = styled.button`
     background: none;
     border: none;
     width: fit-content;

@@ -1,4 +1,4 @@
-import { MenuButton, MenuWrapper } from '../../app/common/menu';
+import { MenuLink, MenuWrapper } from '../../app/common/menu';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '../../app/ui';
 
@@ -6,7 +6,7 @@ export const BoardMenu = ({ ...props }) => {
     const dispatch = useDispatch();
     return (
         <MenuWrapper {...props}>
-            <MenuButton
+            <MenuLink
                 onClick={() =>
                     dispatch(
                         openDialog({
@@ -16,15 +16,15 @@ export const BoardMenu = ({ ...props }) => {
                 }
             >
                 Edit Board
-            </MenuButton>
-            <MenuButton
+            </MenuLink>
+            <MenuLink
                 variant='destructive'
                 onClick={() =>
                     dispatch(openDialog({ dialogType: 'removeBoard' }))
                 }
             >
                 Delete Board
-            </MenuButton>
+            </MenuLink>
         </MenuWrapper>
     );
 };

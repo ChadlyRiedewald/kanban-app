@@ -7,16 +7,22 @@ import Button from '../../app/common/button';
 import { useDispatch } from 'react-redux';
 import { closeDialog } from '../../app/ui';
 
+//=====================
+// STYLED COMPONENTS
 const ButtonWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
 `;
 
+//=====================
+// INITIAL VALUES
 const initialValues = {
     newPassword: '',
     confirmNewPassword: '',
 };
 
+//=====================
+// VALIDATION SCHEMA
 const validationSchema = Yup.object({
     newPassword: Yup.string().required(`Can't be empty`),
     confirmNewPassword: Yup.string()
@@ -24,6 +30,8 @@ const validationSchema = Yup.object({
         .required(`Can't be empty`),
 });
 
+//=====================
+//COMPONENTS
 export const UpdatePasswordDialog = () => {
     const dispatch = useDispatch();
     return (

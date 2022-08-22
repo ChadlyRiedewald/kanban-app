@@ -1,8 +1,9 @@
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import styled from 'styled-components/macro';
 
-//////////////////// STYLED COMPONENTS  ////////////////////
-const StyledSwitch = styled(SwitchPrimitive.Root)`
+//=====================
+// STYLED COMPONENTS
+const SwitchRoot = styled(SwitchPrimitive.Root)`
     all: unset;
     position: relative;
     width: 40px;
@@ -25,7 +26,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root)`
     }
 `;
 
-const StyledThumb = styled(SwitchPrimitive.Thumb)`
+const SwitchThumb = styled(SwitchPrimitive.Thumb)`
     all: unset;
     display: block;
     margin-left: 3px;
@@ -41,11 +42,8 @@ const StyledThumb = styled(SwitchPrimitive.Thumb)`
     }
 `;
 
-//////////////////// EXPORTS  ////////////////////
-export const SwitchRoot = StyledSwitch;
-export const SwitchThumb = StyledThumb;
-
-//////////////////// COMPONENT  ////////////////////
+//=====================
+// COMPONENTS
 const Switch = ({ checked, onChange }) => {
     return (
         <SwitchRoot checked={checked} onCheckedChange={onChange}>

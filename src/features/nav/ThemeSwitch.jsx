@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Switch from '../../app/common/switch';
 import { setDarkTheme, setLightTheme } from '../../app/ui';
 
-//////////////////// STYLED COMPONENTS  ////////////////////
+//=====================
+// DYNAMIC COLORS
 const backgroundColor = theme('colorMode', {
     light: 'var(--color-gray-800)',
     dark: 'var(--color-gray-100)',
 });
 
+//=====================
+// STYLED COMPONENTS
 export const Wrapper = styled.div`
     background-color: ${backgroundColor};
     border-radius: var(--radii-md);
@@ -21,7 +24,8 @@ export const Wrapper = styled.div`
     margin-inline: -8px;
 `;
 
-//////////////////// COMPONENT  ////////////////////
+//=====================
+// COMPONENTS
 export const ThemeSwitch = () => {
     const dispatch = useDispatch();
     const { colorMode } = useSelector(state => state.ui.theme);

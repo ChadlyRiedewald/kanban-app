@@ -9,16 +9,33 @@ import { closeDialog } from '../../app/ui';
 import { nanoid } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 
+//=====================
+// VALIDATION SCHEMA
+const validationSchema = Yup.object({
+    title: Yup.string()
+        .max(16, 'Max. 16 characters')
+        .required(`Can't be empty`),
+    columns: Yup.array().of(
+        Yup.object().shape({
+            title: Yup.string().required(`Can't be empty`),
+        })
+    ),
+});
+
 export const UpdateBoardDialog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const allColumns = useSelector(columnsSelectors.selectAll);
 
+    //=====================
+    // INITIAL COLUMNS
     const currentColumns = allColumns.filter(column => {
         return currentBoard.columnIds.includes(column.id);
     });
 
+    //=====================
+    // INITIAL VALUES
     const initialValues = {
         title: currentBoard.title,
         columns: currentColumns.map(column => ({
@@ -26,17 +43,6 @@ export const UpdateBoardDialog = () => {
             title: column.title,
         })),
     };
-
-    const validationSchema = Yup.object({
-        title: Yup.string()
-            .max(16, 'Max. 16 characters')
-            .required(`Can't be empty`),
-        columns: Yup.array().of(
-            Yup.object().shape({
-                title: Yup.string().required(`Can't be empty`),
-            })
-        ),
-    });
 
     return (
         <DialogWrapper>

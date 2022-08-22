@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getInitialColorMode, getInitialSidebar } from '../util';
 
+//=====================
+// INITIAL STATE
 const isVisible = getInitialSidebar();
-
 const initialState = {
     dialog: {},
     menu: {},
@@ -14,6 +15,8 @@ const initialState = {
     },
 };
 
+//=====================
+// SLICE
 export const uiSlice = createSlice({
     name: 'ui',
     initialState,
@@ -47,6 +50,8 @@ export const uiSlice = createSlice({
     },
 });
 
+//=====================
+// ACTIONS / EXPORTS
 export const {
     openDialog,
     closeDialog,

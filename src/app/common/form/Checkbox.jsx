@@ -3,6 +3,8 @@ import { secondaryBg } from '../../../constants';
 import { useField } from 'formik';
 import { Label } from './Label';
 
+//=====================
+// STYLED COMPONENTS
 const StyledCheckbox = styled.input`
     &[type='checkbox'] {
         appearance: none;
@@ -28,6 +30,8 @@ const StyledCheckbox = styled.input`
     }
 `;
 
+//=====================
+// COMPONENTS
 export const Checkbox = ({ label, ...props }) => {
     const [field] = useField(props);
     return (

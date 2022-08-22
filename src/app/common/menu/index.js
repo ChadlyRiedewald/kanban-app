@@ -1,4 +1,4 @@
-export * from './OpenMenuButton';
+export * from './MenuTrigger';
 export * from './MenuManager';
 export * from './MenuWrapper';
-export * from './MenuButton';
+export * from './MenuLink';

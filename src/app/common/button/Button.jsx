@@ -2,7 +2,8 @@ import styled from 'styled-components/macro';
 import theme from 'styled-theming';
 import { secondaryButtonBg } from '../../../constants';
 
-//////////////////// DYNAMIC COLORS  ////////////////////
+//=====================
+// DYNAMIC COLORS
 const secondaryBgHover = theme('colorMode', {
     light: 'var(--color-purple-300)',
     dark: 'var(--color-purple-500)',
@@ -13,7 +14,8 @@ const secondaryShadow = theme('colorMode', {
     dark: 'var(--color-white-shadow)',
 });
 
-//////////////////// STYLED COMPONENTS  ////////////////////
+//=====================
+// STYLED COMPONENTS
 const BaseButton = styled.button`
     font-weight: var(--font-bold);
     border-radius: var(--radii-round);
@@ -103,7 +105,8 @@ const DestructiveButton = styled(BaseButton)`
     }
 `;
 
-//////////////////// CONSTANTS  ////////////////////
+//=====================
+// CONSTANTS
 const SIZES = {
     medium: {
         '--fontSize': 'var(--font-sm)',
@@ -115,7 +118,8 @@ const SIZES = {
     },
 };
 
-//////////////////// COMPONENT  ////////////////////
+//=====================
+// COMPONENTS
 const Button = ({ children, size, variant, loading, ...props }) => {
     const styles = SIZES[size];
 

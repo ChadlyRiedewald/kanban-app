@@ -6,12 +6,16 @@ import * as Yup from 'yup';
 import { CenteredSpan, FormWrapper, LogoTablet } from './Auth';
 import { Formik } from 'formik';
 
+//=====================
+// INITIAL VALUES
 const initialValues = {
     email: '',
     password: '',
     confirmPassword: '',
 };
 
+//=====================
+// VALIDATION SCHEMA
 const validationSchema = Yup.object({
     email: Yup.string().email(`Not a valid email`).required(`Can't be empty`),
     password: Yup.string()
@@ -22,6 +26,8 @@ const validationSchema = Yup.object({
         .required(`Can't be empty`),
 });
 
+//=====================
+// COMPONENTS
 export const SignUpForm = () => {
     return (
         <FormWrapper>

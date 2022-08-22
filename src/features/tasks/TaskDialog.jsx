@@ -1,7 +1,7 @@
 import { DialogWrapper } from '../../app/common/dialog';
 import { Label } from '../../app/common/form';
 import styled from 'styled-components/macro';
-import { OpenMenuButton } from '../../app/common/menu';
+import { MenuTrigger } from '../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { openMenu } from '../../app/ui';
@@ -11,9 +11,11 @@ import {
     subtasksSelectors,
     toggleSubtask,
     updateTaskColumn,
-} from '../boards/boardsSlice';
+} from '../boards';
 import { ReactComponent as Down } from '../../assets/icon-arrow-down.svg';
 
+//=====================
+// STYLED COMPONENTS
 const StyledCheckbox = styled.input`
     &[type='checkbox'] {
         appearance: none;
@@ -72,6 +74,8 @@ const TitleWrapper = styled.div`
     gap: var(--space-lg);
 `;
 
+//=====================
+// COMPONENTS
 export const TaskDialog = ({ task }) => {
     const dispatch = useDispatch();
     const portalId = nanoid();
@@ -90,7 +94,7 @@ export const TaskDialog = ({ task }) => {
         <DialogWrapper>
             <TitleWrapper>
                 <h2>{task.title}</h2>
-                <OpenMenuButton
+                <MenuTrigger
                     onClick={() =>
                         dispatch(
                             openMenu({

@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import Portal from '../portal';
 import { closeDialog } from '../../ui';
 
+//=====================
+// STYLED COMPONENTS
 const StyledOverlay = styled(Overlay)`
     position: fixed;
     left: 0;
@@ -39,6 +41,9 @@ const StyledContent = styled(Content)`
     }
 `;
 
+//=====================
+// COMPONENTS
+/* The default Dialog where if you click outside the dialog it will close */
 export const DialogWrapper = ({ children }) => {
     const dispatch = useDispatch();
 
@@ -57,6 +62,7 @@ export const DialogWrapper = ({ children }) => {
     );
 };
 
+/* With this dialog you have to make a choice to close the dialog, used with SignOut Dialog */
 export const AlertDialogWrapper = ({ children }) => {
     return (
         <Root defaultOpen={true}>

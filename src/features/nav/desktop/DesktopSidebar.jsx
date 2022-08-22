@@ -7,6 +7,10 @@ import NavMenu from '../NavMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { openSidebar } from '../../../app/ui';
 
+/* This component renders the desktop SIDEBAR only! */
+
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.aside`
     width: var(--width-sidebar);
     height: 100%;
@@ -58,10 +62,12 @@ const ShowSidebarButton = styled.button`
     }
 
     svg {
-        fill: white;
+        fill: var(--color-white);
     }
 `;
 
+//=====================
+// COMPONENTS
 export const DesktopSidebar = () => {
     const dispatch = useDispatch();
     const { open } = useSelector(state => state.ui.sidebar);

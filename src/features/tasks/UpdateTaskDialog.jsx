@@ -8,37 +8,39 @@ import { columnsSelectors, subtasksSelectors, updateTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
 
+//=====================
+// VALIDATION SCHEMA
+const validationSchema = Yup.object({
+    title: Yup.string().required(`Can't be empty`),
+    description: Yup.string().max(256, 'Max. 256 characters'),
+    subtasks: Yup.array().of(
+        Yup.object().shape({
+            title: Yup.string().required(`Can't be empty`),
+        })
+    ),
+    column: Yup.string(),
+});
+
 export const UpdateTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
     const allColumns = useSelector(columnsSelectors.selectAll);
     const allSubtasks = useSelector(subtasksSelectors.selectAll);
-
     const currentColumns = allColumns.filter(column =>
         currentBoard.columnIds.includes(column.id)
     );
-
     const subtasks = allSubtasks.filter(subtask =>
         task.subtaskIds.includes(subtask.id)
     );
 
+    //=====================
+    // INITIAL VALUES
     const initialValues = {
         title: task.title,
         description: task.description,
         subtasks: subtasks,
         columnId: task.columnId,
     };
-
-    const validationSchema = Yup.object({
-        title: Yup.string().required(`Can't be empty`),
-        description: Yup.string().max(256, 'Max. 256 characters'),
-        subtasks: Yup.array().of(
-            Yup.object().shape({
-                title: Yup.string().required(`Can't be empty`),
-            })
-        ),
-        column: Yup.string(),
-    });
 
     return (
         <DialogWrapper>

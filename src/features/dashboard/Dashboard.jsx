@@ -12,6 +12,8 @@ import {
 } from '../boards';
 import { NoBoards } from './NoBoards';
 
+//=====================
+// STYLED COMPONENTS
 const MainWrapper = styled.main`
     padding-block-start: calc(var(--height-topbar-mobile) + var(--space-md));
     padding-block-end: var(--space-md);
@@ -27,6 +29,8 @@ const MainWrapper = styled.main`
     }
 `;
 
+//=====================
+// COMPONENTS
 const Dashboard = () => {
     const dispatch = useDispatch();
     const { boardId } = useParams();

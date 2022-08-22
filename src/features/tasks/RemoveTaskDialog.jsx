@@ -5,11 +5,15 @@ import Button from '../../app/common/button';
 import { closeDialog } from '../../app/ui';
 import { removeTask } from '../boards';
 
+//=====================
+// STYLED COMPONENTS
 const ButtonWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
 `;
 
+//=====================
+// COMPONENTS
 export const RemoveTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
 

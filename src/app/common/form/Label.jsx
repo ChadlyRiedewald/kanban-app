@@ -2,6 +2,8 @@ import styled from 'styled-components/macro';
 import { Root } from '@radix-ui/react-label';
 import { primaryBg, textColor } from '../../../constants';
 
+//=====================
+// STYLED COMPONENTS
 const BaseLabel = styled(Root)`
     font-size: var(--font-xs);
     font-weight: var(--font-bold);
@@ -70,6 +72,8 @@ const CheckboxLabel = styled(BaseLabel)`
     }
 `;
 
+//=====================
+// COMPONENTS
 export const Label = ({ children, variant, ...props }) => {
     let Component;
 

@@ -1,3 +1,5 @@
+//=====================
+/* To get the initial sidebar state */
 export function getInitialSidebar() {
     const persistedSidebarPreference = window.localStorage.getItem('sidebar');
 
@@ -13,7 +15,8 @@ export function getInitialSidebar() {
         return 'visible';
     }
 }
-
+//=====================
+/* To get the initial theme preference */
 export function getInitialColorMode() {
     const persistedColorPreference = window.localStorage.getItem('color-mode');
     const hasPersistedPreference = typeof persistedColorPreference === 'string';

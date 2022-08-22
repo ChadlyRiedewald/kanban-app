@@ -7,18 +7,24 @@ import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 
+//=====================
+// INITIAL VALUES
 const initialValues = {
     email: '',
     password: '',
     rememberPassword: false,
 };
 
+//=====================
+// VALIDATION SCHEMA
 const validationSchema = Yup.object({
     email: Yup.string().email(`Not a valid email`).required(`Can't be empty`),
     password: Yup.string().required(`Can't be empty`),
     rememberPassword: Yup.boolean(),
 });
 
+//=====================
+// COMPONENTS
 export const SignInForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();

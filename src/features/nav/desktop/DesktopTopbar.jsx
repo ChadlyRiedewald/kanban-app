@@ -4,9 +4,13 @@ import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../app/common/button';
 import { openDialog, openMenu } from '../../../app/ui';
-import { OpenMenuButton } from '../../../app/common/menu';
+import { MenuTrigger } from '../../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
 
+/* This component renders the desktop TOPBAR only! */
+
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.header`
     height: var(--height-topbar);
     width: 100%;
@@ -48,6 +52,8 @@ const ButtonsWrapper = styled.div`
     align-items: center;
 `;
 
+//=====================
+// COMPONENTS
 export const DesktopTopbar = () => {
     const { open } = useSelector(state => state.ui.sidebar);
     const currentBoard = useSelector(state => state.boards.selectedBoard);
@@ -75,7 +81,7 @@ export const DesktopTopbar = () => {
                     >
                         + Add New Task
                     </Button>
-                    <OpenMenuButton
+                    <MenuTrigger
                         portalId={portalId}
                         disabled={
                             !currentBoard || !currentBoard?.columnIds.length

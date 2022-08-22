@@ -2,6 +2,8 @@ import { BREAKPOINTS, secondaryButtonBg } from '../../constants';
 import styled from 'styled-components/macro';
 import NavLinkPrimitive from '../../app/common/navLink';
 
+//=====================
+// STYLED COMPONENTS
 export const NavLink = styled(NavLinkPrimitive)`
     text-decoration: none;
     &:hover,

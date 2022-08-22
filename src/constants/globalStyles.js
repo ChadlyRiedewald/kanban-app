@@ -2,7 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import theme from 'styled-theming';
 import { BREAKPOINTS } from './breakpoints';
 
-//////////////////// DYNAMIC COLORS  ////////////////////
+//=====================
+// DYNAMIC COLORS
 export const primaryBg = theme('colorMode', {
     light: 'var(--color-gray-800)',
     dark: 'var(--color-gray-100)',
@@ -34,7 +35,8 @@ export const secondaryButtonBg = theme('colorMode', {
 });
 
 export const GlobalStyles = createGlobalStyle`
-  //////////////////// CSS RESET  ////////////////////
+    //=====================
+    // CSS RESET
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -135,9 +137,10 @@ export const GlobalStyles = createGlobalStyle`
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-  }
-
-  //////////////////// GLOBAL STYLES  ////////////////////
+  }  
+    
+    //=====================
+    // GLOBAL STYLES
   body {
     background-color: ${primaryBg};
     color: ${textColor};
@@ -218,10 +221,9 @@ export const GlobalStyles = createGlobalStyle`
     }
     
   }
-  
-  //////////////////// CSS VARIABLES  ////////////////////
   :root {
-    // Colors
+      //=====================
+      // COLORS
     --color-purple-100: hsl(242 48% 58%); // primary
     --color-purple-200: hsl(243 100% 82%); // primary button hover
     --color-purple-300: hsl(242 48% 58% / 0.25); // secondary button hover & subtask hover
@@ -245,8 +247,9 @@ export const GlobalStyles = createGlobalStyle`
     --color-destructive-100: hsl(0 78% 63%);
     --color-destructive-200: hsl(0 100% 80%);
     --color-destructive-shadow: hsl(0 78% 63% / 0.5);
-    
-    // Column Colors
+
+      //=====================
+      // COLUMN COLORS
     --color-1: hsl(242 48% 58%);
     --color-2: hsl(193 48% 58%);
     --color-3: hsl(154 48% 58%);
@@ -255,8 +258,9 @@ export const GlobalStyles = createGlobalStyle`
     --color-6: hsl(20 48% 58%);
     --color-7: hsl(0 48% 58%);
     --color-8: hsl(320 48% 58%);
-    
-    // Font sizes
+      
+      //=====================
+      // FONT SIZES
     --font-xs: 0.75rem;
     --font-sm: 0.8125rem;
     --font-md: 0.9375rem;
@@ -270,18 +274,21 @@ export const GlobalStyles = createGlobalStyle`
     @media screen and ${BREAKPOINTS.desktop} {
       --font-xl: 1.5rem;
     }
-    
-    // Font weight
+      
+      //=====================
+      // FONT WEIGHTS
     --font-medium: 500;
     --font-bold: 700;
-    
-    // Line Height
+
+      //=====================
+      // LINE HEIGHTS
     --line-height-xs: 1;
     --line-height-sm: 1.25;
     --line-height-md: 1.5;
     --line-height-lg: 1.77;
-    
-    // Spacing
+      
+      //=====================
+      // SPACING
     --space-xxs: 4px;
     --space-xs: 8px;
     --space-sm: 16px;
@@ -290,19 +297,21 @@ export const GlobalStyles = createGlobalStyle`
     --space-xl: 48px;
     --space-xxl: 64px;
     --space-xxxl: 96px;
-    
-    // Border radius
+      
+      //=====================
+      // BORDER RADIUS
     --radii-xs: 2px;
     --radii-sm: 4px;
     --radii-md: 6px;
     --radii-lg: 8px;
     --radii-round: 9999px;
-
-    // Fixed Width's
+      //=====================
+      // FIXED WIDTHS
     --width-sidebar: 300px;
     --width-dialog: 480px;
 
-    // Fixed Height's
+      //=====================
+      // FIXED HEIGTHS
     --height-topbar: 91px;
     --height-topbar-mobile: 64px;
     }

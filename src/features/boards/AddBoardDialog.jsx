@@ -9,27 +9,34 @@ import { addBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
 import { useNavigate } from 'react-router-dom';
 
+//=====================
+// INITIAL VALUES
+const initialValues = {
+    title: '',
+    columns: [
+        { title: '', placeholder: 'e.g. Todo' },
+        { title: '', placeholder: 'e.g. Done' },
+    ],
+};
+
+//=====================
+// VALIDATION SCHEMA
+const validationSchema = Yup.object({
+    title: Yup.string()
+        .max(16, 'Max. 16 characters')
+        .required(`Can't be empty`),
+    columns: Yup.array().of(
+        Yup.object().shape({
+            title: Yup.string().required(`Can't be empty`),
+        })
+    ),
+});
+
+//=====================
+// COMPONENTS
 export const AddBoardDialog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const initialValues = {
-        title: '',
-        columns: [
-            { title: '', placeholder: 'e.g. Todo' },
-            { title: '', placeholder: 'e.g. Done' },
-        ],
-    };
-
-    const validationSchema = Yup.object({
-        title: Yup.string()
-            .max(16, 'Max. 16 characters')
-            .required(`Can't be empty`),
-        columns: Yup.array().of(
-            Yup.object().shape({
-                title: Yup.string().required(`Can't be empty`),
-            })
-        ),
-    });
 
     return (
         <DialogWrapper>

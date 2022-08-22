@@ -15,6 +15,10 @@ import { NavButton } from './NavButton';
 import { closeSidebar, openDialog } from '../../app/ui';
 import { boardsSelectors } from '../boards';
 
+/* This component is the Nav Menu (content)... used both in desktop as in mobile */
+
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -33,6 +37,8 @@ const SectionWrapper = styled.div`
     gap: var(--space-sm);
 `;
 
+//=====================
+// COMPONENTS
 const NavMenu = () => {
     const dispatch = useDispatch();
     const allBoards = useSelector(boardsSelectors.selectAll);

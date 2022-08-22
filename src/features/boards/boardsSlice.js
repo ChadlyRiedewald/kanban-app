@@ -64,12 +64,8 @@ export const fetchData = createAsyncThunk('boards/fetchData', async () => {
     }
 });
 
-/*
-
-ADAPTERS
-
- */
-
+//=====================
+// ENTITY ADAPTERS
 const boardsAdapter = createEntityAdapter({
     selectId: board => board.id,
 });
@@ -86,12 +82,8 @@ const subtasksAdapter = createEntityAdapter({
     selectId: subtask => subtask.id,
 });
 
-/*
-
-SLICE
-
- */
-
+//=====================
+// SLICE
 const boardsSlice = createSlice({
     name: 'boards',
     initialState: boardsAdapter.getInitialState({
@@ -445,12 +437,8 @@ const boardsSlice = createSlice({
     },
 });
 
-/*
-
-SELECTORS
-
- */
-
+//=====================
+// SELECTORS
 export const boardsSelectors = boardsAdapter.getSelectors(
     state => state.boards
 );
@@ -467,12 +455,8 @@ export const subtasksSelectors = subtasksAdapter.getSelectors(
     state => state.boards.columns.tasks.subtasks
 );
 
-/*
-
-EXPORTS
-
- */
-
+//=====================
+// ACTIONS / EXPORTS
 export const {
     addBoard,
     updateBoard,

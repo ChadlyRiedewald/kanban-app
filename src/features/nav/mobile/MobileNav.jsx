@@ -6,9 +6,13 @@ import Button from '../../../app/common/button';
 import { MobileNavDropdown } from './MobileNavDropdown';
 import { openDialog, openMenu } from '../../../app/ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { OpenMenuButton } from '../../../app/common/menu';
+import { MenuTrigger } from '../../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
 
+/* This component renders the complete mobile navigation */
+
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.header`
     height: var(--height-topbar-mobile);
     width: 100%;
@@ -37,6 +41,8 @@ const AddButton = styled(Button)`
     justify-content: center;
 `;
 
+//=====================
+// STYLED COMPONENTS
 export const MobileNav = () => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
@@ -57,7 +63,7 @@ export const MobileNav = () => {
                     >
                         <Add style={{ fill: 'var(--color-white)' }} />
                     </AddButton>
-                    <OpenMenuButton
+                    <MenuTrigger
                         portalId={portalId}
                         onClick={() => {
                             if (

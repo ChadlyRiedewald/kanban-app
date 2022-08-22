@@ -3,6 +3,8 @@ import { secondaryBg } from '../../constants';
 import { useSelector } from 'react-redux';
 import { subtasksSelectors } from '../boards';
 
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     display: flex;
     width: 100%;
@@ -15,6 +17,8 @@ const Wrapper = styled.div`
     cursor: pointer;
 `;
 
+//=====================
+// COMPONENTS
 export const TaskCard = ({ task, ...props }) => {
     const allSubtasks = useSelector(subtasksSelectors.selectAll);
     const prevSubtasks = allSubtasks.filter(subtask =>

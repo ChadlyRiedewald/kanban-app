@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 import { BREAKPOINTS, secondaryButtonBg } from '../../constants';
 
+//=====================
+/* This component is used for Buttons in the Nav Menu with the same styling as the NavLink Component */
 export const NavButton = styled.button`
     width: 240px;
     border: none;

@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import Button from '../../app/common/button';
 import { openDialog } from '../../app/ui';
 
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.div`
     text-align: center;
     height: 100%;
@@ -13,6 +15,8 @@ const Wrapper = styled.div`
     gap: var(--space-md);
 `;
 
+//=====================
+// COMPONENTS
 export const NoBoards = () => {
     const dispatch = useDispatch();
     return (

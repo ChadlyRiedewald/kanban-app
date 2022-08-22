@@ -2,6 +2,10 @@ import { ReactComponent as Icon } from '../../../assets/icon-menu-trigger.svg';
 import styled from 'styled-components/macro';
 import VisuallyHidden from '../visuallyHidden';
 
+/* This component is used to trigger a menu */
+
+//=====================
+// STYLED COMPONENTS
 const Wrapper = styled.button`
     all: unset;
     position: relative;
@@ -25,7 +29,9 @@ const Wrapper = styled.button`
     }
 `;
 
-export const OpenMenuButton = ({ children, portalId, ...props }) => {
+//=====================
+// COMPONENTS
+export const MenuTrigger = ({ children, portalId, ...props }) => {
     return (
         <Wrapper {...props} id={portalId} type='button'>
             <VisuallyHidden>Open Menu</VisuallyHidden>

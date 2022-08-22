@@ -8,6 +8,19 @@ import { columnsSelectors, addTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
 
+//=====================
+// VALIDATION SCHEMA
+const validationSchema = Yup.object({
+    title: Yup.string().required(`Can't be empty`),
+    description: Yup.string().max(256, 'Max. 256 characters'),
+    subtasks: Yup.array().of(
+        Yup.object().shape({
+            title: Yup.string(),
+        })
+    ),
+    column: Yup.string(),
+});
+
 export const AddTaskDialog = ({ columnId }) => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.boards.selectedBoard);
@@ -17,6 +30,8 @@ export const AddTaskDialog = ({ columnId }) => {
         currentBoard.columnIds.includes(column.id)
     );
 
+    //=====================
+    // INITIAL VALUES
     const initialValues = {
         title: '',
         description: '',
@@ -27,24 +42,12 @@ export const AddTaskDialog = ({ columnId }) => {
         columnId: columnId || currentBoard.columnIds[0],
     };
 
-    const validationSchema = Yup.object({
-        title: Yup.string().required(`Can't be empty`),
-        description: Yup.string().max(256, 'Max. 256 characters'),
-        subtasks: Yup.array().of(
-            Yup.object().shape({
-                title: Yup.string(),
-            })
-        ),
-        column: Yup.string(),
-    });
-
     return (
         <DialogWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    console.log(values);
                     const taskId = nanoid();
                     dispatch(
                         addTask({
