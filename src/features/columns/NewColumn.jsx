@@ -20,11 +20,13 @@ export const NewColumn = styled.div`
 
     &:hover {
         h1 {
+            transition: all 0.3s ease-in-out;
             color: var(--color-purple-100);
         }
     }
 
     h1 {
+        transition: all 0.3s ease-in-out;
         color: var(--color-gray-600);
     }
 `;

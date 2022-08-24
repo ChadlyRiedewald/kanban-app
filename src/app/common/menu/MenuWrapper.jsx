@@ -4,6 +4,27 @@ import { Root, Content, Portal } from '@radix-ui/react-dialog';
 import { BREAKPOINTS } from '../../../constants';
 import { closeMenu } from '../../ui';
 import { useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
+
+//=====================
+// ANIMATION VARIANTS
+const variants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.4,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.2,
+        },
+    },
+};
 
 //=====================
 // DYNAMIC COLORS
@@ -34,6 +55,8 @@ const StyledContent = styled(Content)`
     gap: var(--space-sm);
     justify-content: center;
     cursor: auto;
+    box-shadow: var(--shadow);
+
     /* z-index is used to put the menu above the form content */
     z-index: 1;
 
@@ -56,14 +79,27 @@ export const MenuWrapper = ({ children, portalId, ...props }) => {
     return (
         <Root defaultOpen={true}>
             <Portal container={container}>
-                <StyledContent
-                    onInteractOutside={() => dispatch(closeMenu())}
-                    onEscapeKeyDown={() => dispatch(closeMenu())}
-                    onOpenAutoFocus={event => event.preventDefault()}
-                    {...props}
+                <motion.div
+                    variants={variants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
                 >
-                    {children}
-                </StyledContent>
+                    <StyledContent
+                        onInteractOutside={e => {
+                            e.preventDefault();
+                            dispatch(closeMenu());
+                        }}
+                        onEscapeKeyDown={e => {
+                            e.preventDefault();
+                            dispatch(closeMenu());
+                        }}
+                        onOpenAutoFocus={event => event.preventDefault()}
+                        {...props}
+                    >
+                        {children}
+                    </StyledContent>
+                </motion.div>
             </Portal>
         </Root>
     );

@@ -18,13 +18,14 @@ const Wrapper = styled.div`
 export const Board = () => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.data.selectedBoard);
-    const { columns, tasks } = useSelector(state => state.data);
+    const allColumns = useSelector(state => state.data.columns);
+    const allTasks = useSelector(state => state.data.tasks);
 
     return (
         <Wrapper>
             {currentBoard?.columnIds.length ? (
                 <>
-                    {columns
+                    {allColumns
                         .filter(column =>
                             currentBoard?.columnIds.includes(column.id)
                         )
@@ -34,7 +35,7 @@ export const Board = () => {
                                     title={column.title}
                                     color={column.color}
                                 />
-                                {tasks
+                                {allTasks
                                     .filter(task =>
                                         column.taskIds.includes(task.id)
                                     )

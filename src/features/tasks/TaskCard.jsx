@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { secondaryBg } from '../../constants';
+import { secondaryBg, shadowColor } from '../../constants';
 import { useSelector } from 'react-redux';
 
 //=====================
@@ -15,14 +15,20 @@ const Wrapper = styled.div`
     border-radius: var(--radii-md);
     cursor: pointer;
     box-shadow: var(--shadow);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 4px 6px 6px hsl(${shadowColor} / 0.1);
+    }
 `;
 
 //=====================
 // COMPONENTS
 export const TaskCard = ({ task, ...props }) => {
-    const { subtasks } = useSelector(state => state.data);
+    const allSubtasks = useSelector(state => state.data.subtasks);
 
-    const prevSubtasks = subtasks.filter(subtask =>
+    const prevSubtasks = allSubtasks.filter(subtask =>
         task.subtaskIds.includes(subtask.id)
     );
     const completedSubtasks = prevSubtasks.filter(subtask => subtask.completed);

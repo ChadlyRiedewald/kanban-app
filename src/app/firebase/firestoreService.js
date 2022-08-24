@@ -56,7 +56,7 @@ export function updateBoardFromFirestore(values) {
     const batch = writeBatch(db);
     const user = auth.currentUser;
     const boardRef = doc(db, 'users', user.uid, 'boards', values.board.id);
-    const columnIds = values.columns.map(column => column.id);
+    const columnIds = values.columns.map(({ id }) => id);
 
     // Removing Columns
     const columnIdsToRemove = values.board.columnIds.filter(
@@ -198,7 +198,7 @@ export function addTaskToFirestore(values) {
     // Update Column
     const columnRef = doc(db, 'users', user.uid, 'columns', values.columnId);
     batch.update(columnRef, {
-        taskIds: [...values.oldTaskIds, taskRef.id],
+        taskIds: arrayUnion(taskRef.id),
     });
 
     return batch.commit();

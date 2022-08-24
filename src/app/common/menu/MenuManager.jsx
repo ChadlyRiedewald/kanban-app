@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { BoardMenu } from '../../../features/boards';
 import { TaskMenu } from '../../../features/tasks';
+import { AnimatePresence } from 'framer-motion';
 
 export const MenuManager = () => {
     const menuLookup = {
@@ -14,5 +15,5 @@ export const MenuManager = () => {
         renderedMenu = <MenuComponent {...menuProps} />;
     }
 
-    return <span>{renderedMenu}</span>;
+    return <AnimatePresence>{renderedMenu}</AnimatePresence>;
 };

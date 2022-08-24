@@ -16,10 +16,31 @@ import {
 import { NoBoards } from './NoBoards';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../../app/firebase';
+import { motion } from 'framer-motion';
+
+//=====================
+// ANIMATION VARIANTS
+const variants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.8,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.2,
+        },
+    },
+};
 
 //=====================
 // STYLED COMPONENTS
-const MainWrapper = styled.main`
+const MainWrapper = styled(motion.main)`
     padding-block-start: calc(var(--height-topbar-mobile) + var(--space-md));
     padding-block-end: var(--space-md);
     padding-inline: var(--space-md);
@@ -43,13 +64,13 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const allBoards = useSelector(state => state.data.boards);
     const currentBoard = allBoards.find(board => board.id === boardId);
-    const { selectedBoard } = useSelector(state => state.data);
+    const board = useSelector(state => state.data.selectedBoard);
     const { uid } = useSelector(state => state.auth.user);
 
     // selectedBoard or resetSelectedBoard depending on current path
     useEffect(() => {
         currentBoard && dispatch(setSelectedBoard(currentBoard));
-        if (selectedBoard && location.pathname === '/dashboard') {
+        if (board && location.pathname === '/dashboard') {
             dispatch(resetSelectedBoard());
         }
     }, [location, currentBoard?.id]);
@@ -120,7 +141,12 @@ const Dashboard = () => {
         <>
             <MobileNav />
             <DesktopNav />
-            <MainWrapper>
+            <MainWrapper
+                variants={variants}
+                initial='initial'
+                animate='animate'
+                exit='exit'
+            >
                 {allBoards.length ? <Outlet /> : <NoBoards />}
             </MainWrapper>
         </>

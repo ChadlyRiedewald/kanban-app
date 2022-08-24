@@ -8,6 +8,27 @@ import { BREAKPOINTS, secondaryBg, textColor } from '../../constants';
 import { useSelector } from 'react-redux';
 import theme from 'styled-theming';
 import MobileOnly from '../../app/common/mobileOnly';
+import { motion } from 'framer-motion';
+
+//=====================
+// ANIMATION VARIANTS
+const variants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 1.4,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 2,
+        },
+    },
+};
 
 //=====================
 // DYNAMIC COLORS
@@ -23,7 +44,7 @@ export const bannerBg = theme('colorMode', {
 
 //=====================
 // STYLED COMPONENTS
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -108,7 +129,13 @@ export const Auth = () => {
     const { colorMode } = useSelector(state => state.ui.theme);
 
     return (
-        <Wrapper>
+        <Wrapper
+            variants={variants}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+            key='1'
+        >
             <MobileOnly>
                 <Topbar>
                     <LogoMobile />
@@ -143,6 +170,7 @@ export default Auth;
 // CHILDREN STYLED
 export const FormWrapper = styled.div`
     width: 100%;
+    margin-inline: var(--space-md);
     max-width: 416px;
 
     p {

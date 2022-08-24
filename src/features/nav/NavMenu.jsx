@@ -60,7 +60,7 @@ const Wrapper = styled.div`
         nav {
             max-height: 480px;
             margin-left: -32px;
-            padding-inline: 32px;
+            padding-inline: 32px 24px;
         }
     }
 `;

@@ -18,7 +18,7 @@ const ButtonWrapper = styled.div`
 // COMPONENTS
 export const SignOutDialog = () => {
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.async);
+    const isLoading = useSelector(state => state.async.loading);
 
     async function handleSignOut() {
         dispatch(actionStart());
@@ -41,7 +41,7 @@ export const SignOutDialog = () => {
                     variant='destructive'
                     size='medium'
                     fluid
-                    loading={loading}
+                    loading={isLoading}
                     onClick={handleSignOut}
                 >
                     Confirm

@@ -20,6 +20,7 @@ export const NavButton = styled.button`
     padding-inline-start: 24px;
     opacity: ${p => p.disabled && '0.5'};
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
+    transition: all 0.3s ease-in-out;
 
     &:focus {
         outline: none;
@@ -38,6 +39,7 @@ export const NavButton = styled.button`
 
         svg {
             fill: var(--color-purple-100);
+            transition: all 0.3s ease-in-out;
         }
     }
 

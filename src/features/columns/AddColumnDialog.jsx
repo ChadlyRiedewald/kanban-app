@@ -37,7 +37,7 @@ export const AddColumnDialog = () => {
     const tasks = allTasks.filter(task =>
         board.columnIds.includes(task.columnId)
     );
-    const tasksIds = tasks.map(task => task.id);
+    const tasksIds = tasks.map(({ id }) => id);
     const subtasks = allSubtasks.filter(subtask =>
         tasksIds.includes(subtask.taskId)
     );

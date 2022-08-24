@@ -6,9 +6,14 @@ import NavLinkPrimitive from '../../app/common/navLink';
 // STYLED COMPONENTS
 export const NavLink = styled(NavLinkPrimitive)`
     text-decoration: none;
+    transition: all 0.3s ease-in-out;
     &:hover,
     &:focus {
         text-decoration: none;
+    }
+
+    svg {
+        transition: all 0.3s ease-in-out;
     }
 
     &.nav-link {

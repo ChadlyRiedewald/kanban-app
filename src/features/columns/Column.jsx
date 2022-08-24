@@ -30,11 +30,13 @@ const NewTask = styled.div`
     &:hover {
         h1 {
             color: var(--color-purple-100);
+            transition: all 0.3s ease-in-out;
         }
     }
 
     h1 {
         color: var(--color-gray-600);
+        transition: all 0.3s ease-in-out;
     }
 `;
 

@@ -25,6 +25,7 @@ const BaseButton = styled.button`
     width: ${p => (p.fluid ? '100%' : 'fit-content')};
     height: var(--height);
     font-size: var(--fontSize);
+    transition: all 0.3s ease-in-out;
 
     &:disabled,
     &[disabled] {

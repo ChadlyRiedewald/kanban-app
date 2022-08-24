@@ -4,6 +4,27 @@ import { BREAKPOINTS, secondaryBg } from '../../../constants';
 import { useDispatch } from 'react-redux';
 import Portal from '../portal';
 import { closeDialog } from '../../ui';
+import { motion } from 'framer-motion';
+
+//=====================
+// ANIMATION VARIANTS
+const variants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.4,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.2,
+        },
+    },
+};
 
 //=====================
 // STYLED COMPONENTS
@@ -27,7 +48,6 @@ const StyledContent = styled(Content)`
     max-width: var(--width-dialog);
     height: fit-content;
     max-height: calc(100% - 32px);
-    overflow: auto;
     padding: var(--space-md);
     border-radius: var(--radii-md);
     display: flex;
@@ -52,13 +72,27 @@ export const DialogWrapper = ({ children }) => {
     return (
         <Root defaultOpen={true}>
             <Portal>
-                <StyledOverlay />
-                <StyledContent
-                    onInteractOutside={() => dispatch(closeDialog())}
-                    onEscapeKeyDown={() => dispatch(closeDialog())}
+                <motion.div
+                    variants={variants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
                 >
-                    {children}
-                </StyledContent>
+                    <StyledOverlay />
+
+                    <StyledContent
+                        onInteractOutside={e => {
+                            e.preventDefault();
+                            dispatch(closeDialog());
+                        }}
+                        onEscapeKeyDown={e => {
+                            e.preventDefault();
+                            dispatch(closeDialog());
+                        }}
+                    >
+                        {children}
+                    </StyledContent>
+                </motion.div>
             </Portal>
         </Root>
     );
@@ -69,13 +103,20 @@ export const AlertDialogWrapper = ({ children }) => {
     return (
         <Root defaultOpen={true}>
             <Portal>
-                <StyledOverlay />
-                <StyledContent
-                    onInteractOutside={e => e.preventDefault()}
-                    onEscapeKeyDown={e => e.preventDefault()}
+                <motion.div
+                    variants={variants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
                 >
-                    {children}
-                </StyledContent>
+                    <StyledOverlay />
+                    <StyledContent
+                        onInteractOutside={e => e.preventDefault()}
+                        onEscapeKeyDown={e => e.preventDefault()}
+                    >
+                        {children}
+                    </StyledContent>
+                </motion.div>
             </Portal>
         </Root>
     );

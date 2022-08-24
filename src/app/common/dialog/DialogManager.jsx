@@ -10,6 +10,7 @@ import { RemoveBoardDialog } from '../../../features/boards/';
 import { RemoveTaskDialog } from '../../../features/tasks/RemoveTaskDialog';
 import { UpdateTaskDialog } from '../../../features/tasks/UpdateTaskDialog';
 import { AddColumnDialog } from '../../../features/columns/AddColumnDialog';
+import { AnimatePresence } from 'framer-motion';
 
 export const DialogManager = () => {
     const dialogLookup = {
@@ -32,5 +33,5 @@ export const DialogManager = () => {
         renderedDialog = <DialogComponent {...dialogProps} />;
     }
 
-    return <span>{renderedDialog}</span>;
+    return <AnimatePresence>{renderedDialog}</AnimatePresence>;
 };

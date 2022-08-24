@@ -3,6 +3,27 @@ import { primaryBg, textColor } from '../../../constants';
 import { LoadingSpinner } from '../loadingSpinner';
 import theme from 'styled-theming';
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
+import { motion } from 'framer-motion';
+
+//=====================
+// ANIMATION VARIANTS
+const variants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.7,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.4,
+        },
+    },
+};
 
 //=====================
 // DYNAMIC COLORS
@@ -13,7 +34,7 @@ export const color = theme('colorMode', {
 
 //=====================
 // STYLED COMPONENTS
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     position: fixed;
     left: 0;
     top: 0;
@@ -52,7 +73,12 @@ const LoadingWrapper = styled.div`
 // COMPONENTS
 const Loading = () => {
     return (
-        <Wrapper>
+        <Wrapper
+            variants={variants}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+        >
             <LogoWrapper>
                 <Logo />
             </LogoWrapper>

@@ -24,13 +24,10 @@ const validationSchema = Yup.object({
 export const AddTaskDialog = ({ columnId }) => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.data.selectedBoard);
-    const { columns } = useSelector(state => state.data);
-    const currentColumn = columns.filter(column => column.id === columnId);
-    const currentColumns = columns.filter(column =>
+    const allColumns = useSelector(state => state.data.columns);
+    const currentColumns = allColumns.filter(column =>
         currentBoard.columnIds.includes(column.id)
     );
-
-    console.log(currentColumn[0]);
 
     //=====================
     // INITIAL VALUES
@@ -57,7 +54,6 @@ export const AddTaskDialog = ({ columnId }) => {
                             title: values.title,
                             description: values.description,
                             columnId: values.columnId,
-                            oldTaskIds: currentColumn[0].taskIds,
                             subtasks: values.subtasks
                                 .filter(subtask => subtask.title)
                                 .map(subtask => ({
