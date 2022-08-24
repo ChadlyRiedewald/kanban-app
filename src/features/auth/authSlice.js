@@ -6,24 +6,24 @@ import { setListener } from '../../app/firebase';
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        loading: false,
+        loading: true,
         authenticated: false,
-        currentUser: null,
+        user: null,
         initialized: false,
     },
     reducers: {
-        signIn: (state, { payload }) => {
+        setUser: (state, { payload }) => {
             state.authenticated = true;
             state.initialized = true;
-            state.currentUser = {
+            state.user = {
                 uid: payload.uid,
                 email: payload.email,
             };
         },
-        signOut: state => {
+        resetUser: state => {
             state.authenticated = false;
             state.initialized = true;
-            state.currentUser = {};
+            state.user = {};
         },
     },
     extraReducers: {
@@ -42,6 +42,6 @@ const authSlice = createSlice({
 
 //=====================
 // ACTIONS / EXPORTS
-export const { signIn, signOut } = authSlice.actions;
+export const { setUser, resetUser } = authSlice.actions;
 
 export default authSlice.reducer;

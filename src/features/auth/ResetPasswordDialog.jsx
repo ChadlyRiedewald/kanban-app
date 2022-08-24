@@ -6,7 +6,7 @@ import { Form, FormikControl } from '../../app/common/form';
 import Button from '../../app/common/button';
 import { useDispatch } from 'react-redux';
 import { closeDialog } from '../../app/ui';
-import { updatePasswordFirebase } from '../../app/firebase';
+import { resetPasswordFirebase } from '../../app/firebase';
 
 //=====================
 // STYLED COMPONENTS
@@ -18,32 +18,25 @@ const ButtonWrapper = styled.div`
 //=====================
 // INITIAL VALUES
 const initialValues = {
-    newPassword: '',
-    confirmNewPassword: '',
+    email: '',
 };
 
 //=====================
 // VALIDATION SCHEMA
 const validationSchema = Yup.object({
-    newPassword: Yup.string()
-        .min(6, `Min. 6 characters`)
-        .required(`Can't be empty`),
-    confirmNewPassword: Yup.string()
-        .min(6, `Min. 6 characters`)
-        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-        .required(`Can't be empty`),
+    email: Yup.string().email(`Not a valid email`).required(`Can't be empty`),
 });
 
 //=====================
 //COMPONENTS
-export const UpdatePasswordDialog = () => {
+export const ResetPasswordDialog = () => {
     const dispatch = useDispatch();
 
     function handleError(errorCode) {
         switch (errorCode) {
-            case 'auth/requires-recent-login':
+            case 'auth/user-not-found':
                 return {
-                    ['newPassword']: 'Please re-authenticate to proceed',
+                    ['email']: 'User not found',
                 };
             default:
                 return '';
@@ -57,10 +50,9 @@ export const UpdatePasswordDialog = () => {
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setErrors, setSubmitting }) => {
                     try {
-                        await updatePasswordFirebase(values.confirmNewPassword);
+                        await resetPasswordFirebase(values.email);
                         dispatch(closeDialog());
                     } catch (error) {
-                        console.log(error);
                         setErrors(handleError(error.code));
                     } finally {
                         setSubmitting(false);
@@ -69,18 +61,12 @@ export const UpdatePasswordDialog = () => {
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
                     <Form>
-                        <h2>Change password</h2>
+                        <h2 style={{ marginBottom: -16 }}>Reset password</h2>
+                        <p>Please enter your email to reset your password</p>
                         <FormikControl
                             control='input'
-                            label='New password'
-                            type='password'
-                            name='newPassword'
-                        />
-                        <FormikControl
-                            control='input'
-                            label='Confirm password'
-                            type='password'
-                            name='confirmNewPassword'
+                            label='Email'
+                            name='email'
                         />
                         <ButtonWrapper>
                             <Button
@@ -91,7 +77,7 @@ export const UpdatePasswordDialog = () => {
                                 variant='primary'
                                 size='medium'
                             >
-                                Save Changes
+                                Send
                             </Button>
                             <Button
                                 onClick={() => dispatch(closeDialog())}

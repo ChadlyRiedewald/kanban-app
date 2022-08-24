@@ -6,13 +6,9 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { openMenu } from '../../app/ui';
 import { secondaryBg, textColor } from '../../constants';
-import {
-    columnsSelectors,
-    subtasksSelectors,
-    toggleSubtask,
-    updateTaskColumn,
-} from '../boards';
 import { ReactComponent as Down } from '../../assets/icon-arrow-down.svg';
+import { actionError, actionFinish, actionStart } from '../../app/async';
+import { toggleSubtaskCompleted, updateTaskColumn } from '../../app/firebase';
 
 //=====================
 // STYLED COMPONENTS
@@ -79,13 +75,15 @@ const TitleWrapper = styled.div`
 export const TaskDialog = ({ task }) => {
     const dispatch = useDispatch();
     const portalId = nanoid();
-    const allSubtasks = useSelector(subtasksSelectors.selectAll);
+    const allSubtasks = useSelector(state => state.data.subtasks);
+    const allColumns = useSelector(state => state.data.columns);
+    const currentBoard = useSelector(state => state.data.selectedBoard);
+
     const subtasks = allSubtasks.filter(subtask =>
         task.subtaskIds.includes(subtask.id)
     );
+
     const completedSubtasks = subtasks.filter(subtask => subtask.completed);
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
-    const allColumns = useSelector(columnsSelectors.selectAll);
     const currentColumns = allColumns.filter(column =>
         currentBoard.columnIds.includes(column.id)
     );
@@ -125,7 +123,16 @@ export const TaskDialog = ({ task }) => {
                             type='checkbox'
                             id={subtask.id}
                             checked={subtask.completed}
-                            onChange={() => dispatch(toggleSubtask(subtask.id))}
+                            onChange={async () => {
+                                dispatch(actionStart());
+                                try {
+                                    await toggleSubtaskCompleted(subtask);
+                                    dispatch(actionFinish());
+                                } catch (error) {
+                                    console.log(error);
+                                    dispatch(actionError(error));
+                                }
+                            }}
                         />
                         {subtask.completed && (
                             <svg
@@ -150,14 +157,20 @@ export const TaskDialog = ({ task }) => {
             <Label variant='select'>
                 Column
                 <StyledSelect
-                    onChange={e => {
-                        dispatch(
-                            updateTaskColumn({
-                                id: task.id,
+                    onChange={async e => {
+                        dispatch(actionStart());
+
+                        try {
+                            await updateTaskColumn({
                                 prevColumnId: task.columnId,
-                                currColumnId: e.target.value,
-                            })
-                        );
+                                columnId: e.target.value,
+                                id: task.id,
+                            });
+                            dispatch(actionFinish());
+                        } catch (error) {
+                            console.log(error);
+                            dispatch(actionError(error));
+                        }
                     }}
                 >
                     {currentColumns.map((option, index) => (

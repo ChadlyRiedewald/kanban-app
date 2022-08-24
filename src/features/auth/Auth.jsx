@@ -153,6 +153,19 @@ export const FormWrapper = styled.div`
 export const ButtonsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+
+    button {
+        all: unset;
+        font-size: var(--font-xs);
+        font-weight: var(--font-bold);
+        color: var(--color-purple-200);
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
 `;
 
 export const CenteredSpan = styled.span`

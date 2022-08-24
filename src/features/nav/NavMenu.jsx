@@ -5,7 +5,7 @@ import Separator from '../../app/common/separator';
 import MobileOnly from '../../app/common/mobileOnly';
 import styled from 'styled-components/macro';
 import DesktopOnly from '../../app/common/desktopOnly';
-import { BREAKPOINTS } from '../../constants';
+import { BREAKPOINTS, primaryBg, secondaryBg } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as Add } from '../../assets/icon-add.svg';
 import { ReactComponent as User } from '../../assets/icon-user.svg';
@@ -13,7 +13,6 @@ import { ReactComponent as SignOutIcon } from '../../assets/icon-sign-out.svg';
 import { NavLink } from './NavLink';
 import { NavButton } from './NavButton';
 import { closeSidebar, openDialog } from '../../app/ui';
-import { boardsSelectors } from '../boards';
 
 /* This component is the Nav Menu (content)... used both in desktop as in mobile */
 
@@ -25,9 +24,44 @@ const Wrapper = styled.div`
     gap: var(--space-sm);
     height: 100%;
 
+    nav {
+        max-height: 192px;
+        overflow: auto;
+        margin-inline: -24px;
+        padding-inline: 24px 16px;
+
+        // Custom scrollbar
+        /* width */
+        ::-webkit-scrollbar {
+            width: 24px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background-color: ${secondaryBg};
+            left: 16px;
+            margin: 0;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            padding-block: 6px;
+            border: 6px solid ${secondaryBg};
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: ${primaryBg};
+        }
+    }
+
     @media screen and ${BREAKPOINTS.tablet} {
         justify-content: space-between;
         padding-block-start: 53px;
+
+        nav {
+            max-height: 480px;
+            margin-left: -32px;
+            padding-inline: 32px;
+        }
     }
 `;
 
@@ -41,9 +75,7 @@ const SectionWrapper = styled.div`
 // COMPONENTS
 const NavMenu = () => {
     const dispatch = useDispatch();
-    const allBoards = useSelector(boardsSelectors.selectAll);
-    const totalBoards = useSelector(boardsSelectors.selectTotal);
-
+    const allBoards = useSelector(state => state.data.boards);
     function toggleSidebar() {
         dispatch(closeSidebar());
         document.documentElement.style.setProperty('--width-sidebar', '0px');
@@ -53,7 +85,7 @@ const NavMenu = () => {
     return (
         <Wrapper>
             <SectionWrapper>
-                <h4>All boards ({totalBoards})</h4>
+                <h4>All boards ({allBoards.length})</h4>
                 <nav>
                     <ul>
                         {allBoards.map((board, index) => (
@@ -69,30 +101,28 @@ const NavMenu = () => {
                                 </NavLink>
                             </li>
                         ))}
-                        <li>
-                            <NavButton
-                                disabled={totalBoards >= 8}
-                                onClick={() =>
-                                    dispatch(
-                                        openDialog({
-                                            dialogType: 'addBoard',
-                                        })
-                                    )
-                                }
-                                style={{
-                                    color: 'var(--color-purple-100)',
-                                }}
-                            >
-                                <Add
-                                    style={{
-                                        fill: 'var(--color-purple-100)',
-                                    }}
-                                />
-                                Create New Board
-                            </NavButton>
-                        </li>
                     </ul>
                 </nav>
+                <NavButton
+                    onClick={() =>
+                        dispatch(
+                            openDialog({
+                                dialogType: 'addBoard',
+                            })
+                        )
+                    }
+                    style={{
+                        color: 'var(--color-purple-100)',
+                        marginTop: '-16px',
+                    }}
+                >
+                    <Add
+                        style={{
+                            fill: 'var(--color-purple-100)',
+                        }}
+                    />
+                    Create New Board
+                </NavButton>
             </SectionWrapper>
             <MobileOnly>
                 <Separator />

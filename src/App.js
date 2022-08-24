@@ -8,7 +8,6 @@ import { SignInForm, SignUpForm } from './features/auth';
 import { DialogManager } from './app/common/dialog';
 import { MenuManager } from './app/common/menu';
 import { Board } from './features/boards';
-import { boardsSelectors } from './features/boards';
 import { useEffect } from 'react';
 import Loading from './app/common/loading';
 import { setListener } from './app/firebase';
@@ -16,7 +15,7 @@ import { setListener } from './app/firebase';
 const App = () => {
     const { colorMode } = useSelector(state => state.ui.theme);
     const { authenticated, initialized } = useSelector(state => state.auth);
-    const allBoards = useSelector(boardsSelectors.selectAll);
+    const allBoards = useSelector(state => state.data.boards);
     const dispatch = useDispatch();
 
     useEffect(() => {

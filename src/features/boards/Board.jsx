@@ -3,7 +3,6 @@ import { Column, ColumnTitle, NewColumn } from '../columns';
 import { useDispatch, useSelector } from 'react-redux';
 import { openDialog } from '../../app/ui';
 import { TaskCard } from '../tasks';
-import { columnsSelectors, tasksSelectors } from './boardsSlice';
 import { NoColumns } from './NoColumns';
 
 //=====================
@@ -18,15 +17,14 @@ const Wrapper = styled.div`
 // COMPONENTS
 export const Board = () => {
     const dispatch = useDispatch();
-    const allColumns = useSelector(columnsSelectors.selectAll);
-    const allTasks = useSelector(tasksSelectors.selectAll);
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
+    const currentBoard = useSelector(state => state.data.selectedBoard);
+    const { columns, tasks } = useSelector(state => state.data);
 
     return (
         <Wrapper>
             {currentBoard?.columnIds.length ? (
                 <>
-                    {allColumns
+                    {columns
                         .filter(column =>
                             currentBoard?.columnIds.includes(column.id)
                         )
@@ -36,7 +34,7 @@ export const Board = () => {
                                     title={column.title}
                                     color={column.color}
                                 />
-                                {allTasks
+                                {tasks
                                     .filter(task =>
                                         column.taskIds.includes(task.id)
                                     )

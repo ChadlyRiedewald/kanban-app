@@ -4,6 +4,5 @@ export * from './Input';
 export * from './TextArea';
 export * from './ErrorMessage';
 export * from './Label';
-export * from './Checkbox';
 export * from './InputGroup';
 export * from './Form';

@@ -26,6 +26,8 @@ const StyledContent = styled(Content)`
     background: ${secondaryBg};
     max-width: var(--width-dialog);
     height: fit-content;
+    max-height: calc(100% - 32px);
+    overflow: auto;
     padding: var(--space-md);
     border-radius: var(--radii-md);
     display: flex;

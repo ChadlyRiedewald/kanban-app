@@ -4,9 +4,10 @@ import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { columnsSelectors, subtasksSelectors, updateTask } from '../boards';
 import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
+import { delay } from '../../app/util';
+import { updateTaskFromFirestore } from '../../app/firebase';
 
 //=====================
 // VALIDATION SCHEMA
@@ -23,12 +24,16 @@ const validationSchema = Yup.object({
 
 export const UpdateTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
-    const allColumns = useSelector(columnsSelectors.selectAll);
-    const allSubtasks = useSelector(subtasksSelectors.selectAll);
+    const board = useSelector(state => state.data.selectedBoard);
+    const allSubtasks = useSelector(state => state.data.subtasks);
+    const allColumns = useSelector(state => state.data.columns);
     const currentColumns = allColumns.filter(column =>
-        currentBoard.columnIds.includes(column.id)
+        board?.columnIds.includes(column.id)
     );
+
+    //=====================
+    // PREVIOUS STATE OF DATA TO PASS INTO FUNCTION
+    const column = allColumns.filter(column => task.columnId === column.id);
     const subtasks = allSubtasks.filter(subtask =>
         task.subtaskIds.includes(subtask.id)
     );
@@ -47,10 +52,17 @@ export const UpdateTaskDialog = ({ task }) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => {
-                    dispatch(
-                        updateTask({
-                            id: task.id,
+                onSubmit={async (values, { setSubmitting }) => {
+                    setSubmitting(true);
+
+                    console.log(values);
+                    try {
+                        await delay(500);
+                        await updateTaskFromFirestore({
+                            board: board,
+                            prevColumn: column,
+                            task: task,
+                            prevSubtasks: subtasks,
                             title: values.title,
                             description: values.description,
                             columnId: values.columnId,
@@ -60,9 +72,13 @@ export const UpdateTaskDialog = ({ task }) => {
                                 completed: subtask.completed || false,
                                 taskId: task.id,
                             })),
-                        })
-                    );
-                    dispatch(closeDialog());
+                        });
+                        dispatch(closeDialog());
+                    } catch (error) {
+                        console.log(error);
+                    } finally {
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
@@ -98,6 +114,7 @@ export const UpdateTaskDialog = ({ task }) => {
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
+                            loading={isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'

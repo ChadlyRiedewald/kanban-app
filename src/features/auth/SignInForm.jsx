@@ -1,11 +1,43 @@
-import { FormikControl, Form } from '../../app/common/form';
+import { FormikControl, Form, Label } from '../../app/common/form';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import Button from '../../app/common/button';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { CenteredSpan, LogoTablet, FormWrapper, ButtonsWrapper } from './Auth';
 import { Formik } from 'formik';
-import { signInWithEmail } from '../../app/firebase';
+import { signInFirebase } from '../../app/firebase';
+import { useDispatch } from 'react-redux';
+import { openDialog } from '../../app/ui';
+import { useState } from 'react';
+import styled from 'styled-components/macro';
+import { secondaryBg } from '../../constants';
+
+//=====================
+// STYLED COMPONENTS
+const StyledCheckbox = styled.input`
+    &[type='checkbox'] {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: var(--radii-xs);
+        flex-shrink: 0;
+        background-color: ${p =>
+            p.checked ? 'var(--color-purple-100)' : secondaryBg};
+        border: ${p =>
+            !p.checked
+                ? `1px var(--color-gray-400) solid`
+                : `1px solid transparent`};
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--color-purple-shadow);
+        }
+
+        &:focus:not(:focus-visible) {
+            box-shadow: none;
+        }
+    }
+`;
 
 //=====================
 // INITIAL VALUES
@@ -27,23 +59,21 @@ const validationSchema = Yup.object({
 // COMPONENTS
 export const SignInForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [checked, setChecked] = useState(false);
 
     function handleError(errorCode) {
-        let errorMessage;
         switch (errorCode) {
             case 'auth/user-not-found':
-                errorMessage = {
-                    ['email']: 'User Not Found',
+                return {
+                    ['email']: 'User not found',
                 };
-                return errorMessage;
             case 'auth/wrong-password':
-                errorMessage = {
-                    ['password']: 'Wrong Password',
+                return {
+                    ['password']: 'Wrong password',
                 };
-                return errorMessage;
             default:
-                errorMessage = '';
-                return errorMessage;
+                return '';
         }
     }
 
@@ -52,12 +82,14 @@ export const SignInForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async (values, { setErrors }) => {
+                onSubmit={async (values, { setErrors, setSubmitting }) => {
                     try {
-                        await signInWithEmail(values.email, values.password);
+                        await signInFirebase(values.email, values.password);
                         navigate('/dashboard');
                     } catch (error) {
                         setErrors(handleError(error.code));
+                    } finally {
+                        setSubmitting(false);
                     }
                 }}
             >
@@ -82,12 +114,43 @@ export const SignInForm = () => {
                             placeholder='Enter your password'
                         />
                         <ButtonsWrapper>
-                            <FormikControl
-                                control='checkbox'
-                                label='Remember for 30 days'
-                                name='rememberPassword'
-                            />
-                            <a href='#'>Forgot password?</a>
+                            <Label variant='sign-in' htmlFor='rememberPassword'>
+                                <StyledCheckbox
+                                    type='checkbox'
+                                    id='rememberPassword'
+                                    checked={checked}
+                                    name='rememberPassword'
+                                    onChange={() => setChecked(!checked)}
+                                />
+                                {checked && (
+                                    <svg
+                                        aria-hidden='true'
+                                        fill='none'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        viewBox='-3 -4.5 16 16'
+                                    >
+                                        <path
+                                            stroke='var(--color-white)'
+                                            strokeWidth='2'
+                                            fill='none'
+                                            d='m1.276 3.066 2.756 2.756 5-5'
+                                        />
+                                    </svg>
+                                )}
+                                Remember me
+                            </Label>
+                            <button
+                                type='button'
+                                onClick={() =>
+                                    dispatch(
+                                        openDialog({
+                                            dialogType: 'resetPassword',
+                                        })
+                                    )
+                                }
+                            >
+                                Forgot password?
+                            </button>
                         </ButtonsWrapper>
                         <Button
                             loading={isSubmitting}

@@ -34,6 +34,11 @@ export const secondaryButtonBg = theme('colorMode', {
     dark: 'var(--color-white)',
 });
 
+export const shadowColor = theme('colorMode', {
+    light: '216 15% 57%',
+    dark: '235 15% 16%',
+});
+
 export const GlobalStyles = createGlobalStyle`
     //=====================
     // CSS RESET
@@ -219,8 +224,34 @@ export const GlobalStyles = createGlobalStyle`
     &:focus:not(:focus-visible) {
       box-shadow: none;
     }
-    
   }
+  
+  // Custom scrollbar
+    /* width */
+    ::-webkit-scrollbar {
+        width: 16px;
+        height: 24px;
+        padding: 10px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background-color: ${secondaryBg};
+        border-radius: var(--radii-round);
+        left: 16px;
+        margin: 8px;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--color-gray-600);
+        border-radius: var(--radii-round);
+        padding-block: 6px;
+        border: 5px solid ${secondaryBg};
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: ${primaryBg};
+    }
+    
   :root {
       //=====================
       // COLORS
@@ -314,5 +345,10 @@ export const GlobalStyles = createGlobalStyle`
       // FIXED HEIGTHS
     --height-topbar: 91px;
     --height-topbar-mobile: 64px;
+
+      //=====================
+      // SHADOW
+      --shadow-color: 216 15% 57%;
+      --shadow: 4px 4px 6px hsl(${shadowColor} / 0.10)
     }
 `;

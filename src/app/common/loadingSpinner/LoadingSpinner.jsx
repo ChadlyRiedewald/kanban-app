@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { color } from '../loading/Loading';
 
 export const LoadingSpinner = styled.div`
     display: flex;
@@ -8,7 +9,7 @@ export const LoadingSpinner = styled.div`
         content: '';
         width: 20px;
         height: 20px;
-        border: 3px solid ${p => (p.color ? p.color : 'var(--color-white)')};
+        border: 3px solid ${p => (p.loading ? color : 'var(--color-white)')};
         border-top-color: transparent;
         border-radius: 100%;
         animation: loading 0.8s linear infinite;

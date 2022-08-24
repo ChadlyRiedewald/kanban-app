@@ -4,9 +4,9 @@ import { Formik } from 'formik';
 import { Form, FormikControl } from '../../app/common/form';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { columnsSelectors, addTask } from '../boards';
-import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
+import { addTaskToFirestore } from '../../app/firebase';
+import { delay } from '../../app/util';
 
 //=====================
 // VALIDATION SCHEMA
@@ -23,12 +23,14 @@ const validationSchema = Yup.object({
 
 export const AddTaskDialog = ({ columnId }) => {
     const dispatch = useDispatch();
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
-    const allColumns = useSelector(columnsSelectors.selectAll);
-
-    const currentColumns = allColumns.filter(column =>
+    const currentBoard = useSelector(state => state.data.selectedBoard);
+    const { columns } = useSelector(state => state.data);
+    const currentColumn = columns.filter(column => column.id === columnId);
+    const currentColumns = columns.filter(column =>
         currentBoard.columnIds.includes(column.id)
     );
+
+    console.log(currentColumn[0]);
 
     //=====================
     // INITIAL VALUES
@@ -39,7 +41,7 @@ export const AddTaskDialog = ({ columnId }) => {
             { title: '', placeholder: 'e.g. Make coffee' },
             { title: '', placeholder: 'e.g. Drink coffee' },
         ],
-        columnId: columnId || currentBoard.columnIds[0],
+        columnId: columnId || currentColumns[0].id,
     };
 
     return (
@@ -47,25 +49,28 @@ export const AddTaskDialog = ({ columnId }) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => {
-                    const taskId = nanoid();
-                    dispatch(
-                        addTask({
-                            id: taskId,
+                onSubmit={async (values, { setSubmitting }) => {
+                    setSubmitting(true);
+                    try {
+                        await delay(500);
+                        await addTaskToFirestore({
                             title: values.title,
                             description: values.description,
                             columnId: values.columnId,
+                            oldTaskIds: currentColumn[0].taskIds,
                             subtasks: values.subtasks
                                 .filter(subtask => subtask.title)
                                 .map(subtask => ({
-                                    id: nanoid(),
                                     title: subtask.title,
                                     completed: false,
-                                    taskId: taskId,
                                 })),
-                        })
-                    );
-                    dispatch(closeDialog());
+                        });
+                        dispatch(closeDialog());
+                    } catch (error) {
+                        console.log(error);
+                    } finally {
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
@@ -101,6 +106,7 @@ export const AddTaskDialog = ({ columnId }) => {
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
+                            loading={isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'

@@ -1,4 +1,4 @@
-import { Input, TextArea, Select, Checkbox, InputGroup } from './index';
+import { Input, TextArea, Select, InputGroup } from './index';
 
 //=====================
 /* Within a form import this component to use any of the custom Form Components */
@@ -12,8 +12,6 @@ export function FormikControl({ control, ...props }) {
             return <TextArea {...props} />;
         case 'select':
             return <Select {...props} />;
-        case 'checkbox':
-            return <Checkbox {...props} />;
         default:
             return null;
     }

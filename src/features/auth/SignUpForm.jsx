@@ -1,10 +1,11 @@
 import { FormikControl, Form } from '../../app/common/form';
 import Button from '../../app/common/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import * as Yup from 'yup';
 import { CenteredSpan, FormWrapper, LogoTablet } from './Auth';
 import { Formik } from 'formik';
+import { signUpFirebase } from '../../app/firebase';
 
 //=====================
 // INITIAL VALUES
@@ -29,12 +30,41 @@ const validationSchema = Yup.object({
 //=====================
 // COMPONENTS
 export const SignUpForm = () => {
+    const navigate = useNavigate();
+
+    function handleError(errorCode) {
+        switch (errorCode) {
+            case 'auth/email-already-in-use':
+                return {
+                    ['email']: 'Already in use',
+                };
+            case 'auth/invalid-email':
+                return {
+                    ['email']: 'Invalid email',
+                };
+            default:
+                return '';
+        }
+    }
+
     return (
         <FormWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async values => console.log(values)}
+                onSubmit={async (values, { setErrors, setSubmitting }) => {
+                    try {
+                        await signUpFirebase(
+                            values.email,
+                            values.confirmPassword
+                        );
+                        navigate('/dashboard');
+                    } catch (error) {
+                        setErrors(handleError(error.code));
+                    } finally {
+                        setSubmitting(false);
+                    }
+                }}
             >
                 {({ isSubmitting, isValid, dirty }) => (
                     <Form>
@@ -65,7 +95,7 @@ export const SignUpForm = () => {
                         />
                         <Button
                             loading={isSubmitting}
-                            // disabled={!isValid || !dirty || isSubmitting}
+                            disabled={!isValid || !dirty || isSubmitting}
                             type='submit'
                             variant='primary'
                             size='medium'

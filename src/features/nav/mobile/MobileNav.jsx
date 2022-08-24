@@ -45,7 +45,7 @@ const AddButton = styled(Button)`
 // STYLED COMPONENTS
 export const MobileNav = () => {
     const dispatch = useDispatch();
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
+    const currentBoard = useSelector(state => state.data.selectedBoard);
     const portalId = nanoid();
 
     return (
@@ -55,7 +55,7 @@ export const MobileNav = () => {
                 <ButtonsWrapper>
                     <AddButton
                         disabled={
-                            !currentBoard || !currentBoard?.columnIds.length
+                            !currentBoard || !currentBoard?.columnIds?.length
                         }
                         onClick={() =>
                             dispatch(openDialog({ dialogType: 'addTask' }))
@@ -66,10 +66,7 @@ export const MobileNav = () => {
                     <MenuTrigger
                         portalId={portalId}
                         onClick={() => {
-                            if (
-                                currentBoard ||
-                                !currentBoard.columnIds?.length
-                            ) {
+                            if (currentBoard) {
                                 dispatch(
                                     openMenu({
                                         menuType: 'boardMenu',

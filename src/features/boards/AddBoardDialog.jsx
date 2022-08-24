@@ -5,9 +5,9 @@ import Button from '../../app/common/button';
 import * as Yup from 'yup';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { addBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
-import { useNavigate } from 'react-router-dom';
+import { addBoardToFirestore } from '../../app/firebase';
+import { delay } from '../../app/util';
 
 //=====================
 // INITIAL VALUES
@@ -36,30 +36,34 @@ const validationSchema = Yup.object({
 // COMPONENTS
 export const AddBoardDialog = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     return (
         <DialogWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => {
-                    const boardId = nanoid();
-                    dispatch(
-                        addBoard({
-                            id: boardId,
+                onSubmit={async (values, { setSubmitting }) => {
+                    console.log(values);
+                    setSubmitting(true);
+                    try {
+                        await delay(500);
+                        await addBoardToFirestore({
                             title: values.title,
-                            columns: values.columns.map(column => ({
-                                id: nanoid(),
-                                title: column.title,
-                                color: Math.floor(Math.random() * 8) + 1,
-                                boardId: boardId,
-                                taskIds: [],
-                            })),
-                        })
-                    );
-                    dispatch(closeDialog());
-                    navigate(`/dashboard/${boardId}`);
+                            columns: [
+                                ...values.columns.map(column => ({
+                                    id: nanoid(),
+                                    title: column.title,
+                                    color: Math.floor(Math.random() * 6) + 1,
+                                    taskIds: [],
+                                })),
+                            ],
+                        });
+                        dispatch(closeDialog());
+                    } catch (error) {
+                        console.log(error);
+                    } finally {
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({ values, isSubmitting, isValid, dirty }) => (
@@ -79,6 +83,7 @@ export const AddBoardDialog = () => {
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
+                            loading={isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'

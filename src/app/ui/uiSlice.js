@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getInitialColorMode, getInitialSidebar } from '../util';
+import { getInitialColorMode, getInitialSidebar } from '../helpers';
 
 //=====================
 // INITIAL STATE

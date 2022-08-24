@@ -1,5 +1,9 @@
 import { useSelector } from 'react-redux';
-import { UpdatePasswordDialog, SignOutDialog } from '../../../features/auth';
+import {
+    UpdatePasswordDialog,
+    SignOutDialog,
+    ResetPasswordDialog,
+} from '../../../features/auth';
 import { AddBoardDialog, UpdateBoardDialog } from '../../../features/boards';
 import { AddTaskDialog, TaskDialog } from '../../../features/tasks';
 import { RemoveBoardDialog } from '../../../features/boards/';
@@ -11,6 +15,7 @@ export const DialogManager = () => {
     const dialogLookup = {
         signOut: SignOutDialog,
         updatePassword: UpdatePasswordDialog,
+        resetPassword: ResetPasswordDialog,
         addBoard: AddBoardDialog,
         updateBoard: UpdateBoardDialog,
         removeBoard: RemoveBoardDialog,

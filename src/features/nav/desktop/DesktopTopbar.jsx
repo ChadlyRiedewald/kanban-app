@@ -56,7 +56,7 @@ const ButtonsWrapper = styled.div`
 // COMPONENTS
 export const DesktopTopbar = () => {
     const { open } = useSelector(state => state.ui.sidebar);
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
+    const currentBoard = useSelector(state => state.data.selectedBoard);
     const dispatch = useDispatch();
     const portalId = nanoid();
 
@@ -83,14 +83,9 @@ export const DesktopTopbar = () => {
                     </Button>
                     <MenuTrigger
                         portalId={portalId}
-                        disabled={
-                            !currentBoard || !currentBoard?.columnIds.length
-                        }
+                        disabled={!currentBoard}
                         onClick={() => {
-                            if (
-                                currentBoard ||
-                                !currentBoard.columnIds?.length
-                            ) {
+                            if (currentBoard) {
                                 dispatch(
                                     openMenu({
                                         menuType: 'boardMenu',

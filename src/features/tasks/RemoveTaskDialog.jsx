@@ -1,9 +1,11 @@
 import styled from 'styled-components/macro';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AlertDialogWrapper } from '../../app/common/dialog';
 import Button from '../../app/common/button';
 import { closeDialog } from '../../app/ui';
-import { removeTask } from '../boards';
+import { actionError, actionFinish, actionStart } from '../../app/async';
+import { delay } from '../../app/util';
+import { removeTaskFromFirestore } from '../../app/firebase';
 
 //=====================
 // STYLED COMPONENTS
@@ -16,13 +18,29 @@ const ButtonWrapper = styled.div`
 // COMPONENTS
 export const RemoveTaskDialog = ({ task }) => {
     const dispatch = useDispatch();
+    const allSubtasks = useSelector(state => state.data.subtasks);
+    const isLoading = useSelector(state => state.async.loading);
+    const subtasks = allSubtasks.filter(subtask =>
+        task.subtaskIds.includes(subtask.id)
+    );
 
-    function onDelete() {
-        dispatch(removeTask(task));
-        dispatch(closeDialog());
-    }
+    const handleDelete = async () => {
+        dispatch(actionStart());
+        try {
+            await delay(500);
+            await removeTaskFromFirestore({
+                task: task,
+                subtasks: subtasks,
+            });
+            dispatch(closeDialog());
+            dispatch(actionFinish());
+        } catch (error) {
+            console.log(error);
+            dispatch(actionError(error));
+        }
+    };
 
-    function onCancel() {
+    function handleCancel() {
         dispatch(closeDialog());
     }
 
@@ -35,10 +53,11 @@ export const RemoveTaskDialog = ({ task }) => {
             </p>
             <ButtonWrapper>
                 <Button
+                    loading={isLoading}
                     variant='destructive'
                     size='medium'
                     fluid
-                    onClick={onDelete}
+                    onClick={handleDelete}
                 >
                     Delete
                 </Button>
@@ -46,7 +65,7 @@ export const RemoveTaskDialog = ({ task }) => {
                     variant='secondary'
                     size='medium'
                     fluid
-                    onClick={onCancel}
+                    onClick={handleCancel}
                 >
                     Cancel
                 </Button>

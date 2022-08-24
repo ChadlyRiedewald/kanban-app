@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import uiReducer from '../ui';
 import authReducer from '../../features/auth';
-import boardsReducer from '../../features/boards';
+import dataReducer from '../data';
+import asyncReducer from '../async';
 
 //=====================
 // REDUX STORE CONFIG
@@ -9,7 +10,8 @@ export const store = configureStore({
     reducer: {
         ui: uiReducer,
         auth: authReducer,
-        boards: boardsReducer,
+        async: asyncReducer,
+        data: dataReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

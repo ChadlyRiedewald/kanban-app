@@ -4,10 +4,11 @@ import { Form, FormikControl } from '../../app/common/form';
 import Button from '../../app/common/button';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { columnsSelectors, updateBoard } from './boardsSlice';
 import { closeDialog } from '../../app/ui';
 import { nanoid } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
+import { updateBoardFromFirestore } from '../../app/firebase';
+import { delay } from '../../app/util';
 
 //=====================
 // VALIDATION SCHEMA
@@ -25,23 +26,35 @@ const validationSchema = Yup.object({
 export const UpdateBoardDialog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
-    const allColumns = useSelector(columnsSelectors.selectAll);
+    const allColumns = useSelector(state => state.data.columns);
+    const allTasks = useSelector(state => state.data.tasks);
+    const allSubtasks = useSelector(state => state.data.subtasks);
+
+    //=====================
+    // PREVIOUS STATE OF DATA TO PASS INTO FUNCTION
+    const board = useSelector(state => state.data.selectedBoard);
+    const columns = [
+        ...allColumns.filter(column => board.columnIds.includes(column.id)),
+    ];
+    const tasks = allTasks.filter(task =>
+        board.columnIds.includes(task.columnId)
+    );
+    const tasksIds = tasks.map(task => task.id);
+    const subtasks = allSubtasks.filter(subtask =>
+        tasksIds.includes(subtask.taskId)
+    );
 
     //=====================
     // INITIAL COLUMNS
     const currentColumns = allColumns.filter(column => {
-        return currentBoard.columnIds.includes(column.id);
+        return board.columnIds.includes(column.id);
     });
 
     //=====================
     // INITIAL VALUES
     const initialValues = {
-        title: currentBoard.title,
-        columns: currentColumns.map(column => ({
-            id: column.id,
-            title: column.title,
-        })),
+        title: board.title,
+        columns: currentColumns,
     };
 
     return (
@@ -49,19 +62,35 @@ export const UpdateBoardDialog = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => {
-                    dispatch(
-                        updateBoard({
-                            boardId: currentBoard.id,
+                onSubmit={async (values, { setSubmitting }) => {
+                    setSubmitting(true);
+                    try {
+                        await delay(500);
+                        await updateBoardFromFirestore({
+                            board: board,
+                            prevColumns: columns,
+                            prevTasks: tasks,
+                            prevSubtasks: subtasks,
+                            columns: [
+                                ...values.columns.map(column => ({
+                                    id: column.id || nanoid(),
+                                    title: column.title,
+                                    color:
+                                        column.color ||
+                                        Math.floor(Math.random() * 6) + 1,
+                                    boardId: board.id,
+                                    taskIds: column.taskIds || [],
+                                })),
+                            ],
                             title: values.title,
-                            columns: values.columns.map(column => ({
-                                id: column.id || nanoid(),
-                                title: column.title,
-                            })),
-                        })
-                    );
-                    navigate(`/dashboard/${currentBoard.id}`);
-                    dispatch(closeDialog());
+                        });
+                        navigate(`/dashboard/${board.id}`);
+                        dispatch(closeDialog());
+                    } catch (error) {
+                        console.log(error);
+                    } finally {
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({ values, isValid, dirty, isSubmitting }) => (
@@ -81,6 +110,7 @@ export const UpdateBoardDialog = () => {
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
+                            loading={isSubmitting}
                             type='submit'
                             fluid
                             variant='primary'

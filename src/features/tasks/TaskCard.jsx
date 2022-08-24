@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 import { secondaryBg } from '../../constants';
 import { useSelector } from 'react-redux';
-import { subtasksSelectors } from '../boards';
 
 //=====================
 // STYLED COMPONENTS
@@ -15,13 +14,15 @@ const Wrapper = styled.div`
     background-color: ${secondaryBg};
     border-radius: var(--radii-md);
     cursor: pointer;
+    box-shadow: var(--shadow);
 `;
 
 //=====================
 // COMPONENTS
 export const TaskCard = ({ task, ...props }) => {
-    const allSubtasks = useSelector(subtasksSelectors.selectAll);
-    const prevSubtasks = allSubtasks.filter(subtask =>
+    const { subtasks } = useSelector(state => state.data);
+
+    const prevSubtasks = subtasks.filter(subtask =>
         task.subtaskIds.includes(subtask.id)
     );
     const completedSubtasks = prevSubtasks.filter(subtask => subtask.completed);
@@ -30,7 +31,7 @@ export const TaskCard = ({ task, ...props }) => {
         <Wrapper {...props}>
             <h3>{task.title}</h3>
             <strong style={{ color: 'var(--color-gray-600)' }}>
-                {`${completedSubtasks.length} of ${task.subtaskIds.length} subtasks`}
+                {`${completedSubtasks?.length} of ${task.subtaskIds.length} subtasks`}
             </strong>
         </Wrapper>
     );

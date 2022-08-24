@@ -60,7 +60,7 @@ const Root = DialogPrimitive.Root;
 // COMPONENTS
 export const MobileNavDropdown = ({ ...props }) => {
     const [isOpen, toggleIsOpen] = useState(false);
-    const currentBoard = useSelector(state => state.boards.selectedBoard);
+    const currentBoard = useSelector(state => state.data.selectedBoard);
     const toggle = () => toggleIsOpen(!isOpen);
 
     return (
