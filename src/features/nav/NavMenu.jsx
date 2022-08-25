@@ -12,7 +12,7 @@ import { ReactComponent as User } from '../../assets/icon-user.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/icon-sign-out.svg';
 import { NavLink } from './NavLink';
 import { NavButton } from './NavButton';
-import { closeSidebar, openDialog } from '../../app/ui';
+import { closeDialog, closeSidebar, openDialog } from '../../app/ui';
 
 /* This component is the Nav Menu (content)... used both in desktop as in mobile */
 
@@ -73,7 +73,10 @@ const NavMenu = () => {
                 <nav>
                     <ul>
                         {allBoards.map((board, index) => (
-                            <li key={index}>
+                            <li
+                                key={index}
+                                onClick={() => dispatch(closeDialog())}
+                            >
                                 <NavLink
                                     to={`/dashboard/${board.id}`}
                                     className='nav-link'
