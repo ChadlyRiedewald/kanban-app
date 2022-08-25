@@ -28,7 +28,7 @@ export const NoColumns = () => {
                 variant='primary'
                 size='large'
                 onClick={() =>
-                    dispatch(openDialog({ dialogType: 'updateBoard' }))
+                    dispatch(openDialog({ dialogType: 'addColumn' }))
                 }
             >
                 + Add New Column
