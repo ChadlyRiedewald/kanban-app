@@ -3,6 +3,7 @@ import { ErrorMessage, Label, StyledInput } from './index';
 import { ReactComponent as Delete } from '../../../assets/icon-cross.svg';
 import Button from '../button';
 import styled from 'styled-components/macro';
+import { BREAKPOINTS } from '../../../constants';
 
 //=====================
 // STYLED COMPONENTS
@@ -10,6 +11,15 @@ const InputsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    margin-bottom: 8px;
+    max-height: 96px;
+    overflow: auto;
+    margin-right: -8px;
+    padding-right: 16px;
+
+    @media screen and ${BREAKPOINTS.tablet} {
+        max-height: 320px;
+    }
 `;
 
 //=====================
@@ -18,10 +28,10 @@ export const InputGroup = ({ label, name, values }) => {
     return (
         <Label variant='input'>
             {label}
-            <InputsWrapper>
-                <FieldArray name={name}>
-                    {({ push, remove }) => (
-                        <>
+            <FieldArray name={name}>
+                {({ push, remove }) => (
+                    <>
+                        <InputsWrapper>
                             {values.map((input, index) => (
                                 <Label key={index} variant='input-group'>
                                     <Field name={`${name}.${index}.title`}>
@@ -49,21 +59,19 @@ export const InputGroup = ({ label, name, values }) => {
                                     <Delete onClick={() => remove(index)} />
                                 </Label>
                             ))}
-                            <Button
-                                disabled={values.length >= 8}
-                                onClick={() => push('')}
-                                type='button'
-                                variant='secondary'
-                                size='medium'
-                                fluid
-                            >
-                                + Add{' '}
-                                {name === 'columns' ? 'Column' : 'Subtask'}
-                            </Button>
-                        </>
-                    )}
-                </FieldArray>
-            </InputsWrapper>
+                        </InputsWrapper>
+                        <Button
+                            onClick={() => push('')}
+                            type='button'
+                            variant='secondary'
+                            size='medium'
+                            fluid
+                        >
+                            + Add {name === 'columns' ? 'Column' : 'Subtask'}
+                        </Button>
+                    </>
+                )}
+            </FieldArray>
         </Label>
     );
 };

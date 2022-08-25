@@ -46,8 +46,8 @@ const StyledContent = styled(Content)`
     bottom: ${p => !p.nav && '0'};
     background: ${secondaryBg};
     max-width: ${p => (p.nav ? '264px' : ' var(--width-dialog)')};
-    height: fit-content;
-    max-height: calc(100% - 32px);
+    //height: fit-content;
+    max-height: fit-content;
     padding: var(--space-md);
     border-radius: var(--radii-md);
     display: flex;

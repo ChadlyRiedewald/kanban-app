@@ -226,31 +226,39 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
   
-  // Custom scrollbar
-    /* width */
+  // SCROLLBAR
     ::-webkit-scrollbar {
-        width: 16px;
-        height: 24px;
-        padding: 10px;
+        width: 8px;
+        height: 8px;
     }
-    /* Track */
     ::-webkit-scrollbar-track {
         background-color: ${secondaryBg};
         border-radius: var(--radii-round);
-        left: 16px;
-        margin: 8px;
+        margin: 0;
     }
-    /* Handle */
     ::-webkit-scrollbar-thumb {
         background-color: var(--color-gray-600);
         border-radius: var(--radii-round);
-        padding-block: 6px;
-        border: 5px solid ${secondaryBg};
+        border: none;
     }
-    /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: ${primaryBg};
     }
+
+    @media screen and ${BREAKPOINTS.tablet} {
+        ::-webkit-scrollbar {
+            width: 24px;
+            height: 24px;
+        }
+        ::-webkit-scrollbar-track {
+            margin: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+
+            border: 5px solid ${secondaryBg};
+        }
+    }
+    
     
   :root {
       //=====================

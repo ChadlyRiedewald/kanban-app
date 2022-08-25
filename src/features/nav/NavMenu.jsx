@@ -5,7 +5,7 @@ import Separator from '../../app/common/separator';
 import MobileOnly from '../../app/common/mobileOnly';
 import styled from 'styled-components/macro';
 import DesktopOnly from '../../app/common/desktopOnly';
-import { BREAKPOINTS, primaryBg, secondaryBg } from '../../constants';
+import { BREAKPOINTS, secondaryBg } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as Add } from '../../assets/icon-add.svg';
 import { ReactComponent as User } from '../../assets/icon-user.svg';
@@ -29,27 +29,11 @@ const Wrapper = styled.div`
         overflow: auto;
         margin-inline: -24px;
         padding-inline: 24px 16px;
-
-        // Custom scrollbar
-        /* width */
         ::-webkit-scrollbar {
-            width: 24px;
+            width: 20px;
         }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background-color: ${secondaryBg};
-            left: 16px;
-            margin: 0;
-        }
-        /* Handle */
         ::-webkit-scrollbar-thumb {
-            padding-block: 6px;
             border: 6px solid ${secondaryBg};
-        }
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: ${primaryBg};
         }
     }
 
