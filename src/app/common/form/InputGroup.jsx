@@ -12,7 +12,7 @@ const InputsWrapper = styled.div`
     flex-direction: column;
     gap: var(--space-sm);
     margin-bottom: var(--space-xs);
-    max-height: var(--space-xxxl);
+    max-height: 128px;
     overflow: auto;
     margin-right: -8px;
     padding-right: var(--space-sm);

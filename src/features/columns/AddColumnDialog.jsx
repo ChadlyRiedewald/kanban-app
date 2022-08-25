@@ -28,7 +28,7 @@ export const AddColumnDialog = () => {
     //=====================
     // INITIAL VALUES
     const initialValues = {
-        columns: [{ title: '', placeholder: 'e.g. Todo' }],
+        title: '',
     };
 
     return (
@@ -39,18 +39,17 @@ export const AddColumnDialog = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
                     dispatch(actionStart());
+                    console.log(values);
                     try {
                         await delay(500);
                         await addColumnToFirestore({
                             board: currentBoard,
-                            columns: [
-                                ...values.columns.map(column => ({
-                                    title: column.title,
-                                    color: Math.floor(Math.random() * 6) + 1,
-                                    boardId: currentBoard.id,
-                                    taskIds: [],
-                                })),
-                            ],
+                            column: {
+                                title: values.title,
+                                color: Math.floor(Math.random() * 6) + 1,
+                                boardId: currentBoard.id,
+                                taskIds: [],
+                            },
                         });
                         dispatch(actionFinish());
                         dispatch(closeDialog());
@@ -64,12 +63,13 @@ export const AddColumnDialog = () => {
             >
                 {({ values, isValid, dirty, isSubmitting }) => (
                     <Form>
-                        <h2>Add Column</h2>
+                        <h2>New Column</h2>
                         <FormikControl
-                            control='input-group'
-                            label='Columns'
-                            name='columns'
-                            values={values.columns}
+                            control='input'
+                            label='Name'
+                            name='title'
+                            values={values.title}
+                            placeholder='e.g. Todo'
                         />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
@@ -79,7 +79,7 @@ export const AddColumnDialog = () => {
                             variant='primary'
                             size='medium'
                         >
-                            Save Changes
+                            Create Column
                         </Button>
                     </Form>
                 )}

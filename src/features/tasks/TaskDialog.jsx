@@ -1,4 +1,4 @@
-import { DialogWrapper } from '../../app/common/dialog';
+import { TaskDialogWrapper } from '../../app/common/dialog';
 import { Label } from '../../app/common/form';
 import styled from 'styled-components/macro';
 import { MenuTrigger } from '../../app/common/menu';
@@ -89,7 +89,7 @@ export const TaskDialog = ({ task }) => {
     );
 
     return (
-        <DialogWrapper>
+        <TaskDialogWrapper>
             <TitleWrapper>
                 <h2>{task.title}</h2>
                 <MenuTrigger
@@ -189,6 +189,6 @@ export const TaskDialog = ({ task }) => {
                 </StyledSelect>
                 <Down />
             </Label>
-        </DialogWrapper>
+        </TaskDialogWrapper>
     );
 };

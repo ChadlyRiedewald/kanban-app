@@ -161,29 +161,26 @@ export function removeBoardFromFirestore(values) {
     return batch.commit();
 }
 
-// Add Column(s)
+// Add Column
 export function addColumnToFirestore(values) {
+    const batch = writeBatch(db);
     const user = auth.currentUser;
     const boardRef = doc(db, 'users', user.uid, 'boards', values.board.id);
-    const prevColumIds = values.board.columnIds;
-    let columnIdsToAdd = [];
 
-    // Set Column(s)
-    values.columns.map(column => {
-        const columnRef = doc(collection(db, 'users', user.uid, 'columns'));
-        columnIdsToAdd.push(columnRef.id);
-        const columnData = {
-            ...column,
-            id: columnRef.id,
-            createdAt: serverTimestamp(),
-        };
-        return setDoc(columnRef, columnData);
+    // Set Column
+    const columnRef = doc(collection(db, 'users', user.uid, 'columns'));
+    batch.set(columnRef, {
+        ...values.column,
+        id: columnRef.id,
+        createdAt: serverTimestamp(),
     });
 
     // Update Board
-    return updateDoc(boardRef, {
-        columnIds: [...prevColumIds, ...columnIdsToAdd],
+    batch.update(boardRef, {
+        columnIds: arrayUnion(columnRef.id),
     });
+
+    return batch.commit();
 }
 
 //=====================
