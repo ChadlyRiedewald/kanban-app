@@ -11,6 +11,7 @@ import { RemoveTaskDialog } from '../../../features/tasks/RemoveTaskDialog';
 import { UpdateTaskDialog } from '../../../features/tasks/UpdateTaskDialog';
 import { AddColumnDialog } from '../../../features/columns/AddColumnDialog';
 import { AnimatePresence } from 'framer-motion';
+import { MobileNavDialog } from '../../../features/nav/mobile';
 
 export const DialogManager = () => {
     const dialogLookup = {
@@ -25,6 +26,7 @@ export const DialogManager = () => {
         addTask: AddTaskDialog,
         updateTask: UpdateTaskDialog,
         removeTask: RemoveTaskDialog,
+        mobileNav: MobileNavDialog,
     };
     const { dialogType, dialogProps } = useSelector(state => state.ui.dialog);
     let renderedDialog;

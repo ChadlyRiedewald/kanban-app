@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeDialog } from '../../app/ui';
 import { addTaskToFirestore } from '../../app/firebase';
 import { delay } from '../../app/util';
+import { actionError, actionFinish, actionStart } from '../../app/async';
 
 //=====================
 // VALIDATION SCHEMA
@@ -48,6 +49,7 @@ export const AddTaskDialog = ({ columnId }) => {
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
+                    dispatch(actionStart());
                     try {
                         await delay(500);
                         await addTaskToFirestore({
@@ -61,9 +63,10 @@ export const AddTaskDialog = ({ columnId }) => {
                                     completed: false,
                                 })),
                         });
+                        dispatch(actionFinish());
                         dispatch(closeDialog());
                     } catch (error) {
-                        console.log(error);
+                        dispatch(actionError(error));
                     } finally {
                         setSubmitting(false);
                     }

@@ -9,6 +9,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import { updateBoardFromFirestore } from '../../app/firebase';
 import { delay } from '../../app/util';
+import { actionError, actionFinish, actionStart } from '../../app/async';
 
 //=====================
 // VALIDATION SCHEMA
@@ -55,6 +56,7 @@ export const AddColumnDialog = () => {
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
+                    dispatch(actionStart());
                     try {
                         await delay(500);
                         await updateBoardFromFirestore({
@@ -74,10 +76,11 @@ export const AddColumnDialog = () => {
                                 })),
                             ],
                         });
+                        dispatch(actionFinish());
                         dispatch(closeDialog());
                         navigate(`/dashboard/${currentBoard.id}`);
                     } catch (error) {
-                        console.log(error);
+                        dispatch(actionError(error));
                     } finally {
                         setSubmitting(false);
                     }

@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { MenuTrigger } from '../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { openMenu } from '../../app/ui';
+import { closeDialog, openMenu } from '../../app/ui';
 import { secondaryBg, textColor } from '../../constants';
 import { ReactComponent as Down } from '../../assets/icon-arrow-down.svg';
 import { actionError, actionFinish, actionStart } from '../../app/async';
@@ -129,7 +129,6 @@ export const TaskDialog = ({ task }) => {
                                     await toggleSubtaskCompleted(subtask);
                                     dispatch(actionFinish());
                                 } catch (error) {
-                                    console.log(error);
                                     dispatch(actionError(error));
                                 }
                             }}
@@ -159,16 +158,21 @@ export const TaskDialog = ({ task }) => {
                 <StyledSelect
                     onChange={async e => {
                         dispatch(actionStart());
-
+                        const prevColumn = allColumns.find(
+                            column => task.columnId === column.id
+                        );
+                        const column = allColumns.find(
+                            column => e.target.value === column.id
+                        );
                         try {
                             await updateTaskColumn({
-                                prevColumnId: task.columnId,
-                                columnId: e.target.value,
+                                prevColumn,
+                                column,
                                 id: task.id,
                             });
+                            dispatch(closeDialog());
                             dispatch(actionFinish());
                         } catch (error) {
-                            console.log(error);
                             dispatch(actionError(error));
                         }
                     }}

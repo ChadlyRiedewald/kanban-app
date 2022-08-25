@@ -31,7 +31,7 @@ const variants = {
 const StyledOverlay = styled(Overlay)`
     position: fixed;
     left: 0;
-    top: 0;
+    top: ${p => (p.nav ? '64px' : '0')};
     right: 0;
     bottom: 0;
     background-color: var(--color-overlay);
@@ -41,11 +41,11 @@ const StyledContent = styled(Content)`
     margin: auto;
     position: fixed;
     left: var(--space-sm);
-    top: 0;
+    top: ${p => (p.nav ? '80px' : '0')};
     right: var(--space-sm);
-    bottom: 0;
+    bottom: ${p => !p.nav && '0'};
     background: ${secondaryBg};
-    max-width: var(--width-dialog);
+    max-width: ${p => (p.nav ? '264px' : ' var(--width-dialog)')};
     height: fit-content;
     max-height: calc(100% - 32px);
     padding: var(--space-md);
@@ -53,7 +53,6 @@ const StyledContent = styled(Content)`
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-
     @media screen and ${BREAKPOINTS.tablet} {
         padding: var(--space-lg);
     }
@@ -66,7 +65,7 @@ const StyledContent = styled(Content)`
 //=====================
 // COMPONENTS
 /* The default Dialog where if you click outside the dialog it will close */
-export const DialogWrapper = ({ children }) => {
+export const DialogWrapper = ({ children, ...props }) => {
     const dispatch = useDispatch();
 
     return (
@@ -78,9 +77,10 @@ export const DialogWrapper = ({ children }) => {
                     animate='animate'
                     exit='exit'
                 >
-                    <StyledOverlay />
+                    <StyledOverlay {...props} />
 
                     <StyledContent
+                        {...props}
                         onInteractOutside={e => {
                             e.preventDefault();
                             dispatch(closeDialog());

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     border-radius: var(--radii-md);
     cursor: pointer;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 
     &:hover {
         transform: translateY(-4px);

@@ -1,2 +1,2 @@
 export * from './MobileNav';
-export * from './MobileNavDropdown';
+export * from './MobileNavDialog';

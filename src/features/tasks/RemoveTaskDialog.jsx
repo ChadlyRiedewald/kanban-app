@@ -35,7 +35,6 @@ export const RemoveTaskDialog = ({ task }) => {
             dispatch(closeDialog());
             dispatch(actionFinish());
         } catch (error) {
-            console.log(error);
             dispatch(actionError(error));
         }
     };

@@ -248,7 +248,6 @@ export function updateTaskFromFirestore(values) {
 
     // Update Column
     if (values.columnId !== values.task.columnId) {
-        console.log('yes');
         const prevColumnRef = doc(
             db,
             'users',
@@ -277,12 +276,14 @@ export function updateTaskFromFirestore(values) {
             title: values.title,
             description: values.description,
             subtaskIds: subtaskIds,
+            createdAt: serverTimestamp(),
         });
     } else {
         batch.update(taskRef, {
             title: values.title,
             description: values.description,
             subtaskIds: subtaskIds,
+            createdAt: serverTimestamp(),
         });
     }
 
@@ -324,22 +325,30 @@ export function removeTaskFromFirestore(values) {
 // Update task column
 export function updateTaskColumn(values) {
     const user = auth.currentUser;
+    const taskRef = doc(db, 'users', user.uid, 'tasks', values.id);
     const batch = writeBatch(db);
     const prevColumnRef = doc(
         db,
         'users',
         user.uid,
         'columns',
-        values.prevColumnId
+        values.prevColumn.id
     );
-    const columnRef = doc(db, 'users', user.uid, 'columns', values.columnId);
+    const prevColumnTaskIds = values.prevColumn.taskIds;
+    const columnRef = doc(db, 'users', user.uid, 'columns', values.column.id);
+    const columnTaskIds = values.column.taskIds;
 
     batch.update(prevColumnRef, {
-        taskIds: arrayRemove(values.id),
+        taskIds: prevColumnTaskIds.filter(id => id !== values.id),
     });
 
     batch.update(columnRef, {
-        taskIds: arrayUnion(values.id),
+        taskIds: [...columnTaskIds, values.id],
+    });
+
+    batch.update(taskRef, {
+        columnId: values.column.id,
+        createdAt: serverTimestamp(),
     });
 
     return batch.commit();

@@ -45,7 +45,7 @@ const StyledContent = styled(Content)`
     background-color: ${p =>
         p.variant === 'tasks' ? backgroundColor : backgroundColorMobile};
     top: ${p => (p.variant === 'tasks' ? '40px' : '52px')};
-    right: ${p => (p.variant === 'tasks' ? '-12px' : '-8px')};
+    right: ${p => (p.variant === 'tasks' ? '-12px' : '-4px')};
     width: 192px;
     height: 94px;
     border-radius: var(--radii-lg);

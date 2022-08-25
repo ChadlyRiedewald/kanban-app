@@ -3,11 +3,12 @@ import { secondaryBg } from '../../../constants';
 import MobileOnly from '../../../app/common/mobileOnly';
 import { ReactComponent as Add } from '../../../assets/icon-add.svg';
 import Button from '../../../app/common/button';
-import { MobileNavDropdown } from './MobileNavDropdown';
 import { openDialog, openMenu } from '../../../app/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { MenuTrigger } from '../../../app/common/menu';
 import { nanoid } from '@reduxjs/toolkit';
+import { ReactComponent as Logo } from '../../../assets/logo-mobile.svg';
+import { ReactComponent as Down } from '../../../assets/icon-arrow-down.svg';
 
 /* This component renders the complete mobile navigation */
 
@@ -30,6 +31,7 @@ const ButtonsWrapper = styled.div`
     display: flex;
     gap: var(--space-sm);
     align-items: center;
+    flex-shrink: 0;
 `;
 
 const AddButton = styled(Button)`
@@ -39,6 +41,18 @@ const AddButton = styled(Button)`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const LogoWrapper = styled.div`
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+
+    h2 {
+        margin-right: -8px;
+    }
 `;
 
 //=====================
@@ -51,7 +65,15 @@ export const MobileNav = () => {
     return (
         <MobileOnly>
             <Wrapper>
-                <MobileNavDropdown />
+                <LogoWrapper
+                    onClick={() =>
+                        dispatch(openDialog({ dialogType: 'mobileNav' }))
+                    }
+                >
+                    <Logo />
+                    <h1>{currentBoard?.title}</h1>
+                    <Down />
+                </LogoWrapper>
                 <ButtonsWrapper>
                     <AddButton
                         disabled={

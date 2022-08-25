@@ -8,6 +8,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { closeDialog } from '../../app/ui';
 import { delay } from '../../app/util';
 import { updateTaskFromFirestore } from '../../app/firebase';
+import { actionError, actionFinish, actionStart } from '../../app/async';
 
 //=====================
 // VALIDATION SCHEMA
@@ -54,8 +55,7 @@ export const UpdateTaskDialog = ({ task }) => {
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
-
-                    console.log(values);
+                    dispatch(actionStart());
                     try {
                         await delay(500);
                         await updateTaskFromFirestore({
@@ -73,9 +73,10 @@ export const UpdateTaskDialog = ({ task }) => {
                                 taskId: task.id,
                             })),
                         });
+                        dispatch(actionFinish());
                         dispatch(closeDialog());
                     } catch (error) {
-                        console.log(error);
+                        dispatch(actionError(error));
                     } finally {
                         setSubmitting(false);
                     }

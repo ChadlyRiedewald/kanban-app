@@ -60,7 +60,6 @@ export const UpdatePasswordDialog = () => {
                         await updatePasswordFirebase(values.confirmNewPassword);
                         dispatch(closeDialog());
                     } catch (error) {
-                        console.log(error);
                         setErrors(handleError(error.code));
                     } finally {
                         setSubmitting(false);

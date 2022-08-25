@@ -60,6 +60,7 @@ const CheckboxLabel = styled(BaseLabel)`
     text-decoration: ${p => p.checked && 'line-through'};
     color: ${p => (p.checked ? 'var(--color-gray-500)' : textColor)};
     position: relative;
+    transition: all 0.3s ease-in-out;
 
     svg {
         position: absolute;

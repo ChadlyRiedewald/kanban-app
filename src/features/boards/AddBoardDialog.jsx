@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { closeDialog } from '../../app/ui';
 import { addBoardToFirestore } from '../../app/firebase';
 import { delay } from '../../app/util';
+import { actionError, actionFinish, actionStart } from '../../app/async';
 
 //=====================
 // INITIAL VALUES
@@ -27,7 +28,7 @@ const validationSchema = Yup.object({
         .required(`Can't be empty`),
     columns: Yup.array().of(
         Yup.object().shape({
-            title: Yup.string().required(`Can't be empty`),
+            title: Yup.string(),
         })
     ),
 });
@@ -43,24 +44,28 @@ export const AddBoardDialog = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
-                    console.log(values);
                     setSubmitting(true);
+                    dispatch(actionStart());
                     try {
                         await delay(500);
                         await addBoardToFirestore({
                             title: values.title,
                             columns: [
-                                ...values.columns.map(column => ({
-                                    id: nanoid(),
-                                    title: column.title,
-                                    color: Math.floor(Math.random() * 6) + 1,
-                                    taskIds: [],
-                                })),
+                                ...values.columns
+                                    .filter(column => column.title)
+                                    .map(column => ({
+                                        id: nanoid(),
+                                        title: column.title,
+                                        color:
+                                            Math.floor(Math.random() * 6) + 1,
+                                        taskIds: [],
+                                    })),
                             ],
                         });
+                        dispatch(actionFinish());
                         dispatch(closeDialog());
                     } catch (error) {
-                        console.log(error);
+                        dispatch(actionError(error));
                     } finally {
                         setSubmitting(false);
                     }
