@@ -1,10 +1,11 @@
 import styled from 'styled-components/macro';
 import { Root, Overlay, Content } from '@radix-ui/react-dialog';
-import { BREAKPOINTS, secondaryBg } from '../../../constants';
+import { BREAKPOINTS, secondaryBg, textColor } from '../../../constants';
 import { useDispatch } from 'react-redux';
 import Portal from '../portal';
 import { closeDialog } from '../../ui';
 import { motion } from 'framer-motion';
+import { ReactComponent as Close } from '../../../assets/icon-cross.svg';
 
 //=====================
 // ANIMATION VARIANTS
@@ -46,7 +47,6 @@ const StyledContent = styled(Content)`
     bottom: ${p => !p.nav && '0'};
     background: ${secondaryBg};
     max-width: ${p => (p.nav ? '264px' : ' var(--width-dialog)')};
-    //height: fit-content;
     max-height: fit-content;
     padding: var(--space-md);
     border-radius: var(--radii-md);
@@ -59,6 +59,22 @@ const StyledContent = styled(Content)`
 
     p {
         color: var(--color-gray-600);
+    }
+`;
+
+const CloseWrapper = styled.div`
+    position: absolute;
+    right: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+        fill: ${textColor};
+        transform: scale(0.75);
     }
 `;
 
@@ -90,6 +106,9 @@ export const DialogWrapper = ({ children, ...props }) => {
                             dispatch(closeDialog());
                         }}
                     >
+                        <CloseWrapper onClick={() => dispatch(closeDialog())}>
+                            <Close />
+                        </CloseWrapper>
                         {children}
                     </StyledContent>
                 </motion.div>

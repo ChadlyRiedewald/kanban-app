@@ -161,6 +161,31 @@ export function removeBoardFromFirestore(values) {
     return batch.commit();
 }
 
+// Add Column(s)
+export function addColumnToFirestore(values) {
+    const user = auth.currentUser;
+    const boardRef = doc(db, 'users', user.uid, 'boards', values.board.id);
+    const prevColumIds = values.board.columnIds;
+    let columnIdsToAdd = [];
+
+    // Set Column(s)
+    values.columns.map(column => {
+        const columnRef = doc(collection(db, 'users', user.uid, 'columns'));
+        columnIdsToAdd.push(columnRef.id);
+        const columnData = {
+            ...column,
+            id: columnRef.id,
+            createdAt: serverTimestamp(),
+        };
+        return setDoc(columnRef, columnData);
+    });
+
+    // Update Board
+    return updateDoc(boardRef, {
+        columnIds: [...prevColumIds, ...columnIdsToAdd],
+    });
+}
+
 //=====================
 // TASKS / SUBTASKS
 /* Add Task in Column */

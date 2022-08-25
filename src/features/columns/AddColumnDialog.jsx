@@ -5,9 +5,8 @@ import Button from '../../app/common/button';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeDialog } from '../../app/ui';
-import { nanoid } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
-import { updateBoardFromFirestore } from '../../app/firebase';
+import { addColumnToFirestore } from '../../app/firebase';
 import { delay } from '../../app/util';
 import { actionError, actionFinish, actionStart } from '../../app/async';
 
@@ -25,28 +24,11 @@ export const AddColumnDialog = () => {
     const dispatch = useDispatch();
     const currentBoard = useSelector(state => state.data.selectedBoard);
     const navigate = useNavigate();
-    const allColumns = useSelector(state => state.data.columns);
-    const allTasks = useSelector(state => state.data.tasks);
-    const allSubtasks = useSelector(state => state.data.subtasks);
-
-    //=====================
-    // PREVIOUS STATE OF DATA TO PASS INTO FUNCTION
-    const board = useSelector(state => state.data.selectedBoard);
-    const columns = [
-        ...allColumns.filter(column => board.columnIds.includes(column.id)),
-    ];
-    const tasks = allTasks.filter(task =>
-        board.columnIds.includes(task.columnId)
-    );
-    const tasksIds = tasks.map(({ id }) => id);
-    const subtasks = allSubtasks.filter(subtask =>
-        tasksIds.includes(subtask.taskId)
-    );
 
     //=====================
     // INITIAL VALUES
     const initialValues = {
-        columns: columns,
+        columns: [{ title: '', placeholder: 'e.g. Todo' }],
     };
 
     return (
@@ -59,20 +41,14 @@ export const AddColumnDialog = () => {
                     dispatch(actionStart());
                     try {
                         await delay(500);
-                        await updateBoardFromFirestore({
-                            board: board,
-                            prevColumns: columns,
-                            prevTasks: tasks,
-                            prevSubtasks: subtasks,
+                        await addColumnToFirestore({
+                            board: currentBoard,
                             columns: [
                                 ...values.columns.map(column => ({
-                                    id: column.id || nanoid(),
                                     title: column.title,
-                                    color:
-                                        column.color ||
-                                        Math.floor(Math.random() * 6) + 1,
-                                    boardId: board.id,
-                                    taskIds: column.taskIds || [],
+                                    color: Math.floor(Math.random() * 6) + 1,
+                                    boardId: currentBoard.id,
+                                    taskIds: [],
                                 })),
                             ],
                         });
