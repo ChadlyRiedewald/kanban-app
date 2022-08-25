@@ -11,11 +11,11 @@ const InputsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-    margin-bottom: 8px;
-    max-height: 96px;
+    margin-bottom: var(--space-xs);
+    max-height: var(--space-xxxl);
     overflow: auto;
     margin-right: -8px;
-    padding-right: 16px;
+    padding-right: var(--space-sm);
 
     @media screen and ${BREAKPOINTS.tablet} {
         max-height: 320px;

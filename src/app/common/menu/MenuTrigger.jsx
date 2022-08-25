@@ -9,7 +9,7 @@ import VisuallyHidden from '../visuallyHidden';
 const Wrapper = styled.button`
     all: unset;
     position: relative;
-    width: 16px;
+    width: var(--space-sm);
     margin-right: -5.69px;
     margin-left: -5.69px;
     height: 28px;

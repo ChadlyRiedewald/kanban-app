@@ -40,8 +40,8 @@ const InputLabel = styled(BaseLabel)`
 const SelectLabel = styled(InputLabel)`
     svg {
         position: absolute;
-        bottom: 16px;
-        right: 16px;
+        bottom: var(--space-sm);
+        right: var(--space-sm);
     }
 `;
 

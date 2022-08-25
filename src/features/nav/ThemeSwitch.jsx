@@ -16,7 +16,7 @@ const backgroundColor = theme('colorMode', {
 export const Wrapper = styled.div`
     background-color: ${backgroundColor};
     border-radius: var(--radii-md);
-    height: 48px;
+    height: var(--space-xl);
     display: flex;
     justify-content: center;
     align-items: center;

@@ -35,8 +35,8 @@ const ButtonsWrapper = styled.div`
 `;
 
 const AddButton = styled(Button)`
-    height: 32px;
-    width: 48px;
+    height: var(--space-lg);
+    width: var(--space-xl);
     padding: 0;
     display: flex;
     align-items: center;

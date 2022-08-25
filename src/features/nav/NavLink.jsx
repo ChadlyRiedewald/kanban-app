@@ -23,10 +23,10 @@ export const NavLink = styled(NavLinkPrimitive)`
         display: flex;
         align-items: center;
         gap: calc(var(--space-xs) * 1.5);
-        height: 48px;
+        height: var(--space-xl);
         border-radius: 0 var(--radii-round) var(--radii-round) 0;
         margin-inline-start: -24px;
-        padding-inline-start: 24px;
+        padding-inline-start: var(--space-md);
 
         &:focus {
             outline: none;

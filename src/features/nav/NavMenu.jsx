@@ -28,7 +28,7 @@ const Wrapper = styled.div`
         max-height: 192px;
         overflow: auto;
         margin-inline: -24px;
-        padding-inline: 24px 16px;
+        padding-inline: var(--space-md) var(--space-sm);
         ::-webkit-scrollbar {
             width: 20px;
         }

@@ -32,9 +32,9 @@ const LogoWrapper = styled.div`
 
 const ShowSidebarButton = styled.button`
     position: fixed;
-    bottom: 32px;
+    bottom: var(--space-lg);
     left: -4px;
-    height: 48px;
+    height: var(--space-xl);
     width: 60px;
     border: none;
     background-color: var(--color-purple-100);

@@ -14,10 +14,10 @@ export const NavButton = styled.button`
     display: flex;
     align-items: center;
     gap: calc(var(--space-xs) * 1.5);
-    height: 48px;
+    height: var(--space-xl);
     border-radius: 0 var(--radii-round) var(--radii-round) 0;
     margin-inline-start: -24px;
-    padding-inline-start: 24px;
+    padding-inline-start: var(--space-md);
     opacity: ${p => p.disabled && '0.5'};
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
     transition: all 0.3s ease-in-out;
