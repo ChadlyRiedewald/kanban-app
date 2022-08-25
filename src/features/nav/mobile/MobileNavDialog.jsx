@@ -1,5 +1,5 @@
 import NavMenu from '../NavMenu';
-import { DialogWrapper } from '../../../app/common/dialog';
+import { NavDialogWrapper } from '../../../app/common/dialog';
 
 /* This component renders only the mobile navigation dropdown MENU */
 
@@ -7,8 +7,8 @@ import { DialogWrapper } from '../../../app/common/dialog';
 // COMPONENTS
 export const MobileNavDialog = () => {
     return (
-        <DialogWrapper nav>
+        <NavDialogWrapper nav>
             <NavMenu />
-        </DialogWrapper>
+        </NavDialogWrapper>
     );
 };

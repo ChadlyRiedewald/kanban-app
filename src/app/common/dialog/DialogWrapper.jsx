@@ -117,6 +117,40 @@ export const DialogWrapper = ({ children, ...props }) => {
     );
 };
 
+/* The Dialog for mobile Nav */
+export const NavDialogWrapper = ({ children, ...props }) => {
+    const dispatch = useDispatch();
+
+    return (
+        <Root defaultOpen={true}>
+            <Portal>
+                <motion.div
+                    variants={variants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
+                >
+                    <StyledOverlay {...props} />
+
+                    <StyledContent
+                        {...props}
+                        onInteractOutside={e => {
+                            e.preventDefault();
+                            dispatch(closeDialog());
+                        }}
+                        onEscapeKeyDown={e => {
+                            e.preventDefault();
+                            dispatch(closeDialog());
+                        }}
+                    >
+                        {children}
+                    </StyledContent>
+                </motion.div>
+            </Portal>
+        </Root>
+    );
+};
+
 /* With this dialog you have to make a choice to close the dialog, used with SignOut Dialog */
 export const AlertDialogWrapper = ({ children }) => {
     return (

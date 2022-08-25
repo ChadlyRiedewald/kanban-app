@@ -67,7 +67,11 @@ export const MobileNav = () => {
             <Wrapper>
                 <LogoWrapper
                     onClick={() =>
-                        dispatch(openDialog({ dialogType: 'mobileNav' }))
+                        dispatch(
+                            openDialog({
+                                dialogType: 'mobileNav',
+                            })
+                        )
                     }
                 >
                     <Logo />
