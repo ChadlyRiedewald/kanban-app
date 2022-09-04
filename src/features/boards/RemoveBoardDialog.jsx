@@ -28,11 +28,17 @@ export const RemoveBoardDialog = () => {
     const currentColumns = allColumns.filter(column =>
         currentBoard?.columnIds.includes(column.id)
     );
+    const currentTaskIds = currentColumns
+        .reduce((prev, curr) => [...prev, curr.taskIds], [])
+        .flat(1);
     const currentTasks = allTasks.filter(task =>
-        currentColumns.map(column => column.taskIds.includes(task.id))
+        currentTaskIds.includes(task.id)
     );
+    const currentSubtaskIds = currentTasks
+        .reduce((prev, curr) => [...prev, curr.subtaskIds], [])
+        .flat(1);
     const currentSubtasks = allSubtasks.filter(subtask =>
-        currentTasks.map(task => task.subtaskIds.includes(subtask.id))
+        currentSubtaskIds.includes(subtask.id)
     );
 
     const handleDelete = async () => {
