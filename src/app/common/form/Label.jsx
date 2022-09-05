@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { Root } from '@radix-ui/react-label';
-import { primaryBg, textColor } from '../../../constants';
+import { BREAKPOINTS, primaryBg, textColor } from '../../../constants';
 
 //=====================
 // STYLED COMPONENTS
@@ -9,6 +9,15 @@ const BaseLabel = styled(Root)`
     font-weight: var(--font-bold);
     line-height: var(--line-height-xs);
     position: relative;
+
+    max-height: 150px;
+    overflow: auto;
+    margin-right: -8px;
+    padding-right: var(--space-sm);
+
+    @media screen and ${BREAKPOINTS.tablet} {
+        max-height: 350px;
+    }
 `;
 
 const InputGroupLabel = styled(BaseLabel)`
@@ -61,6 +70,7 @@ const CheckboxLabel = styled(BaseLabel)`
     color: ${p => (p.checked ? 'var(--color-gray-500)' : textColor)};
     position: relative;
     transition: all 0.3s ease-in-out;
+    flex-shrink: 0;
 
     svg {
         position: absolute;
