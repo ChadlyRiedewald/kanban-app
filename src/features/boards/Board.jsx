@@ -34,6 +34,7 @@ export const Board = () => {
                                 <ColumnTitle
                                     title={column.title}
                                     color={column.color}
+                                    tasks={column.taskIds.length}
                                 />
                                 {allTasks
                                     .filter(task =>

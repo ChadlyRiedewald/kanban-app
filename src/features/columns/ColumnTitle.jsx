@@ -13,11 +13,13 @@ const Circle = styled.div`
     background-color: ${p => p.color};
 `;
 
-export const ColumnTitle = ({ color, title }) => {
+export const ColumnTitle = ({ color, title, tasks }) => {
     return (
         <Wrapper>
             <Circle color={`var(--color-${color})`} />
-            <h4>{title}</h4>
+            <h4>
+                {title} ({tasks})
+            </h4>
         </Wrapper>
     );
 };
