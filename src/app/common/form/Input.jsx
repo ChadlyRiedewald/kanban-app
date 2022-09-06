@@ -16,6 +16,7 @@ export const StyledInput = styled.input`
     font-weight: var(--font-medium);
     border-radius: var(--radii-sm);
     font-size: var(--font-sm);
+  //flex-shrink: 0;
 
     &:focus {
       border-color: ${p =>

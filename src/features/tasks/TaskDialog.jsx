@@ -109,7 +109,7 @@ export const TaskDialog = ({ task }) => {
                 />
             </TitleWrapper>
             <p>{task.description}</p>
-            <Label variant='input'>
+            <Label variant='subtasks'>
                 {`Subtasks (${completedSubtasks.length} of
                 ${task.subtaskIds.length})`}
                 {subtasks.map((subtask, index) => (

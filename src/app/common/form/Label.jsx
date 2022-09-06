@@ -9,15 +9,6 @@ const BaseLabel = styled(Root)`
     font-weight: var(--font-bold);
     line-height: var(--line-height-xs);
     position: relative;
-
-    max-height: 150px;
-    overflow: auto;
-    margin-right: -8px;
-    padding-right: var(--space-sm);
-
-    @media screen and ${BREAKPOINTS.tablet} {
-        max-height: 350px;
-    }
 `;
 
 const InputGroupLabel = styled(BaseLabel)`
@@ -44,6 +35,17 @@ const InputLabel = styled(BaseLabel)`
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+`;
+
+const SubtasksLabel = styled(InputLabel)`
+    max-height: 150px;
+    overflow: auto;
+    margin-right: -8px;
+    padding-right: var(--space-sm);
+
+    @media screen and ${BREAKPOINTS.tablet} {
+        max-height: 350px;
+    }
 `;
 
 const SelectLabel = styled(InputLabel)`
@@ -103,6 +105,10 @@ export const Label = ({ children, variant, ...props }) => {
         }
         case 'input-group': {
             Component = InputGroupLabel;
+            break;
+        }
+        case 'subtasks': {
+            Component = SubtasksLabel;
             break;
         }
         case 'input':
